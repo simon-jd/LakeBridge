@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LakeBridge immutable arrival manifest v1",
+  "type": "object",
+  "required": ["contract_version", "dataset_id", "high_watermark", "timezone", "files"],
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {"const": 1},
+    "dataset_id": {"type": "string", "minLength": 1},
+    "high_watermark": {"type": "integer", "minimum": 1},
+    "timezone": {"const": "UTC"},
+    "files": {
+      "type": "array", "minItems": 2,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["path", "kind", "batch", "sha256", "bytes", "rows", "schema"],
+        "properties": {
+          "path": {"type": "string", "minLength": 1},
+          "kind": {"enum": ["events", "plans"]},
+          "batch": {"type": "integer", "minimum": 1},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "bytes": {"type": "integer", "minimum": 1},
+          "rows": {"type": "integer", "minimum": 0},
+          "schema": {
+            "type": "array", "minItems": 1,
+            "items": {"type": "object", "required": ["name", "type"],
+              "additionalProperties": false,
+              "properties": {"name": {"type": "string"}, "type": {"type": "string"}}}
+          }
+        }
+      }
+    }
+  }
+}
+

@@ -1,0 +1,502 @@
+{
+  "release_id": "rel_demo_corrected",
+  "run_id": "demo_corrected",
+  "created_at": "2026-09-06T22:54:37.855067+00:00",
+  "rule_version": "v1",
+  "rule_scope": "all",
+  "input_high_watermark": 3,
+  "previous_input_high_watermark": 3,
+  "manifest_sha256": "f72e05c949058a628e465adb3caf28a3b9b28179a355c4b82e468892152517d9",
+  "input_files": [
+    {
+      "path": "plans/history.parquet",
+      "kind": "plans",
+      "batch": 1,
+      "sha256": "b2010f4290cde68203f39788f6c26d0bc3abaabe4e1351cdded0012e8e50d631",
+      "bytes": 1632,
+      "rows": 10,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "plan_id",
+          "type": "string"
+        },
+        {
+          "name": "effective_from",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "effective_to",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "attributes",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0001/date=2025-01-06/part-000000.parquet",
+      "kind": "events",
+      "batch": 1,
+      "sha256": "7e0095993be2d9fecf55dc02aab56577afdac5755ba09d645a81166654a4c829",
+      "bytes": 2503,
+      "rows": 14,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0001/date=2025-01-04/part-000000.parquet",
+      "kind": "events",
+      "batch": 1,
+      "sha256": "b529342ccfafb0ca1549a9c4ae1f274ada8beb1d9eca89a99777fdb0b31e7635",
+      "bytes": 2507,
+      "rows": 14,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0001/date=2025-01-02/part-000000.parquet",
+      "kind": "events",
+      "batch": 1,
+      "sha256": "140059c00d0af28acb988bd742016d9c1d1bcd73f6d700d6a7c70ac747ae2476",
+      "bytes": 2609,
+      "rows": 19,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0001/date=2025-01-07/part-000000.parquet",
+      "kind": "events",
+      "batch": 1,
+      "sha256": "6fbf58716adc23c5bf2d45fe57eb970fed670c92da2622fc672ebf338e23ced5",
+      "bytes": 2472,
+      "rows": 12,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0001/date=2025-01-03/part-000000.parquet",
+      "kind": "events",
+      "batch": 1,
+      "sha256": "fcc1279a1483af82bddc0567fe515c6d4befa609c5eec14bf60b1cd3aefeb6db",
+      "bytes": 2533,
+      "rows": 16,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0001/date=2025-01-01/part-000000.parquet",
+      "kind": "events",
+      "batch": 1,
+      "sha256": "34e672784fd74330a4493b4a77445c8b4fcd5ecb1911711d3ef65cec56eaef13",
+      "bytes": 2496,
+      "rows": 14,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0001/date=2025-01-05/part-000000.parquet",
+      "kind": "events",
+      "batch": 1,
+      "sha256": "8ff9652862da7f0b501a508e424e84caac723407f25eab91fd09b47774843c3b",
+      "bytes": 2456,
+      "rows": 11,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0002/date=2025-01-04/part-000000.parquet",
+      "kind": "events",
+      "batch": 2,
+      "sha256": "28e97460e1b01d36d19431e37dd723ec703884b951ac7318d0cd839676fb983d",
+      "bytes": 2240,
+      "rows": 3,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0002/date=2025-01-02/part-000000.parquet",
+      "kind": "events",
+      "batch": 2,
+      "sha256": "aa0a5c9781d264d69ac9c00e18f3b1faca21e4bfe06ae6dab23b154703c2e74d",
+      "bytes": 2268,
+      "rows": 6,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0002/date=2025-01-06/part-000000.parquet",
+      "kind": "events",
+      "batch": 2,
+      "sha256": "6fa6bafe446d523d6f9a723c32d354d4991a89d7f05d30d13c706624fd13aeae",
+      "bytes": 2277,
+      "rows": 6,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0003/date=2025-01-08/part-000000.parquet",
+      "kind": "events",
+      "batch": 3,
+      "sha256": "11fce183d21d2955c8cce325a7ef4af914ed79ba573c258038957e936f52f5cd",
+      "bytes": 2245,
+      "rows": 2,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    }
+  ],
+  "tables": {
+    "detail": {
+      "table": "lake.saas.detail",
+      "snapshot_id": 4678715670198260063
+    },
+    "plans": {
+      "table": "lake.saas.plans",
+      "snapshot_id": 1168725612577199532
+    },
+    "daily": {
+      "table": "lake.saas.daily",
+      "snapshot_id": 2628202277544566317
+    }
+  },
+  "validation": {
+    "keys": {
+      "missing": 0,
+      "unexpected": 0,
+      "passed": true
+    },
+    "detail": {
+      "missing": 0,
+      "unexpected": 0,
+      "passed": true
+    },
+    "daily": {
+      "missing": 0,
+      "unexpected": 0,
+      "passed": true
+    },
+    "duplicate_keys": 0,
+    "null_keys": 0,
+    "tombstones": 1,
+    "detail_rows": 102,
+    "live_rows": 101,
+    "passed": true
+  },
+  "queue_seconds": 0.0019131709996145219,
+  "application_id": "local-1788735251655",
+  "reason": "forward correction preserving legal data",
+  "evidence": "/workspace/artifacts/compose/runs/demo_corrected",
+  "execution_seconds": 2.707920725999429
+}

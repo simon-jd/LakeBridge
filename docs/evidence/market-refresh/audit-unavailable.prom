@@ -1,0 +1,6 @@
+# HELP lakebridge_audit_up Whether the configured audit store was read successfully.
+# TYPE lakebridge_audit_up gauge
+lakebridge_audit_up 0
+# HELP lakebridge_audit_observed_timestamp_seconds Unix time of this collection attempt.
+# TYPE lakebridge_audit_observed_timestamp_seconds gauge
+lakebridge_audit_observed_timestamp_seconds 1788740566.752802

@@ -1,0 +1,34 @@
+== Physical Plan ==
+AdaptiveSparkPlan (5)
++- HashAggregate (4)
+   +- Exchange (3)
+      +- HashAggregate (2)
+         +- BatchScan lake.fair_performance.bench_b93f24c96e_small_files (1)
+
+
+(1) BatchScan lake.fair_performance.bench_b93f24c96e_small_files
+Output [2]: [units#1175, payload#1176]
+lake.fair_performance.bench_b93f24c96e_small_files (branch=null) [filters=, groupedBy=]
+
+(2) HashAggregate
+Input [2]: [units#1175, payload#1176]
+Keys: []
+Functions [3]: [partial_count(1), partial_sum(units#1175), partial_sum(length(payload#1176))]
+Aggregate Attributes [4]: [count#1187L, sum#1188, isEmpty#1189, sum#1190L]
+Results [4]: [count#1191L, sum#1192, isEmpty#1193, sum#1194L]
+
+(3) Exchange
+Input [4]: [count#1191L, sum#1192, isEmpty#1193, sum#1194L]
+Arguments: SinglePartition, ENSURE_REQUIREMENTS, [plan_id=1273]
+
+(4) HashAggregate
+Input [4]: [count#1191L, sum#1192, isEmpty#1193, sum#1194L]
+Keys: []
+Functions [3]: [count(1), sum(units#1175), sum(length(payload#1176))]
+Aggregate Attributes [3]: [count(1)#1177L, sum(units#1175)#1178, sum(length(payload#1176))#1179L]
+Results [3]: [count(1)#1177L AS events#1164L, sum(units#1175)#1178 AS units#1165, sum(length(payload#1176))#1179L AS payload_bytes#1166L]
+
+(5) AdaptiveSparkPlan
+Output [3]: [events#1164L, units#1165, payload_bytes#1166L]
+Arguments: isFinalPlan=false
+

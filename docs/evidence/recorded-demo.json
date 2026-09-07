@@ -1,0 +1,47 @@
+{
+  "scope": "local functional demonstration",
+  "rows": 100,
+  "scenarios": [
+    {
+      "name": "full_migration_and_idempotent_retry",
+      "passed": true,
+      "release": "rel_demo_initial"
+    },
+    {
+      "name": "late_revision_backfill_and_commit_recovery",
+      "passed": true,
+      "dry_run": {
+        "input_high_watermark": 2,
+        "manifest_sha256": "f72e05c949058a628e465adb3caf28a3b9b28179a355c4b82e468892152517d9",
+        "rule_version": "v1",
+        "scope": [
+          "2025-01-01",
+          "2025-01-07"
+        ],
+        "affected_keys": 100,
+        "affected_partitions": 7,
+        "evidence": "/home/postedism/Desktop/LakeBridge/artifacts/recording/dry-runs/83d8db8b672d48e896ae120f069dc1fd",
+        "published": false
+      },
+      "release": "rel_demo_late",
+      "recovery_seconds": 3.559898403000261,
+      "tombstones": 1
+    },
+    {
+      "name": "concurrent_writer_blocked_then_resumed",
+      "passed": true
+    },
+    {
+      "name": "consumer_rollback_and_legal_data_forward_correction",
+      "passed": true,
+      "bad_release": "rel_demo_rule",
+      "rolled_back_to": "rel_demo_late",
+      "corrected_release": "rel_demo_corrected",
+      "consumer_recovery_seconds": 0.18306613100139657,
+      "legal_new_events_preserved": 2
+    }
+  ],
+  "passed": true,
+  "total_seconds": 24.648698725999566,
+  "final_release": "rel_demo_corrected"
+}

@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "scope": "same-host Compose service restart; no cross-node DR claim",
+  "outage_detected_exit_code": 1,
+  "trusted_data_readable_seconds": 5.899357335001696
+}

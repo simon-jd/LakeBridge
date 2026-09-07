@@ -1,0 +1,12 @@
+ Container lakebridge-minio-1 Running 
+ Container lakebridge-postgres-1 Running 
+ Container lakebridge-minio-init-1 Starting 
+ Container lakebridge-minio-init-1 Started 
+ Container lakebridge-postgres-1 Waiting 
+ Container lakebridge-minio-init-1 Waiting 
+ Container lakebridge-minio-init-1 Exited 
+ Container lakebridge-postgres-1 Healthy 
+ Container lakebridge-airflow-run-579656e0cb1b Creating 
+ Container lakebridge-airflow-run-579656e0cb1b Created 
+
+No data found

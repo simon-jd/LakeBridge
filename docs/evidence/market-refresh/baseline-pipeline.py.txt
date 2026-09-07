@@ -1,0 +1,385 @@
+from __future__ import annotations
+
+import time
+import uuid
+from datetime import date
+from pathlib import Path
+
+from pyspark.sql import functions as F
+
+from lakebridge.common import ConflictError, LakeBridgeError, identifier, json_write, literal, now
+from lakebridge.config import Settings
+from lakebridge.contracts import verify_manifest
+from lakebridge.control import Control
+from lakebridge.oracle import reference
+from lakebridge.transform import aggregate, prepare
+from lakebridge.validation import validate
+
+TABLES = ("detail", "plans", "daily")
+
+
+def date_scope(start, end):
+    if bool(start) != bool(end):
+        raise LakeBridgeError("Both --start and --end are required")
+    if not start:
+        return None
+    try:
+        left, right = date.fromisoformat(start), date.fromisoformat(end)
+    except ValueError as exc:
+        raise LakeBridgeError("Dates must be ISO YYYY-MM-DD") from exc
+    if left > right:
+        raise LakeBridgeError("Start must not be after end")
+    return left.isoformat(), right.isoformat()
+
+
+class Pipeline:
+    def __init__(self, spark, settings: Settings):
+        self.spark, self.settings = spark, settings
+        self.control = Control(settings.root, settings.audit_dsn)
+        self.control.bind(settings.namespace, settings.warehouse)
+
+    def close(self):
+        self.control.close()
+
+    def table(self, name):
+        return self.settings.table(name)
+
+    def snapshot(self, name, ref="main"):
+        rows = self.spark.sql(
+            f"SELECT snapshot_id FROM {self.table(name)}.refs WHERE name={literal(ref)}"
+        ).collect()
+        return int(rows[0][0]) if rows else None
+
+    def read_snapshot(self, name, snapshot):
+        return self.spark.read.option("snapshot-id", str(int(snapshot))).table(self.table(name))
+
+    def initialize(self, detail, plans):
+        self.spark.sql(f"CREATE NAMESPACE IF NOT EXISTS lake.{self.settings.namespace}")
+        frames = {"detail": detail, "plans": plans, "daily": aggregate(detail)}
+        for name, frame in frames.items():
+            table = self.table(name)
+            if not self.spark.catalog.tableExists(table):
+                writer = (
+                    frame.limit(0)
+                    .writeTo(table)
+                    .using("iceberg")
+                    .tableProperty("format-version", "2")
+                    .tableProperty("write.format.default", "parquet")
+                    .tableProperty("write.target-file-size-bytes", str(128 * 1024 * 1024))
+                    .tableProperty("write.distribution-mode", "hash")
+                )
+                if name == "detail":
+                    writer = writer.partitionedBy(F.days("event_time"))
+                elif name == "daily":
+                    writer = writer.partitionedBy("business_date")
+                writer.create()
+            if self.snapshot(name) is None:
+                frame.limit(0).writeTo(table).append()
+
+    def _check_boundary(self, inputs):
+        releases = self.control.releases()
+        if not releases:
+            return
+        previous = releases[-1]  # Consumer rollback must never roll back writer progress.
+        if previous.get("dataset_id", inputs.dataset_id) != inputs.dataset_id:
+            raise LakeBridgeError("Cannot mix different source datasets")
+        if inputs.watermark < previous["input_high_watermark"]:
+            raise LakeBridgeError("Input progress cannot move backwards")
+        old = {(e["path"], e["kind"], e["batch"]): e for e in previous["input_files"]}
+        new = {(e["path"], e["kind"], e["batch"]): e for e in inputs.entries}
+        if any(new.get(key) != value for key, value in old.items()):
+            raise LakeBridgeError("Previously consumed immutable input changed or disappeared")
+        if any(
+            k not in old and e["batch"] <= previous["input_high_watermark"] for k, e in new.items()
+        ):
+            raise LakeBridgeError("Late files require a NEW arrival batch")
+
+    def dry_run(self, manifest, watermark, rule, start=None, end=None):
+        scope = date_scope(start, end)
+        inputs = verify_manifest(Path(manifest), watermark)
+        self._check_boundary(inputs)
+        run_dir = self.settings.root / "dry-runs" / uuid.uuid4().hex
+        detail, _ = prepare(self.spark, inputs, run_dir / "quarantine", rule)
+        affected = detail.where(F.col("business_date").between(*scope)) if scope else detail
+        affected.select("tenant_id", "event_id", "business_date", "source_version").write.parquet(
+            str(run_dir / "affected_keys")
+        )
+        affected.groupBy("business_date").count().write.parquet(str(run_dir / "partitions"))
+        report = {
+            "input_high_watermark": inputs.watermark,
+            "manifest_sha256": inputs.fingerprint,
+            "rule_version": rule,
+            "scope": scope,
+            "affected_keys": affected.count(),
+            "affected_partitions": affected.select("business_date").distinct().count(),
+            "evidence": str(run_dir),
+            "published": False,
+        }
+        json_write(run_dir / "plan.json", report)
+        return report
+
+    def execute(
+        self,
+        manifest,
+        watermark=None,
+        rule="v1",
+        start=None,
+        end=None,
+        reason="historical migration",
+        run_id=None,
+        fail_at=None,
+        lock_timeout=0,
+    ):
+        started = time.monotonic()
+        run_id = identifier(run_id or "r" + uuid.uuid4().hex)
+        if not reason.strip():
+            raise LakeBridgeError("A migration/backfill reason is required")
+        scope = date_scope(start, end)
+        inputs = verify_manifest(Path(manifest), watermark)
+        warehouse = self.settings.warehouse
+        if not warehouse.startswith("s3://"):
+            target = Path(warehouse).resolve()
+            source = inputs.path.parent
+            if target.is_relative_to(source) or source.is_relative_to(target):
+                raise LakeBridgeError("Raw data and Iceberg must have independent storage paths")
+        context = {
+            "manifest": str(inputs.path),
+            "manifest_sha256": inputs.fingerprint,
+            "input_high_watermark": inputs.watermark,
+            "rule_version": rule,
+            "scope": list(scope) if scope else None,
+            "reason": reason,
+        }
+        previous = self.control.run(run_id)
+        if previous:
+            if previous["state"] == "ABORTED":
+                raise LakeBridgeError("Aborted run_id cannot be reused")
+            if any(previous[k] != value for k, value in context.items()):
+                raise LakeBridgeError("run_id is bound to different immutable inputs or parameters")
+            if previous["state"] == "COMPLETED":
+                if self.control.status()["writer_run"] == run_id:
+                    with self.control.writer(run_id, lock_timeout):
+                        self.control.finish_writer(run_id)
+                return self.control.release(previous["candidate"]["release_id"])
+            context = previous
+        run_dir = self.settings.root / "runs" / run_id
+        run_dir.mkdir(parents=True, exist_ok=True)
+        with self.control.writer(run_id, lock_timeout) as waited:
+            context["queue_seconds"] = context.get("queue_seconds", 0) + waited
+            context["application_id"] = self.spark.sparkContext.applicationId
+            context.setdefault("started_at", now())
+            context.setdefault("generation", self.control.status()["generation"])
+            self.control.save_run(run_id, "RUNNING", context)
+            try:
+                if "candidate" not in context:
+                    self._check_boundary(inputs)
+                    detail, plans = prepare(self.spark, inputs, run_dir / "quarantine", rule)
+                    self.initialize(detail, plans)
+                    context.setdefault("base_snapshots", {n: self.snapshot(n) for n in TABLES})
+                    self.control.save_run(run_id, "WRITING", context)
+                    base = self.read_snapshot("detail", context["base_snapshots"]["detail"])
+                    if scope:
+                        if not self.control.releases():
+                            raise LakeBridgeError("Initial migration must cover all dates")
+                        # Input progress may advance only if ALL new revisions are in the range.
+                        new_versions = (
+                            detail.alias("s")
+                            .join(base.alias("t"), ["tenant_id", "event_id"], "left")
+                            .where(
+                                (
+                                    F.col("t.source_version").isNull()
+                                    | (F.col("s.source_version") > F.col("t.source_version"))
+                                )
+                                & ~F.col("s.business_date").between(*scope)
+                            )
+                        )
+                        if new_versions.limit(1).count():
+                            raise LakeBridgeError(
+                                "Unconsumed revisions outside range; "
+                                "widen range before advancing HWM"
+                            )
+                        old_plans = self.read_snapshot("plans", context["base_snapshots"]["plans"])
+                        if (
+                            plans.exceptAll(old_plans).limit(1).count()
+                            or old_plans.exceptAll(plans).limit(1).count()
+                        ):
+                            raise LakeBridgeError("Plan history changed; use full recomputation")
+                        base.select(*base.columns).write.mode("overwrite").parquet(
+                            str(run_dir / "previous")
+                        )
+                    for name in TABLES:
+                        if self.snapshot(name, run_id) is None:
+                            self.spark.sql(
+                                f"ALTER TABLE {self.table(name)} CREATE BRANCH {run_id} "
+                                f"AS OF VERSION {context['base_snapshots'][name]}"
+                            )
+                    plans.writeTo(f"{self.table('plans')}.branch_{run_id}").overwrite(F.lit(True))
+                    selected = (
+                        detail.where(F.col("business_date").between(*scope)) if scope else detail
+                    )
+                    # input_file_name() carries a nondeterministic Spark expression. Persist
+                    # provenance and break that lineage before MERGE's correlated subquery.
+                    staging = run_dir / "incoming"
+                    selected.write.mode("overwrite").parquet(str(staging))
+                    self.spark.read.parquet(str(staging)).createOrReplaceTempView("incoming")
+                    # Retain tombstones in the state table to fence stale source revisions.
+                    self.spark.sql(f"""MERGE INTO {self.table("detail")}.branch_{run_id} t
+                        USING incoming s ON t.tenant_id=s.tenant_id AND t.event_id=s.event_id
+                        WHEN MATCHED AND (s.source_version>t.source_version OR
+                          (s.source_version=t.source_version AND
+                           (s.rule_version<>t.rule_version OR s.plan_id<>t.plan_id)))
+                          THEN UPDATE SET *
+                        WHEN NOT MATCHED THEN INSERT *""")
+                    self._fault(fail_at, "after_detail_commit")
+                    branch_detail = self.spark.table(f"{self.table('detail')}.branch_{run_id}")
+                    aggregate(branch_detail).writeTo(
+                        f"{self.table('daily')}.branch_{run_id}"
+                    ).overwrite(F.lit(True))
+                    reference(
+                        inputs.path,
+                        inputs.watermark,
+                        rule,
+                        run_dir / "oracle",
+                        scope,
+                        run_dir / "previous" if scope else None,
+                    )
+                    validation = validate(
+                        self.spark,
+                        branch_detail,
+                        self.spark.table(f"{self.table('daily')}.branch_{run_id}"),
+                        run_dir / "oracle",
+                        run_dir / "validation",
+                        base if scope else None,
+                        scope,
+                    )
+                    if not validation["passed"]:
+                        raise LakeBridgeError(f"Reconciliation failed: {run_dir / 'validation'}")
+                    verify_manifest(inputs.path, inputs.watermark)
+                    snapshots = {n: self.snapshot(n, run_id) for n in TABLES}
+                    context["candidate"] = {
+                        "release_id": "rel_" + run_id,
+                        "run_id": run_id,
+                        "created_at": now(),
+                        "rule_version": rule,
+                        "rule_scope": list(scope) if scope else "all",
+                        "input_high_watermark": inputs.watermark,
+                        "previous_input_high_watermark": (
+                            self.control.releases()[-1]["input_high_watermark"]
+                            if self.control.releases()
+                            else 0
+                        ),
+                        "manifest_sha256": inputs.fingerprint,
+                        "dataset_id": inputs.dataset_id,
+                        "input_files": inputs.entries,
+                        "tables": {
+                            n: {"table": self.table(n), "snapshot_id": snapshots[n]} for n in TABLES
+                        },
+                        "validation": validation,
+                        "queue_seconds": context["queue_seconds"],
+                        "application_id": context["application_id"],
+                        "reason": reason,
+                        "evidence": str(run_dir),
+                    }
+                    self.control.save_run(run_id, "VALIDATED", context)
+                candidate = context["candidate"]
+                for name, pointer in candidate["tables"].items():
+                    expected = pointer["snapshot_id"]
+                    current = self.snapshot(name)
+                    if current not in (context["base_snapshots"][name], expected):
+                        raise ConflictError(f"{name}: main diverged; refusing unsafe fast-forward")
+                    tag = candidate["release_id"]
+                    protected = self.snapshot(name, tag)
+                    if protected is not None and protected != expected:
+                        raise ConflictError(f"{name}: release tag points to an unexpected snapshot")
+                    if protected is None:
+                        self.spark.sql(
+                            f"ALTER TABLE {self.table(name)} CREATE TAG {tag} "
+                            f"AS OF VERSION {expected}"
+                        )
+                    if current != expected:
+                        if self.snapshot(name, run_id) != expected:
+                            raise ConflictError(f"{name}: validated audit branch changed")
+                        self.spark.sql(
+                            f"CALL lake.system.fast_forward("
+                            f"'{self.settings.namespace}.{name}', 'main', '{run_id}')"
+                        )
+                self._fault(fail_at, "after_fast_forward")
+                candidate["execution_seconds"] = time.monotonic() - started
+                candidate["queue_seconds"] = context["queue_seconds"]
+                self.control.save_run(run_id, "COMMITTED", context)
+                self._fault(fail_at, "before_audit")
+                self.control.publish(candidate, context["generation"])
+                self._fault(fail_at, "after_audit")
+                with self.control.transaction():
+                    self.control.save_run(run_id, "COMPLETED", context)
+                    self.control.finish_writer(run_id)
+                json_write(run_dir / "release.json", candidate)
+                return candidate
+            except BaseException as exc:
+                context["last_error"] = f"{type(exc).__name__}: {exc}"
+                self.control.save_run(run_id, "FAILED", context)
+                json_write(run_dir / "failure.json", context)
+                raise
+
+    @staticmethod
+    def _fault(requested, stage):
+        if requested == stage:
+            raise LakeBridgeError(f"Injected failure: {stage}; recover with the same run_id")
+
+    def recover(self, run_id):
+        run = self.control.run(identifier(run_id))
+        if not run:
+            raise LakeBridgeError("Unknown run")
+        scope = run["scope"] or (None, None)
+        return self.execute(
+            run["manifest"],
+            run["input_high_watermark"],
+            run["rule_version"],
+            *scope,
+            reason=run["reason"],
+            run_id=run_id,
+        )
+
+    def abort(self, run_id, reason):
+        if not reason.strip():
+            raise LakeBridgeError("Abort requires a reason")
+        run_id = identifier(run_id)
+        run = self.control.run(run_id)
+        if not run or run["state"] in ("COMPLETED", "ABORTED"):
+            raise LakeBridgeError("Only an unfinished run can be aborted")
+        with self.control.writer(run_id):
+            if any(self.snapshot(n) != snap for n, snap in run.get("base_snapshots", {}).items()):
+                raise LakeBridgeError(
+                    "Main already changed; recover this run, then forward-correct"
+                )
+            run["abort_reason"] = reason
+            self.control.save_run(run_id, "ABORTED", run)
+            self.control.finish_writer(run_id)
+        return {"run_id": run_id, "state": "ABORTED"}
+
+    def activate(self, release_id, reason):
+        release = self.control.release(release_id)
+        # Verify all protected snapshots are still readable before moving consumers.
+        for name, pointer in release["tables"].items():
+            self.read_snapshot(name, pointer["snapshot_id"]).limit(1).count()
+        generation = self.control.activate(release_id, reason, self.control.status()["generation"])
+        return {"release_id": release_id, "generation": generation, "writer_heads_unchanged": True}
+
+    def query(self, release_id=None, limit=20):
+        if not 1 <= limit <= 1000:
+            raise LakeBridgeError("Query limit must be between 1 and 1000")
+        release = self.control.release(release_id)
+        if not release:
+            raise LakeBridgeError("No active release")
+        daily = release["tables"]["daily"]
+        rows = (
+            self.read_snapshot("daily", daily["snapshot_id"])
+            .orderBy("business_date", "tenant_id")
+            .limit(limit)
+            .collect()
+        )
+        return {
+            "release_id": release["release_id"],
+            "tables": release["tables"],
+            "rows": [r.asDict() for r in rows],
+        }

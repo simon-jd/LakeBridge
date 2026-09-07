@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "files": 12,
+  "manifest_sha256": "3f841488b1601764ad771e1efc2ec362cddf80f27ceaf8c2fa5e2c5e82cad02b",
+  "output": "artifacts/s3-staged/manifest.json"
+}

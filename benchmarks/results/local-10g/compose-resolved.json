@@ -1,0 +1,473 @@
+{
+  "name": "lakebridge-simulation",
+  "networks": {
+    "default": {
+      "name": "lakebridge-simulation_default",
+      "ipam": {}
+    }
+  },
+  "services": {
+    "master": {
+      "cpus": 1,
+      "command": [
+        "org.apache.spark.deploy.master.Master",
+        "--host",
+        "master",
+        "--port",
+        "7077",
+        "--webui-port",
+        "8080"
+      ],
+      "entrypoint": [
+        "/usr/local/lib/python3.11/site-packages/pyspark/bin/spark-class"
+      ],
+      "environment": {
+        "AWS_ACCESS_KEY_ID": "simulation_admin",
+        "AWS_REGION": "us-east-1",
+        "AWS_SECRET_ACCESS_KEY": "simulation_local_secret",
+        "LAKEBRIDGE_JARS": "/opt/lakebridge/.runtime/jars",
+        "PYTHONPATH": "/opt/lakebridge/src",
+        "SPARK_DAEMON_MEMORY": "512m",
+        "SPARK_HOME": "/usr/local/lib/python3.11/site-packages/pyspark",
+        "SPARK_LOCAL_DIRS": "/scratch",
+        "SPARK_LOCAL_IP": "master"
+      },
+      "hostname": "master",
+      "image": "lakebridge-spark:latest",
+      "init": true,
+      "mem_limit": "1073741824",
+      "networks": {
+        "default": null
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "host_ip": "127.0.0.1",
+          "target": 8080,
+          "published": "58180",
+          "protocol": "tcp"
+        }
+      ],
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "/home/postedism/Desktop/LakeBridge/src",
+          "target": "/opt/lakebridge/src",
+          "read_only": true,
+          "bind": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/postedism/Desktop/LakeBridge/scripts",
+          "target": "/opt/lakebridge/scripts",
+          "read_only": true,
+          "bind": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/postedism/Desktop/LakeBridge/.runtime/jars",
+          "target": "/opt/lakebridge/.runtime/jars",
+          "read_only": true,
+          "bind": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/postedism/Desktop/LakeBridge/artifacts/simulation",
+          "target": "/workspace/artifacts/simulation",
+          "bind": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/postedism/Desktop/LakeBridge/artifacts/simulation/scratch",
+          "target": "/scratch",
+          "bind": {}
+        }
+      ]
+    },
+    "minio": {
+      "cpus": 3,
+      "command": [
+        "server",
+        "/data"
+      ],
+      "entrypoint": null,
+      "environment": {
+        "MINIO_PROMETHEUS_AUTH_TYPE": "public",
+        "MINIO_ROOT_PASSWORD": "simulation_local_secret",
+        "MINIO_ROOT_USER": "simulation_admin"
+      },
+      "image": "minio/minio:RELEASE.2025-04-22T22-12-26Z",
+      "mem_limit": "6442450944",
+      "networks": {
+        "default": null
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "host_ip": "127.0.0.1",
+          "target": 9000,
+          "published": "59100",
+          "protocol": "tcp"
+        }
+      ],
+      "volumes": [
+        {
+          "type": "volume",
+          "source": "simulation-minio",
+          "target": "/data",
+          "volume": {}
+        }
+      ]
+    },
+    "minio-init": {
+      "command": [
+        "-ec",
+        "until mc alias set local http://minio:9000 simulation_admin simulation_local_secret; do sleep 2; done\nmc mb --ignore-existing local/simulation-raw local/simulation-warehouse\n"
+      ],
+      "depends_on": {
+        "minio": {
+          "condition": "service_started",
+          "required": true
+        }
+      },
+      "entrypoint": [
+        "/bin/sh"
+      ],
+      "image": "minio/mc:RELEASE.2025-04-16T18-13-26Z",
+      "networks": {
+        "default": null
+      }
+    },
+    "postgres": {
+      "cpus": 1,
+      "command": null,
+      "entrypoint": null,
+      "environment": {
+        "POSTGRES_PASSWORD": "simulation_postgres_local",
+        "POSTGRES_USER": "postgres"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "pg_isready -U postgres"
+        ],
+        "timeout": "3s",
+        "interval": "3s",
+        "retries": 30
+      },
+      "image": "postgres:17.6-alpine",
+      "mem_limit": "2147483648",
+      "networks": {
+        "default": null
+      },
+      "volumes": [
+        {
+          "type": "volume",
+          "source": "simulation-postgres",
+          "target": "/var/lib/postgresql/data",
+          "volume": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/postedism/Desktop/LakeBridge/infra/docker/postgres-init.sql",
+          "target": "/docker-entrypoint-initdb.d/init.sql",
+          "read_only": true,
+          "bind": {}
+        }
+      ]
+    },
+    "s3proxy": {
+      "cpus": 2,
+      "command": null,
+      "depends_on": {
+        "minio": {
+          "condition": "service_started",
+          "required": true
+        }
+      },
+      "entrypoint": null,
+      "image": "nginx:1.29-alpine",
+      "mem_limit": "1073741824",
+      "networks": {
+        "default": null
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "/home/postedism/Desktop/LakeBridge/infra/docker/simulation-nginx.conf",
+          "target": "/etc/nginx/nginx.conf",
+          "read_only": true,
+          "bind": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/postedism/Desktop/LakeBridge/artifacts/simulation",
+          "target": "/logs",
+          "bind": {}
+        }
+      ]
+    },
+    "worker1": {
+      "cpus": 4,
+      "command": [
+        "org.apache.spark.deploy.worker.Worker",
+        "--host",
+        "worker1",
+        "--cores",
+        "4",
+        "--memory",
+        "14g",
+        "--work-dir",
+        "/scratch/worker1",
+        "spark://master:7077"
+      ],
+      "depends_on": {
+        "master": {
+          "condition": "service_started",
+          "required": true
+        }
+      },
+      "entrypoint": [
+        "/usr/local/lib/python3.11/site-packages/pyspark/bin/spark-class"
+      ],
+      "environment": {
+        "AWS_ACCESS_KEY_ID": "simulation_admin",
+        "AWS_REGION": "us-east-1",
+        "AWS_SECRET_ACCESS_KEY": "simulation_local_secret",
+        "LAKEBRIDGE_JARS": "/opt/lakebridge/.runtime/jars",
+        "PYTHONPATH": "/opt/lakebridge/src",
+        "SPARK_DAEMON_MEMORY": "512m",
+        "SPARK_HOME": "/usr/local/lib/python3.11/site-packages/pyspark",
+        "SPARK_LOCAL_DIRS": "/scratch",
+        "SPARK_LOCAL_IP": "worker1"
+      },
+      "hostname": "worker1",
+      "image": "lakebridge-spark:latest",
+      "init": true,
+      "mem_limit": "17179869184",
+      "networks": {
+        "default": null
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "/home/postedism/Desktop/LakeBridge/src",
+          "target": "/opt/lakebridge/src",
+          "read_only": true,
+          "bind": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/postedism/Desktop/LakeBridge/scripts",
+          "target": "/opt/lakebridge/scripts",
+          "read_only": true,
+          "bind": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/postedism/Desktop/LakeBridge/.runtime/jars",
+          "target": "/opt/lakebridge/.runtime/jars",
+          "read_only": true,
+          "bind": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/postedism/Desktop/LakeBridge/artifacts/simulation",
+          "target": "/workspace/artifacts/simulation",
+          "bind": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/postedism/Desktop/LakeBridge/artifacts/simulation/scratch",
+          "target": "/scratch",
+          "bind": {}
+        }
+      ]
+    },
+    "worker2": {
+      "cpus": 4,
+      "command": [
+        "org.apache.spark.deploy.worker.Worker",
+        "--host",
+        "worker2",
+        "--cores",
+        "4",
+        "--memory",
+        "14g",
+        "--work-dir",
+        "/scratch/worker2",
+        "spark://master:7077"
+      ],
+      "depends_on": {
+        "master": {
+          "condition": "service_started",
+          "required": true
+        }
+      },
+      "entrypoint": [
+        "/usr/local/lib/python3.11/site-packages/pyspark/bin/spark-class"
+      ],
+      "environment": {
+        "AWS_ACCESS_KEY_ID": "simulation_admin",
+        "AWS_REGION": "us-east-1",
+        "AWS_SECRET_ACCESS_KEY": "simulation_local_secret",
+        "LAKEBRIDGE_JARS": "/opt/lakebridge/.runtime/jars",
+        "PYTHONPATH": "/opt/lakebridge/src",
+        "SPARK_DAEMON_MEMORY": "512m",
+        "SPARK_HOME": "/usr/local/lib/python3.11/site-packages/pyspark",
+        "SPARK_LOCAL_DIRS": "/scratch",
+        "SPARK_LOCAL_IP": "worker2"
+      },
+      "hostname": "worker2",
+      "image": "lakebridge-spark:latest",
+      "init": true,
+      "mem_limit": "17179869184",
+      "networks": {
+        "default": null
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "/home/postedism/Desktop/LakeBridge/src",
+          "target": "/opt/lakebridge/src",
+          "read_only": true,
+          "bind": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/postedism/Desktop/LakeBridge/scripts",
+          "target": "/opt/lakebridge/scripts",
+          "read_only": true,
+          "bind": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/postedism/Desktop/LakeBridge/.runtime/jars",
+          "target": "/opt/lakebridge/.runtime/jars",
+          "read_only": true,
+          "bind": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/postedism/Desktop/LakeBridge/artifacts/simulation",
+          "target": "/workspace/artifacts/simulation",
+          "bind": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/postedism/Desktop/LakeBridge/artifacts/simulation/scratch",
+          "target": "/scratch",
+          "bind": {}
+        }
+      ]
+    },
+    "worker3": {
+      "cpus": 4,
+      "command": [
+        "org.apache.spark.deploy.worker.Worker",
+        "--host",
+        "worker3",
+        "--cores",
+        "4",
+        "--memory",
+        "14g",
+        "--work-dir",
+        "/scratch/worker3",
+        "spark://master:7077"
+      ],
+      "depends_on": {
+        "master": {
+          "condition": "service_started",
+          "required": true
+        }
+      },
+      "entrypoint": [
+        "/usr/local/lib/python3.11/site-packages/pyspark/bin/spark-class"
+      ],
+      "environment": {
+        "AWS_ACCESS_KEY_ID": "simulation_admin",
+        "AWS_REGION": "us-east-1",
+        "AWS_SECRET_ACCESS_KEY": "simulation_local_secret",
+        "LAKEBRIDGE_JARS": "/opt/lakebridge/.runtime/jars",
+        "PYTHONPATH": "/opt/lakebridge/src",
+        "SPARK_DAEMON_MEMORY": "512m",
+        "SPARK_HOME": "/usr/local/lib/python3.11/site-packages/pyspark",
+        "SPARK_LOCAL_DIRS": "/scratch",
+        "SPARK_LOCAL_IP": "worker3"
+      },
+      "hostname": "worker3",
+      "image": "lakebridge-spark:latest",
+      "init": true,
+      "mem_limit": "17179869184",
+      "networks": {
+        "default": null
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "/home/postedism/Desktop/LakeBridge/src",
+          "target": "/opt/lakebridge/src",
+          "read_only": true,
+          "bind": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/postedism/Desktop/LakeBridge/scripts",
+          "target": "/opt/lakebridge/scripts",
+          "read_only": true,
+          "bind": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/postedism/Desktop/LakeBridge/.runtime/jars",
+          "target": "/opt/lakebridge/.runtime/jars",
+          "read_only": true,
+          "bind": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/postedism/Desktop/LakeBridge/artifacts/simulation",
+          "target": "/workspace/artifacts/simulation",
+          "bind": {}
+        },
+        {
+          "type": "bind",
+          "source": "/home/postedism/Desktop/LakeBridge/artifacts/simulation/scratch",
+          "target": "/scratch",
+          "bind": {}
+        }
+      ]
+    }
+  },
+  "volumes": {
+    "simulation-minio": {
+      "name": "lakebridge-simulation_simulation-minio"
+    },
+    "simulation-postgres": {
+      "name": "lakebridge-simulation_simulation-postgres"
+    }
+  },
+  "x-runtime": {
+    "entrypoint": [
+      "/usr/local/lib/python3.11/site-packages/pyspark/bin/spark-class"
+    ],
+    "environment": {
+      "AWS_ACCESS_KEY_ID": "simulation_admin",
+      "AWS_REGION": "us-east-1",
+      "AWS_SECRET_ACCESS_KEY": "simulation_local_secret",
+      "LAKEBRIDGE_JARS": "/opt/lakebridge/.runtime/jars",
+      "PYTHONPATH": "/opt/lakebridge/src",
+      "SPARK_HOME": "/usr/local/lib/python3.11/site-packages/pyspark",
+      "SPARK_LOCAL_DIRS": "/scratch"
+    },
+    "image": "lakebridge-spark:latest",
+    "init": true,
+    "volumes": [
+      "./src:/opt/lakebridge/src:ro",
+      "./scripts:/opt/lakebridge/scripts:ro",
+      "./.runtime/jars:/opt/lakebridge/.runtime/jars:ro",
+      "./artifacts/simulation:/workspace/artifacts/simulation",
+      "./artifacts/simulation/scratch:/scratch"
+    ]
+  }
+}

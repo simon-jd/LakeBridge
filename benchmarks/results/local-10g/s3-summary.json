@@ -1,0 +1,19 @@
+{
+  "requests": {
+    "HEAD": 27295,
+    "LIST": 4644,
+    "PUT": 3732,
+    "DELETE": 2974,
+    "GET": 42586,
+    "POST": 362
+  },
+  "http_statuses": {
+    "404": 3809,
+    "200": 34466,
+    "204": 732,
+    "206": 42586
+  },
+  "response_body_bytes": 294063031785,
+  "scope": "completed proxy requests between calibration start and final query end; includes inter-stage calls",
+  "note": "HEAD 404 existence probes are expected; response bytes include repeated reads and S3 copy responses"
+}

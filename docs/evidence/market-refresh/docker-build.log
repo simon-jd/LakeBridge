@@ -1,0 +1,125 @@
+ Image lakebridge-spark Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 535B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 741B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.11.11-slim-bookworm
+#3 DONE 0.6s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 121B done
+#4 DONE 0.0s
+
+#5 [ 1/10] FROM docker.io/library/python:3.11.11-slim-bookworm@sha256:081075da77b2b55c23c088251026fb69a7b2bf92471e491ff5fd75c192fd38e5
+#5 resolve docker.io/library/python:3.11.11-slim-bookworm@sha256:081075da77b2b55c23c088251026fb69a7b2bf92471e491ff5fd75c192fd38e5 0.0s done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 220.99kB done
+#6 DONE 0.0s
+
+#7 [ 2/10] RUN apt-get update && apt-get install -y --no-install-recommends     openjdk-17-jre-headless procps ca-certificates     && rm -rf /var/lib/apt/lists/*
+#7 CACHED
+
+#8 [ 3/10] WORKDIR /opt/lakebridge
+#8 CACHED
+
+#9 [ 4/10] COPY pyproject.toml ./
+#9 DONE 0.1s
+
+#10 [ 5/10] COPY requirements.lock ./
+#10 DONE 0.1s
+
+#11 [ 6/10] RUN pip install --no-cache-dir --require-hashes -r requirements.lock
+#11 1.041 Ignoring tzdata: markers 'sys_platform == "win32"' don't match your environment
+#11 1.338 Collecting duckdb==1.2.2 (from -r requirements.lock (line 3))
+#11 1.453   Downloading duckdb-1.2.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (20.2 MB)
+#11 1.744      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 20.2/20.2 MB 83.1 MB/s eta 0:00:00
+#11 1.830 Collecting psycopg==3.2.6 (from -r requirements.lock (line 22))
+#11 1.846   Downloading psycopg-3.2.6-py3-none-any.whl (199 kB)
+#11 1.851      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 199.1/199.1 kB 188.7 MB/s eta 0:00:00
+#11 1.972 Collecting psycopg-binary==3.2.6 (from -r requirements.lock (line 26))
+#11 1.992   Downloading psycopg_binary-3.2.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (4.3 MB)
+#11 2.029      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.3/4.3 MB 121.6 MB/s eta 0:00:00
+#11 2.072 Collecting py4j==0.10.9.7 (from -r requirements.lock (line 50))
+#11 2.096   Downloading py4j-0.10.9.7-py2.py3-none-any.whl (200 kB)
+#11 2.099      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 200.5/200.5 kB 143.5 MB/s eta 0:00:00
+#11 2.172 Collecting pyarrow==19.0.1 (from -r requirements.lock (line 54))
+#11 2.187   Downloading pyarrow-19.0.1-cp311-cp311-manylinux_2_28_x86_64.whl (42.1 MB)
+#11 2.720      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 42.1/42.1 MB 128.9 MB/s eta 0:00:00
+#11 2.776 Collecting pyspark==3.5.9 (from -r requirements.lock (line 71))
+#11 2.797   Downloading pyspark-3.5.9.tar.gz (317.9 MB)
+#11 5.270      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 317.9/317.9 MB 122.5 MB/s eta 0:00:00
+#11 7.460   Preparing metadata (setup.py): started
+#11 7.749   Preparing metadata (setup.py): finished with status 'done'
+#11 7.782 Collecting typing-extensions==4.16.0 (from -r requirements.lock (line 74))
+#11 7.804   Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+#11 7.806      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.6/45.6 kB 429.6 MB/s eta 0:00:00
+#11 7.830 Building wheels for collected packages: pyspark
+#11 7.830   Building wheel for pyspark (setup.py): started
+#11 13.39   Building wheel for pyspark (setup.py): finished with status 'done'
+#11 13.54   Created wheel for pyspark: filename=pyspark-3.5.9-py2.py3-none-any.whl size=318391062 sha256=ba06c318bd1a0eddfed253c548d18e0a9db3195933c6c72ab274c80e2b134d66
+#11 13.54   Stored in directory: /tmp/pip-ephem-wheel-cache-gv08nvcv/wheels/97/e4/80/6b83a7fb1188cd3263388242a040a5a573049acceed83bb154
+#11 13.54 Successfully built pyspark
+#11 13.60 Installing collected packages: py4j, typing-extensions, pyspark, pyarrow, psycopg-binary, duckdb, psycopg
+#11 15.93 Successfully installed duckdb-1.2.2 psycopg-3.2.6 psycopg-binary-3.2.6 py4j-0.10.9.7 pyarrow-19.0.1 pyspark-3.5.9 typing-extensions-4.16.0
+#11 15.93 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#11 16.08 
+#11 16.08 [notice] A new release of pip is available: 24.0 -> 26.2.1
+#11 16.08 [notice] To update, run: pip install --upgrade pip
+#11 DONE 16.4s
+
+#12 [ 7/10] COPY src ./src
+#12 DONE 0.1s
+
+#13 [ 8/10] COPY scripts ./scripts
+#13 DONE 0.1s
+
+#14 [ 9/10] RUN pip install --no-cache-dir --no-deps . && python scripts/bootstrap.py
+#14 0.348 Processing /opt/lakebridge
+#14 0.349   Installing build dependencies: started
+#14 1.919   Installing build dependencies: finished with status 'done'
+#14 1.920   Getting requirements to build wheel: started
+#14 1.961   Getting requirements to build wheel: finished with status 'done'
+#14 1.962   Preparing metadata (pyproject.toml): started
+#14 2.021   Preparing metadata (pyproject.toml): finished with status 'done'
+#14 2.023 Building wheels for collected packages: lakebridge
+#14 2.023   Building wheel for lakebridge (pyproject.toml): started
+#14 2.038   Building wheel for lakebridge (pyproject.toml): finished with status 'done'
+#14 2.038   Created wheel for lakebridge: filename=lakebridge-0.1.0-py3-none-any.whl size=44928 sha256=fb90522c6da085ea0fbe7ce3629f838b3f4dc00d00eca20da20bb53dd68ff759
+#14 2.038   Stored in directory: /tmp/pip-ephem-wheel-cache-kyziid_b/wheels/d5/af/c6/c8e967a8a38993639ee2e194e3a4e1ec0bfc262a290e28f643
+#14 2.039 Successfully built lakebridge
+#14 2.039 Installing collected packages: lakebridge
+#14 2.074 Successfully installed lakebridge-0.1.0
+#14 2.074 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#14 2.215 
+#14 2.215 [notice] A new release of pip is available: 24.0 -> 26.2.1
+#14 2.215 [notice] To update, run: pip install --upgrade pip
+#14 2.939 Downloaded and verified iceberg-spark-runtime-3.5_2.12-1.10.2.jar
+#14 3.127 Downloaded and verified postgresql-42.7.5.jar
+#14 3.968 Downloaded and verified iceberg-aws-bundle-1.10.2.jar
+#14 DONE 4.0s
+
+#15 [10/10] WORKDIR /workspace
+#15 DONE 0.1s
+
+#16 exporting to image
+#16 exporting layers
+#16 exporting layers 14.6s done
+#16 exporting manifest sha256:849de2df151565e4a019b509c45ed8b8a9147521e5569c724fb5efd89486a7fa 0.0s done
+#16 exporting config sha256:ac2da5e865c477ebbaf2f89ef24f23b2d69e3fc731c6f2a064b2d20ecf2ec453 0.0s done
+#16 exporting attestation manifest sha256:cd43c36d31a578ba44853a93932a49d401c8d871d2672d0a5e0a330215892047
+#16 exporting attestation manifest sha256:cd43c36d31a578ba44853a93932a49d401c8d871d2672d0a5e0a330215892047 0.0s done
+#16 exporting manifest list sha256:700d5d6a143595d22d6a247e23ac5a9929cb853608448aea075a67fd6b168694 0.0s done
+#16 naming to docker.io/library/lakebridge-spark:latest done
+#16 unpacking to docker.io/library/lakebridge-spark:latest
+#16 unpacking to docker.io/library/lakebridge-spark:latest 2.1s done
+#16 DONE 16.9s
+
+#17 resolving provenance for metadata file
+#17 DONE 0.0s
+ Image lakebridge-spark Built 

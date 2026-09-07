@@ -1,0 +1,14 @@
+{
+  "readme_links": "passed",
+  "missing_links": [],
+  "files_staged": 175,
+  "private_notes_excluded": true,
+  "large_generated_data_excluded": true,
+  "recorded_at": "2026-09-07T00:51:15.963158+00:00",
+  "workflow_yaml": "parsed; contents-read permission and both JUnit uploads verified",
+  "previous_runtime_qualified_files_unchanged": 52,
+  "source_lint": "passed",
+  "source_format": "passed",
+  "secret_pattern_scan": "No high-confidence access-token or private-key patterns in publication candidates; explicit local lab fixture credentials retained.",
+  "validation_boundary": "Documentation/CI changes only; existing runtime qualification is preserved, not represented as a new test run."
+}

@@ -1,0 +1,848 @@
+{
+  "table": "lake.simulation.sim_10g_20260906_partitioned",
+  "sql": "SELECT count(*) events,sum(units) units FROM lake.simulation.sim_10g_20260906_partitioned\n            WHERE event_time>=TIMESTAMP '2025-01-15 00:00:00'\n              AND event_time<TIMESTAMP '2025-01-16 00:00:00'",
+  "seconds": [
+    0.09764542799894116,
+    0.08885507800005144,
+    0.08514554299836163
+  ],
+  "median_seconds": 0.08885507800005144,
+  "min_seconds": 0.08514554299836163,
+  "max_seconds": 0.09764542799894116,
+  "stdev_seconds": 0.006419735561265424,
+  "result": [
+    {
+      "events": 659521,
+      "units": "329607023.218000"
+    }
+  ],
+  "plan_metrics": [
+    [
+      {
+        "node": "WholeStageCodegen (2)",
+        "metrics": {
+          "pipelineTime": {
+            "value": 0,
+            "type": "timing"
+          }
+        }
+      },
+      {
+        "node": "HashAggregate",
+        "metrics": {
+          "spillSize": {
+            "value": 0,
+            "type": "size"
+          },
+          "aggTime": {
+            "value": 0,
+            "type": "timing"
+          },
+          "peakMemory": {
+            "value": 0,
+            "type": "size"
+          },
+          "numOutputRows": {
+            "value": 1,
+            "type": "sum"
+          },
+          "numTasksFallBacked": {
+            "value": 0,
+            "type": "sum"
+          },
+          "avgHashProbe": {
+            "value": 0,
+            "type": "average"
+          }
+        }
+      },
+      {
+        "node": "Exchange",
+        "metrics": {
+          "shuffleRecordsWritten": {
+            "value": 24,
+            "type": "sum"
+          },
+          "localMergedChunksFetched": {
+            "value": 0,
+            "type": "sum"
+          },
+          "shuffleWriteTime": {
+            "value": 5388239,
+            "type": "nsTiming"
+          },
+          "remoteMergedBytesRead": {
+            "value": 0,
+            "type": "size"
+          },
+          "localMergedBlocksFetched": {
+            "value": 0,
+            "type": "sum"
+          },
+          "corruptMergedBlockChunks": {
+            "value": 0,
+            "type": "sum"
+          },
+          "remoteMergedReqsDuration": {
+            "value": 0,
+            "type": "timing"
+          },
+          "remoteMergedBlocksFetched": {
+            "value": 0,
+            "type": "sum"
+          },
+          "recordsRead": {
+            "value": 24,
+            "type": "sum"
+          },
+          "localBytesRead": {
+            "value": 672,
+            "type": "size"
+          },
+          "fetchWaitTime": {
+            "value": 0,
+            "type": "timing"
+          },
+          "remoteBytesRead": {
+            "value": 1344,
+            "type": "size"
+          },
+          "mergedFetchFallbackCount": {
+            "value": 0,
+            "type": "sum"
+          },
+          "localBlocksFetched": {
+            "value": 8,
+            "type": "sum"
+          },
+          "remoteMergedChunksFetched": {
+            "value": 0,
+            "type": "sum"
+          },
+          "remoteBlocksFetched": {
+            "value": 16,
+            "type": "sum"
+          },
+          "dataSize": {
+            "value": 1152,
+            "type": "size"
+          },
+          "localMergedBytesRead": {
+            "value": 0,
+            "type": "size"
+          },
+          "numPartitions": {
+            "value": 1,
+            "type": "sum"
+          },
+          "remoteReqsDuration": {
+            "value": 0,
+            "type": "timing"
+          },
+          "remoteBytesReadToDisk": {
+            "value": 0,
+            "type": "size"
+          },
+          "shuffleBytesWritten": {
+            "value": 2016,
+            "type": "size"
+          }
+        }
+      },
+      {
+        "node": "WholeStageCodegen (1)",
+        "metrics": {
+          "pipelineTime": {
+            "value": 300,
+            "type": "timing"
+          }
+        }
+      },
+      {
+        "node": "HashAggregate",
+        "metrics": {
+          "spillSize": {
+            "value": 0,
+            "type": "size"
+          },
+          "aggTime": {
+            "value": 297,
+            "type": "timing"
+          },
+          "peakMemory": {
+            "value": 0,
+            "type": "size"
+          },
+          "numOutputRows": {
+            "value": 24,
+            "type": "sum"
+          },
+          "numTasksFallBacked": {
+            "value": 0,
+            "type": "sum"
+          },
+          "avgHashProbe": {
+            "value": 0,
+            "type": "average"
+          }
+        }
+      },
+      {
+        "node": "ColumnarToRow",
+        "metrics": {
+          "numOutputRows": {
+            "value": 659521,
+            "type": "sum"
+          },
+          "numInputBatches": {
+            "value": 144,
+            "type": "sum"
+          }
+        }
+      },
+      {
+        "node": "BatchScan lake.simulation.sim_10g_20260906_partitioned",
+        "metrics": {
+          "numDeletes": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.NumDeletes"
+          },
+          "skippedDeleteFiles": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.SkippedDeleteFiles"
+          },
+          "skippedDataFiles": {
+            "value": 696,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.SkippedDataFiles"
+          },
+          "totalDataManifest": {
+            "value": 1,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.TotalDataManifests"
+          },
+          "totalPlanningDuration": {
+            "value": 6,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.TotalPlanningDuration"
+          },
+          "totalDataFileSize": {
+            "value": 363172329,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.TotalDataFileSize"
+          },
+          "indexedDeleteFiles": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.IndexedDeleteFiles"
+          },
+          "scannedDeleteManifests": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.ScannedDeleteManifests"
+          },
+          "positionalDeleteFiles": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.PositionalDeleteFiles"
+          },
+          "resultDeleteFiles": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.ResultDeleteFiles"
+          },
+          "numSplits": {
+            "value": 24,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.NumSplits"
+          },
+          "numOutputRows": {
+            "value": 659521,
+            "type": "sum"
+          },
+          "totalDeleteFileSize": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.TotalDeleteFileSize"
+          },
+          "scannedDataManifests": {
+            "value": 1,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.ScannedDataManifests"
+          },
+          "skippedDeleteManifests": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.SkippedDeleteManifests"
+          },
+          "totalDeleteManifests": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.TotalDeleteManifests"
+          },
+          "equalityDeleteFiles": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.EqualityDeleteFiles"
+          },
+          "resultDataFiles": {
+            "value": 24,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.ResultDataFiles"
+          },
+          "skippedDataManifests": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.SkippedDataManifests"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "node": "WholeStageCodegen (2)",
+        "metrics": {
+          "pipelineTime": {
+            "value": 0,
+            "type": "timing"
+          }
+        }
+      },
+      {
+        "node": "HashAggregate",
+        "metrics": {
+          "spillSize": {
+            "value": 0,
+            "type": "size"
+          },
+          "aggTime": {
+            "value": 0,
+            "type": "timing"
+          },
+          "peakMemory": {
+            "value": 0,
+            "type": "size"
+          },
+          "numOutputRows": {
+            "value": 1,
+            "type": "sum"
+          },
+          "numTasksFallBacked": {
+            "value": 0,
+            "type": "sum"
+          },
+          "avgHashProbe": {
+            "value": 0,
+            "type": "average"
+          }
+        }
+      },
+      {
+        "node": "Exchange",
+        "metrics": {
+          "shuffleRecordsWritten": {
+            "value": 24,
+            "type": "sum"
+          },
+          "localMergedChunksFetched": {
+            "value": 0,
+            "type": "sum"
+          },
+          "shuffleWriteTime": {
+            "value": 5209462,
+            "type": "nsTiming"
+          },
+          "remoteMergedBytesRead": {
+            "value": 0,
+            "type": "size"
+          },
+          "localMergedBlocksFetched": {
+            "value": 0,
+            "type": "sum"
+          },
+          "corruptMergedBlockChunks": {
+            "value": 0,
+            "type": "sum"
+          },
+          "remoteMergedReqsDuration": {
+            "value": 0,
+            "type": "timing"
+          },
+          "remoteMergedBlocksFetched": {
+            "value": 0,
+            "type": "sum"
+          },
+          "recordsRead": {
+            "value": 24,
+            "type": "sum"
+          },
+          "localBytesRead": {
+            "value": 672,
+            "type": "size"
+          },
+          "fetchWaitTime": {
+            "value": 0,
+            "type": "timing"
+          },
+          "remoteBytesRead": {
+            "value": 1344,
+            "type": "size"
+          },
+          "mergedFetchFallbackCount": {
+            "value": 0,
+            "type": "sum"
+          },
+          "localBlocksFetched": {
+            "value": 8,
+            "type": "sum"
+          },
+          "remoteMergedChunksFetched": {
+            "value": 0,
+            "type": "sum"
+          },
+          "remoteBlocksFetched": {
+            "value": 16,
+            "type": "sum"
+          },
+          "dataSize": {
+            "value": 1152,
+            "type": "size"
+          },
+          "localMergedBytesRead": {
+            "value": 0,
+            "type": "size"
+          },
+          "numPartitions": {
+            "value": 1,
+            "type": "sum"
+          },
+          "remoteReqsDuration": {
+            "value": 0,
+            "type": "timing"
+          },
+          "remoteBytesReadToDisk": {
+            "value": 0,
+            "type": "size"
+          },
+          "shuffleBytesWritten": {
+            "value": 2016,
+            "type": "size"
+          }
+        }
+      },
+      {
+        "node": "WholeStageCodegen (1)",
+        "metrics": {
+          "pipelineTime": {
+            "value": 270,
+            "type": "timing"
+          }
+        }
+      },
+      {
+        "node": "HashAggregate",
+        "metrics": {
+          "spillSize": {
+            "value": 0,
+            "type": "size"
+          },
+          "aggTime": {
+            "value": 263,
+            "type": "timing"
+          },
+          "peakMemory": {
+            "value": 0,
+            "type": "size"
+          },
+          "numOutputRows": {
+            "value": 24,
+            "type": "sum"
+          },
+          "numTasksFallBacked": {
+            "value": 0,
+            "type": "sum"
+          },
+          "avgHashProbe": {
+            "value": 0,
+            "type": "average"
+          }
+        }
+      },
+      {
+        "node": "ColumnarToRow",
+        "metrics": {
+          "numOutputRows": {
+            "value": 659521,
+            "type": "sum"
+          },
+          "numInputBatches": {
+            "value": 144,
+            "type": "sum"
+          }
+        }
+      },
+      {
+        "node": "BatchScan lake.simulation.sim_10g_20260906_partitioned",
+        "metrics": {
+          "numDeletes": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.NumDeletes"
+          },
+          "skippedDeleteFiles": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.SkippedDeleteFiles"
+          },
+          "skippedDataFiles": {
+            "value": 696,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.SkippedDataFiles"
+          },
+          "totalDataManifest": {
+            "value": 1,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.TotalDataManifests"
+          },
+          "totalPlanningDuration": {
+            "value": 7,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.TotalPlanningDuration"
+          },
+          "totalDataFileSize": {
+            "value": 363172329,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.TotalDataFileSize"
+          },
+          "indexedDeleteFiles": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.IndexedDeleteFiles"
+          },
+          "scannedDeleteManifests": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.ScannedDeleteManifests"
+          },
+          "positionalDeleteFiles": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.PositionalDeleteFiles"
+          },
+          "resultDeleteFiles": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.ResultDeleteFiles"
+          },
+          "numSplits": {
+            "value": 24,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.NumSplits"
+          },
+          "numOutputRows": {
+            "value": 659521,
+            "type": "sum"
+          },
+          "totalDeleteFileSize": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.TotalDeleteFileSize"
+          },
+          "scannedDataManifests": {
+            "value": 1,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.ScannedDataManifests"
+          },
+          "skippedDeleteManifests": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.SkippedDeleteManifests"
+          },
+          "totalDeleteManifests": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.TotalDeleteManifests"
+          },
+          "equalityDeleteFiles": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.EqualityDeleteFiles"
+          },
+          "resultDataFiles": {
+            "value": 24,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.ResultDataFiles"
+          },
+          "skippedDataManifests": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.SkippedDataManifests"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "node": "WholeStageCodegen (2)",
+        "metrics": {
+          "pipelineTime": {
+            "value": 0,
+            "type": "timing"
+          }
+        }
+      },
+      {
+        "node": "HashAggregate",
+        "metrics": {
+          "spillSize": {
+            "value": 0,
+            "type": "size"
+          },
+          "aggTime": {
+            "value": 0,
+            "type": "timing"
+          },
+          "peakMemory": {
+            "value": 0,
+            "type": "size"
+          },
+          "numOutputRows": {
+            "value": 1,
+            "type": "sum"
+          },
+          "numTasksFallBacked": {
+            "value": 0,
+            "type": "sum"
+          },
+          "avgHashProbe": {
+            "value": 0,
+            "type": "average"
+          }
+        }
+      },
+      {
+        "node": "Exchange",
+        "metrics": {
+          "shuffleRecordsWritten": {
+            "value": 24,
+            "type": "sum"
+          },
+          "localMergedChunksFetched": {
+            "value": 0,
+            "type": "sum"
+          },
+          "shuffleWriteTime": {
+            "value": 7022638,
+            "type": "nsTiming"
+          },
+          "remoteMergedBytesRead": {
+            "value": 0,
+            "type": "size"
+          },
+          "localMergedBlocksFetched": {
+            "value": 0,
+            "type": "sum"
+          },
+          "corruptMergedBlockChunks": {
+            "value": 0,
+            "type": "sum"
+          },
+          "remoteMergedReqsDuration": {
+            "value": 0,
+            "type": "timing"
+          },
+          "remoteMergedBlocksFetched": {
+            "value": 0,
+            "type": "sum"
+          },
+          "recordsRead": {
+            "value": 24,
+            "type": "sum"
+          },
+          "localBytesRead": {
+            "value": 672,
+            "type": "size"
+          },
+          "fetchWaitTime": {
+            "value": 0,
+            "type": "timing"
+          },
+          "remoteBytesRead": {
+            "value": 1344,
+            "type": "size"
+          },
+          "mergedFetchFallbackCount": {
+            "value": 0,
+            "type": "sum"
+          },
+          "localBlocksFetched": {
+            "value": 8,
+            "type": "sum"
+          },
+          "remoteMergedChunksFetched": {
+            "value": 0,
+            "type": "sum"
+          },
+          "remoteBlocksFetched": {
+            "value": 16,
+            "type": "sum"
+          },
+          "dataSize": {
+            "value": 1152,
+            "type": "size"
+          },
+          "localMergedBytesRead": {
+            "value": 0,
+            "type": "size"
+          },
+          "numPartitions": {
+            "value": 1,
+            "type": "sum"
+          },
+          "remoteReqsDuration": {
+            "value": 0,
+            "type": "timing"
+          },
+          "remoteBytesReadToDisk": {
+            "value": 0,
+            "type": "size"
+          },
+          "shuffleBytesWritten": {
+            "value": 2016,
+            "type": "size"
+          }
+        }
+      },
+      {
+        "node": "WholeStageCodegen (1)",
+        "metrics": {
+          "pipelineTime": {
+            "value": 298,
+            "type": "timing"
+          }
+        }
+      },
+      {
+        "node": "HashAggregate",
+        "metrics": {
+          "spillSize": {
+            "value": 0,
+            "type": "size"
+          },
+          "aggTime": {
+            "value": 294,
+            "type": "timing"
+          },
+          "peakMemory": {
+            "value": 0,
+            "type": "size"
+          },
+          "numOutputRows": {
+            "value": 24,
+            "type": "sum"
+          },
+          "numTasksFallBacked": {
+            "value": 0,
+            "type": "sum"
+          },
+          "avgHashProbe": {
+            "value": 0,
+            "type": "average"
+          }
+        }
+      },
+      {
+        "node": "ColumnarToRow",
+        "metrics": {
+          "numOutputRows": {
+            "value": 659521,
+            "type": "sum"
+          },
+          "numInputBatches": {
+            "value": 144,
+            "type": "sum"
+          }
+        }
+      },
+      {
+        "node": "BatchScan lake.simulation.sim_10g_20260906_partitioned",
+        "metrics": {
+          "numDeletes": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.NumDeletes"
+          },
+          "skippedDeleteFiles": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.SkippedDeleteFiles"
+          },
+          "skippedDataFiles": {
+            "value": 696,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.SkippedDataFiles"
+          },
+          "totalDataManifest": {
+            "value": 1,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.TotalDataManifests"
+          },
+          "totalPlanningDuration": {
+            "value": 9,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.TotalPlanningDuration"
+          },
+          "totalDataFileSize": {
+            "value": 363172329,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.TotalDataFileSize"
+          },
+          "indexedDeleteFiles": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.IndexedDeleteFiles"
+          },
+          "scannedDeleteManifests": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.ScannedDeleteManifests"
+          },
+          "positionalDeleteFiles": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.PositionalDeleteFiles"
+          },
+          "resultDeleteFiles": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.ResultDeleteFiles"
+          },
+          "numSplits": {
+            "value": 24,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.NumSplits"
+          },
+          "numOutputRows": {
+            "value": 659521,
+            "type": "sum"
+          },
+          "totalDeleteFileSize": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.TotalDeleteFileSize"
+          },
+          "scannedDataManifests": {
+            "value": 1,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.ScannedDataManifests"
+          },
+          "skippedDeleteManifests": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.SkippedDeleteManifests"
+          },
+          "totalDeleteManifests": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.TotalDeleteManifests"
+          },
+          "equalityDeleteFiles": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.EqualityDeleteFiles"
+          },
+          "resultDataFiles": {
+            "value": 24,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.ResultDataFiles"
+          },
+          "skippedDataManifests": {
+            "value": 0,
+            "type": "v2Custom_org.apache.iceberg.spark.source.metrics.SkippedDataManifests"
+          }
+        }
+      }
+    ]
+  ],
+  "request_samples": [
+    {
+      "HEAD": 0,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 73,
+      "HTTP_502": 0,
+      "POST": 0
+    },
+    {
+      "HEAD": 0,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 73,
+      "HTTP_502": 0,
+      "POST": 0
+    },
+    {
+      "HEAD": 0,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 73,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  ]
+}

@@ -1,0 +1,456 @@
+{
+  "contract_version": 1,
+  "dataset_id": "saas_seed_42",
+  "high_watermark": 3,
+  "timezone": "UTC",
+  "files": [
+    {
+      "path": "plans/history.parquet",
+      "kind": "plans",
+      "batch": 1,
+      "sha256": "1f90b9828af0e09da63d194daace736038298b3719c0e81c9913983a9537d8f2",
+      "bytes": 1617,
+      "rows": 6,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "plan_id",
+          "type": "string"
+        },
+        {
+          "name": "effective_from",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "effective_to",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "attributes",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0001/date=2025-01-06/part-000000.parquet",
+      "kind": "events",
+      "batch": 1,
+      "sha256": "d6d5575b38d929b91fbab9249ed96b70f1572d46e8c59ab390d0875377ed922c",
+      "bytes": 2338,
+      "rows": 6,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0001/date=2025-01-04/part-000000.parquet",
+      "kind": "events",
+      "batch": 1,
+      "sha256": "20eca4a405e685f4cfa7738078142e275cb4b014259dc2133a403f3a9585a3b0",
+      "bytes": 2329,
+      "rows": 6,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0001/date=2025-01-02/part-000000.parquet",
+      "kind": "events",
+      "batch": 1,
+      "sha256": "e816e200432ab69be5080d7c5ef5d4d831ea7a8a50c7d0347b91b6b82a4c40ab",
+      "bytes": 2287,
+      "rows": 4,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0001/date=2025-01-07/part-000000.parquet",
+      "kind": "events",
+      "batch": 1,
+      "sha256": "d8b5329ee587f7a056a012feab73b08e3aff6e4db969bde669f39ff7bec5a0a0",
+      "bytes": 2267,
+      "rows": 3,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0001/date=2025-01-03/part-000000.parquet",
+      "kind": "events",
+      "batch": 1,
+      "sha256": "42ea308fe68576ccca254345df201444ede54cd68f9011ba4d0f727188db5c72",
+      "bytes": 2310,
+      "rows": 5,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0001/date=2025-01-01/part-000000.parquet",
+      "kind": "events",
+      "batch": 1,
+      "sha256": "b6c594c580cd6149ab8b128600fdae649cece422001f13537955afe22d6fe42e",
+      "bytes": 2298,
+      "rows": 4,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0001/date=2025-01-05/part-000000.parquet",
+      "kind": "events",
+      "batch": 1,
+      "sha256": "c2734c4087faac0db6103b94c6d0b9d94f9079bdff76021b0ab9e99148e6d814",
+      "bytes": 2246,
+      "rows": 2,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0002/date=2025-01-06/part-000000.parquet",
+      "kind": "events",
+      "batch": 2,
+      "sha256": "125fe55d919206f397186931ba1ddba726ddf1505fdf98a04ded2dea70e40306",
+      "bytes": 2277,
+      "rows": 6,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0002/date=2025-01-04/part-000000.parquet",
+      "kind": "events",
+      "batch": 2,
+      "sha256": "13ce38084e548e3293788a51d33ee74621c3d69ecf34d853c703b6e0379e4141",
+      "bytes": 2240,
+      "rows": 3,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0002/date=2025-01-02/part-000000.parquet",
+      "kind": "events",
+      "batch": 2,
+      "sha256": "a61c0872bd3b8ef0a1840623d04a6f431fd38a841873ab8ffcd216ae208dba9e",
+      "bytes": 2268,
+      "rows": 6,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0003/date=2025-01-08/part-000000.parquet",
+      "kind": "events",
+      "batch": 3,
+      "sha256": "11fce183d21d2955c8cce325a7ef4af914ed79ba573c258038957e936f52f5cd",
+      "bytes": 2245,
+      "rows": 2,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    }
+  ]
+}

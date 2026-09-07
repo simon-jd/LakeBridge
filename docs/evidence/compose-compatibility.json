@@ -1,0 +1,29 @@
+{
+  "spark": "3.5.6",
+  "iceberg": "1.8.1",
+  "python": "3.11.11",
+  "java": "17.0.20.1",
+  "scala": "2.12.18",
+  "warehouse": "s3://lakebridge-warehouse/warehouse",
+  "checks": [
+    "create",
+    "insert",
+    "merge",
+    "branch_isolation",
+    "fast_forward",
+    "tag",
+    "time_travel",
+    "schema_evolution",
+    "partition_evolution",
+    "rollback",
+    "unprotected_snapshot_actually_expired",
+    "compaction",
+    "expiration",
+    "protected_snapshot",
+    "orphan_dry_run",
+    "retained_snapshot_reselected_after_expiration",
+    "divergence_rejected",
+    "divergence_rebuilt_preserving_main"
+  ],
+  "passed": true
+}

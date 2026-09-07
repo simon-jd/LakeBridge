@@ -1,0 +1,9 @@
+{
+  "objects": 1651,
+  "bytes": 43635232433,
+  "gib": 40.63847701344639,
+  "monthly_s3_reference_usd": 0.934684971309267,
+  "scope": "this run's raw source, pilot, both Iceberg tables, old tagged files and metadata",
+  "excludes": "other smoke runs, local shuffle/event logs, MinIO internal filesystem overhead",
+  "deletion_executed": false
+}

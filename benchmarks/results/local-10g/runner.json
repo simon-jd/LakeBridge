@@ -1,0 +1,23 @@
+{
+  "command": [
+    "docker",
+    "compose",
+    "-f",
+    "compose.simulation.yaml",
+    "run",
+    "--rm",
+    "--use-aliases",
+    "--name",
+    "lakebridge-simulation-driver",
+    "driver",
+    "--run-id",
+    "sim_10g_20260906",
+    "--target-gib",
+    "10.0",
+    "--write-partitions",
+    "24"
+  ],
+  "exit_code": 0,
+  "end_to_end_seconds": 587.1084460839993,
+  "includes": "container scheduling, dependency readiness, JVM start, calibration, data generation, all validation, warmups, queries, maintenance, JVM stop"
+}

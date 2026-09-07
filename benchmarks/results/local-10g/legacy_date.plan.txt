@@ -1,0 +1,48 @@
+== Physical Plan ==
+AdaptiveSparkPlan (7)
++- HashAggregate (6)
+   +- Exchange (5)
+      +- HashAggregate (4)
+         +- Project (3)
+            +- Filter (2)
+               +- Scan parquet  (1)
+
+
+(1) Scan parquet 
+Output [3]: [event_time#52, units#53, business_date#55]
+Batched: true
+Location: InMemoryFileIndex [s3a://simulation-raw/sim_10g_20260906/source]
+PartitionFilters: [isnotnull(business_date#55), (business_date#55 = 2025-01-15)]
+PushedFilters: [IsNotNull(event_time), GreaterThanOrEqual(event_time,2025-01-15 00:00:00.0), LessThan(event_time,2025-01-16 00:00:00.0)]
+ReadSchema: struct<event_time:timestamp,units:decimal(18,6)>
+
+(2) Filter
+Input [3]: [event_time#52, units#53, business_date#55]
+Condition : ((isnotnull(event_time#52) AND (event_time#52 >= 2025-01-15 00:00:00)) AND (event_time#52 < 2025-01-16 00:00:00))
+
+(3) Project
+Output [1]: [units#53]
+Input [3]: [event_time#52, units#53, business_date#55]
+
+(4) HashAggregate
+Input [1]: [units#53]
+Keys: []
+Functions [2]: [partial_count(1), partial_sum(units#53)]
+Aggregate Attributes [3]: [count#560L, sum#561, isEmpty#562]
+Results [3]: [count#563L, sum#564, isEmpty#565]
+
+(5) Exchange
+Input [3]: [count#563L, sum#564, isEmpty#565]
+Arguments: SinglePartition, ENSURE_REQUIREMENTS, [plan_id=1125]
+
+(6) HashAggregate
+Input [3]: [count#563L, sum#564, isEmpty#565]
+Keys: []
+Functions [2]: [count(1), sum(units#53)]
+Aggregate Attributes [2]: [count(1)#558L, sum(units#53)#559]
+Results [2]: [count(1)#558L AS events#551L, sum(units#53)#559 AS units#552]
+
+(7) AdaptiveSparkPlan
+Output [2]: [events#551L, units#552]
+Arguments: isFinalPlan=false
+

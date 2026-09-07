@@ -1,0 +1,61 @@
+ Container lakebridge-spark-run-2a71ceaaddcc Creating 
+ Container lakebridge-spark-run-2a71ceaaddcc Created 
+26/09/07 00:24:15 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/09/07 00:24:15 WARN SparkConf: Note that spark.local.dir will be overridden by the value set by the cluster manager (via SPARK_LOCAL_DIRS in mesos/standalone/kubernetes and LOCAL_DIRS in YARN).
+26/09/07 00:24:16 WARN JdbcCatalog: JDBC catalog is initialized without view support. To auto-migrate the database's schema and enable view support, set jdbc.schema-version=V1
+{
+  "release_id": "rel_airflow_a8f67a735539de18974be633a37fb062",
+  "tables": {
+    "detail": {
+      "table": "lake.saas.detail",
+      "snapshot_id": 4088405452087322694
+    },
+    "plans": {
+      "table": "lake.saas.plans",
+      "snapshot_id": 9009694568952213929
+    },
+    "daily": {
+      "table": "lake.saas.daily",
+      "snapshot_id": 4138495334849138296
+    }
+  },
+  "rows": [
+    {
+      "tenant_id": "t0000",
+      "business_date": "2025-01-01",
+      "event_count": 7,
+      "total_units": "518.906000",
+      "billable_units": "518.906000"
+    },
+    {
+      "tenant_id": "t0001",
+      "business_date": "2025-01-01",
+      "event_count": 4,
+      "total_units": "320.858000",
+      "billable_units": "320.858000"
+    },
+    {
+      "tenant_id": "t0003",
+      "business_date": "2025-01-01",
+      "event_count": 2,
+      "total_units": "12.622000",
+      "billable_units": "12.622000"
+    },
+    {
+      "tenant_id": "t0004",
+      "business_date": "2025-01-01",
+      "event_count": 1,
+      "total_units": "14.663000",
+      "billable_units": "14.663000"
+    },
+    {
+      "tenant_id": "t0000",
+      "business_date": "2025-01-02",
+      "event_count": 11,
+      "total_units": "657.117844",
+      "billable_units": "657.117844"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+== Physical Plan ==
+AdaptiveSparkPlan (6)
++- HashAggregate (5)
+   +- Exchange (4)
+      +- HashAggregate (3)
+         +- Project (2)
+            +- BatchScan lake.simulation.sim_10g_20260906_partitioned (1)
+
+
+(1) BatchScan lake.simulation.sim_10g_20260906_partitioned
+Output [2]: [event_time#783, units#784]
+lake.simulation.sim_10g_20260906_partitioned (branch=null) [filters=event_time IS NOT NULL, event_time >= 1736899200000000, event_time < 1736985600000000, groupedBy=]
+
+(2) Project
+Output [1]: [units#784]
+Input [2]: [event_time#783, units#784]
+
+(3) HashAggregate
+Input [1]: [units#784]
+Keys: []
+Functions [2]: [partial_count(1), partial_sum(units#784)]
+Aggregate Attributes [3]: [count#796L, sum#797, isEmpty#798]
+Results [3]: [count#799L, sum#800, isEmpty#801]
+
+(4) Exchange
+Input [3]: [count#799L, sum#800, isEmpty#801]
+Arguments: SinglePartition, ENSURE_REQUIREMENTS, [plan_id=1591]
+
+(5) HashAggregate
+Input [3]: [count#799L, sum#800, isEmpty#801]
+Keys: []
+Functions [2]: [count(1), sum(units#784)]
+Aggregate Attributes [2]: [count(1)#787L, sum(units#784)#788]
+Results [2]: [count(1)#787L AS events#774L, sum(units#784)#788 AS units#775]
+
+(6) AdaptiveSparkPlan
+Output [2]: [events#774L, units#775]
+Arguments: isFinalPlan=false
+

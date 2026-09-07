@@ -1,0 +1,93 @@
+{
+  "recorded_at": "2026-09-07T00:26:27.645786+00:00",
+  "environment": {
+    "mode": "single-host local Docker PostgreSQL and MinIO; Spark local[2]",
+    "platform": "Linux-7.0.0-29-generic-x86_64-with-glibc2.43",
+    "python": "3.11.11",
+    "logical_cpus": 32,
+    "cpu_model": "13th Gen Intel(R) Core(TM) i9-13900K",
+    "memory_kib": 129209084
+  },
+  "checks": [
+    {
+      "command": [
+        ".venv/bin/ruff",
+        "check",
+        "src",
+        "scripts",
+        "tests",
+        "orchestration"
+      ],
+      "exit_code": 0,
+      "output": "All checks passed!\n"
+    },
+    {
+      "command": [
+        ".venv/bin/ruff",
+        "format",
+        "--check",
+        "src",
+        "scripts",
+        "tests",
+        "orchestration"
+      ],
+      "exit_code": 0,
+      "output": "37 files already formatted\n"
+    },
+    {
+      "command": [
+        "uv",
+        "lock",
+        "--check",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "output": "Resolved 20 packages in 0.60ms\n"
+    },
+    {
+      "command": [
+        "docker",
+        "compose",
+        "config",
+        "--quiet"
+      ],
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "docker",
+        "compose",
+        "-f",
+        "compose.simulation.yaml",
+        "config",
+        "--quiet"
+      ],
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "command": "promtool v3.6.0 check metrics < audit.prom",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "command": "promtool v3.6.0 check metrics < audit-unavailable.prom",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "docker",
+        "image",
+        "inspect",
+        "lakebridge-spark:latest",
+        "--format",
+        "{{.Id}}"
+      ],
+      "output": "sha256:700d5d6a143595d22d6a247e23ac5a9929cb853608448aea075a67fd6b168694",
+      "exit_code": 0
+    }
+  ],
+  "passed": true
+}

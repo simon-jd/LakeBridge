@@ -1,0 +1,104 @@
+name: lakebridge
+
+x-lake-env: &lake-env
+  LAKEBRIDGE_CATALOG_URI: jdbc:postgresql://postgres:5432/lakebridge?currentSchema=catalog
+  LAKEBRIDGE_CATALOG_USER: lake_catalog
+  LAKEBRIDGE_CATALOG_PASSWORD: catalog_local
+  LAKEBRIDGE_AUDIT_DSN: postgresql://lake_audit:audit_local@postgres:5432/lakebridge
+  LAKEBRIDGE_WAREHOUSE: s3://lakebridge-warehouse/warehouse
+  LAKEBRIDGE_S3_ENDPOINT: http://minio:9000
+  AWS_ACCESS_KEY_ID: lake_writer
+  AWS_SECRET_ACCESS_KEY: lake_writer_local
+  AWS_REGION: us-east-1
+
+services:
+  postgres:
+    image: postgres:17.6-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_local
+    ports: ["127.0.0.1:${LAKEBRIDGE_POSTGRES_PORT:-55439}:5432"]
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./infra/docker/postgres-init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+  minio:
+    image: minio/minio:RELEASE.2025-04-22T22-12-26Z
+    command: server /data --console-address :9001
+    environment:
+      MINIO_ROOT_USER: minio_admin
+      MINIO_ROOT_PASSWORD: minio_admin_local
+    ports: ["127.0.0.1:59000:9000", "127.0.0.1:59001:9001"]
+    volumes: ["minio-data:/data"]
+
+  minio-init:
+    image: minio/mc:RELEASE.2025-04-16T18-13-26Z
+    depends_on: [minio]
+    volumes:
+      - ./infra/docker/lake-writer-policy.json:/policy.json:ro
+    entrypoint: /bin/sh
+    command:
+      - -ec
+      - |
+        until mc alias set local http://minio:9000 minio_admin minio_admin_local; do sleep 2; done
+        mc mb --ignore-existing local/lakebridge-raw local/lakebridge-warehouse
+        mc version enable local/lakebridge-raw
+        mc admin user add local lake_writer lake_writer_local
+        mc admin policy create local lake_writer /policy.json
+        mc admin policy attach local lake_writer --user lake_writer
+
+  spark:
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile
+    environment: *lake-env
+    depends_on:
+      postgres: {condition: service_healthy}
+      minio-init: {condition: service_completed_successfully}
+    volumes:
+      - ./artifacts:/workspace/artifacts
+    ports: ["127.0.0.1:54040:4040"]
+    profiles: [jobs]
+
+  airflow-init:
+    build:
+      context: .
+      dockerfile: infra/docker/airflow.Dockerfile
+    profiles: [airflow]
+    depends_on:
+      postgres: {condition: service_healthy}
+    environment:
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow_local@postgres:5432/airflow
+    entrypoint: /bin/bash
+    # Explicit one-time initialization; a repeated user-create error is not swallowed.
+    command: ["-ec", "airflow db migrate; airflow users create --username admin --password admin_local --firstname Local --lastname Admin --role Admin --email admin@example.invalid"]
+
+  airflow:
+    build:
+      context: .
+      dockerfile: infra/docker/airflow.Dockerfile
+    profiles: [airflow]
+    user: "${AIRFLOW_UID:-1000}:0"
+    depends_on:
+      postgres: {condition: service_healthy}
+      minio-init: {condition: service_completed_successfully}
+    environment:
+      <<: *lake-env
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow_local@postgres:5432/airflow
+      LAKEBRIDGE_ROOT: /workspace/artifacts/airflow
+    volumes:
+      - ./orchestration/dags:/opt/airflow/dags:ro
+      - ./artifacts:/workspace/artifacts
+    ports: ["127.0.0.1:58080:8080"]
+    command: ["bash", "-ec", "airflow scheduler & exec airflow webserver"]
+
+volumes:
+  postgres-data:
+  minio-data:

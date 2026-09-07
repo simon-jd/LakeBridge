@@ -1,0 +1,154 @@
+name: lakebridge-simulation
+
+x-runtime: &runtime
+  image: lakebridge-spark:latest
+  init: true
+  volumes:
+    - ./src:/opt/lakebridge/src:ro
+    - ./scripts:/opt/lakebridge/scripts:ro
+    - ./.runtime/jars:/opt/lakebridge/.runtime/jars:ro
+    - ./artifacts/simulation:/workspace/artifacts/simulation
+    - ./artifacts/simulation/scratch:/scratch
+  environment: &environment
+    PYTHONPATH: /opt/lakebridge/src
+    SPARK_HOME: /usr/local/lib/python3.11/site-packages/pyspark
+    LAKEBRIDGE_JARS: /opt/lakebridge/.runtime/jars
+    AWS_ACCESS_KEY_ID: simulation_admin
+    AWS_SECRET_ACCESS_KEY: simulation_local_secret
+    AWS_REGION: us-east-1
+    SPARK_LOCAL_DIRS: /scratch
+  entrypoint: ["/usr/local/lib/python3.11/site-packages/pyspark/bin/spark-class"]
+
+services:
+  postgres:
+    image: postgres:17.6-alpine
+    cpus: 1
+    mem_limit: 2g
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: simulation_postgres_local
+    volumes:
+      - simulation-postgres:/var/lib/postgresql/data
+      - ./infra/docker/postgres-init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+  minio:
+    image: minio/minio:RELEASE.2025-04-22T22-12-26Z
+    cpus: 3
+    mem_limit: 6g
+    command: server /data
+    environment:
+      MINIO_ROOT_USER: simulation_admin
+      MINIO_ROOT_PASSWORD: simulation_local_secret
+      MINIO_PROMETHEUS_AUTH_TYPE: public
+    ports: ["127.0.0.1:59100:9000"]
+    volumes: ["simulation-minio:/data"]
+
+  minio-init:
+    image: minio/mc:RELEASE.2025-04-16T18-13-26Z
+    depends_on: [minio]
+    entrypoint: /bin/sh
+    command:
+      - -ec
+      - |
+        until mc alias set local http://minio:9000 simulation_admin simulation_local_secret; do sleep 2; done
+        mc mb --ignore-existing local/simulation-raw local/simulation-warehouse
+
+  s3proxy:
+    image: nginx:1.29-alpine
+    cpus: 2
+    mem_limit: 1g
+    depends_on: [minio]
+    volumes:
+      - ./infra/docker/simulation-nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./artifacts/simulation:/logs
+
+  master:
+    <<: *runtime
+    hostname: master
+    cpus: 1
+    mem_limit: 1g
+    environment:
+      <<: *environment
+      SPARK_LOCAL_IP: master
+      SPARK_DAEMON_MEMORY: 512m
+    command: ["org.apache.spark.deploy.master.Master", "--host", "master", "--port", "7077", "--webui-port", "8080"]
+    ports: ["127.0.0.1:58180:8080"]
+
+  worker1:
+    <<: *runtime
+    hostname: worker1
+    cpus: 4
+    mem_limit: 16g
+    depends_on: [master]
+    environment:
+      <<: *environment
+      SPARK_LOCAL_IP: worker1
+      SPARK_DAEMON_MEMORY: 512m
+    command: ["org.apache.spark.deploy.worker.Worker", "--host", "worker1", "--cores", "4", "--memory", "14g", "--work-dir", "/scratch/worker1", "spark://master:7077"]
+
+  worker2:
+    <<: *runtime
+    hostname: worker2
+    cpus: 4
+    mem_limit: 16g
+    depends_on: [master]
+    environment:
+      <<: *environment
+      SPARK_LOCAL_IP: worker2
+      SPARK_DAEMON_MEMORY: 512m
+    command: ["org.apache.spark.deploy.worker.Worker", "--host", "worker2", "--cores", "4", "--memory", "14g", "--work-dir", "/scratch/worker2", "spark://master:7077"]
+
+  worker3:
+    <<: *runtime
+    hostname: worker3
+    cpus: 4
+    mem_limit: 16g
+    depends_on: [master]
+    environment:
+      <<: *environment
+      SPARK_LOCAL_IP: worker3
+      SPARK_DAEMON_MEMORY: 512m
+    command: ["org.apache.spark.deploy.worker.Worker", "--host", "worker3", "--cores", "4", "--memory", "14g", "--work-dir", "/scratch/worker3", "spark://master:7077"]
+
+  driver:
+    <<: *runtime
+    hostname: driver
+    cpus: 2
+    mem_limit: 10g
+    profiles: [jobs]
+    depends_on:
+      postgres: {condition: service_healthy}
+      minio-init: {condition: service_completed_successfully}
+      worker1: {condition: service_started}
+      worker2: {condition: service_started}
+      worker3: {condition: service_started}
+      s3proxy: {condition: service_started}
+    entrypoint: ["python", "-m", "lakebridge.simulation"]
+    environment:
+      <<: *environment
+      SPARK_LOCAL_IP: driver
+      SPARK_MASTER: spark://master:7077
+      SPARK_DRIVER_HOST: driver
+      SPARK_DRIVER_BIND_ADDRESS: 0.0.0.0
+      SPARK_DRIVER_PORT: 37001
+      SPARK_DRIVER_MEMORY: 8g
+      SPARK_EXECUTOR_MEMORY: 12g
+      SPARK_EXECUTOR_CORES: 4
+      SPARK_CORES_MAX: 12
+      SPARK_PARTITIONS: 96
+      LAKEBRIDGE_CATALOG_URI: jdbc:postgresql://postgres:5432/lakebridge?currentSchema=catalog
+      LAKEBRIDGE_CATALOG_USER: lake_catalog
+      LAKEBRIDGE_CATALOG_PASSWORD: catalog_local
+      LAKEBRIDGE_WAREHOUSE: s3://simulation-warehouse/warehouse
+      LAKEBRIDGE_S3_ENDPOINT: http://s3proxy:9000
+      LAKEBRIDGE_S3A: "1"
+    ports: ["127.0.0.1:54140:4040"]
+
+volumes:
+  simulation-postgres:
+  simulation-minio:

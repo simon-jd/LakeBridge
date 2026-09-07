@@ -1,0 +1,731 @@
+{
+  "table": "simulation_legacy",
+  "sql": "SELECT count(*) events,sum(units) units FROM simulation_legacy\n            WHERE event_time>=TIMESTAMP '2025-01-15 00:00:00'\n              AND event_time<TIMESTAMP '2025-01-16 00:00:00' AND business_date=DATE '2025-01-15'",
+  "seconds": [
+    0.17517732600026648,
+    0.09663333999924362,
+    0.09674958100004005
+  ],
+  "median_seconds": 0.09674958100004005,
+  "min_seconds": 0.09663333999924362,
+  "max_seconds": 0.17517732600026648,
+  "stdev_seconds": 0.04531387284765318,
+  "result": [
+    {
+      "events": 659521,
+      "units": "329607023.218000"
+    }
+  ],
+  "plan_metrics": [
+    [
+      {
+        "node": "WholeStageCodegen (2)",
+        "metrics": {
+          "pipelineTime": {
+            "value": 0,
+            "type": "timing"
+          }
+        }
+      },
+      {
+        "node": "HashAggregate",
+        "metrics": {
+          "spillSize": {
+            "value": 0,
+            "type": "size"
+          },
+          "aggTime": {
+            "value": 0,
+            "type": "timing"
+          },
+          "peakMemory": {
+            "value": 0,
+            "type": "size"
+          },
+          "numOutputRows": {
+            "value": 1,
+            "type": "sum"
+          },
+          "numTasksFallBacked": {
+            "value": 0,
+            "type": "sum"
+          },
+          "avgHashProbe": {
+            "value": 0,
+            "type": "average"
+          }
+        }
+      },
+      {
+        "node": "Exchange",
+        "metrics": {
+          "shuffleRecordsWritten": {
+            "value": 12,
+            "type": "sum"
+          },
+          "localMergedChunksFetched": {
+            "value": 0,
+            "type": "sum"
+          },
+          "shuffleWriteTime": {
+            "value": 2439973,
+            "type": "nsTiming"
+          },
+          "remoteMergedBytesRead": {
+            "value": 0,
+            "type": "size"
+          },
+          "localMergedBlocksFetched": {
+            "value": 0,
+            "type": "sum"
+          },
+          "corruptMergedBlockChunks": {
+            "value": 0,
+            "type": "sum"
+          },
+          "remoteMergedReqsDuration": {
+            "value": 0,
+            "type": "timing"
+          },
+          "remoteMergedBlocksFetched": {
+            "value": 0,
+            "type": "sum"
+          },
+          "recordsRead": {
+            "value": 12,
+            "type": "sum"
+          },
+          "localBytesRead": {
+            "value": 336,
+            "type": "size"
+          },
+          "fetchWaitTime": {
+            "value": 0,
+            "type": "timing"
+          },
+          "remoteBytesRead": {
+            "value": 672,
+            "type": "size"
+          },
+          "mergedFetchFallbackCount": {
+            "value": 0,
+            "type": "sum"
+          },
+          "localBlocksFetched": {
+            "value": 4,
+            "type": "sum"
+          },
+          "remoteMergedChunksFetched": {
+            "value": 0,
+            "type": "sum"
+          },
+          "remoteBlocksFetched": {
+            "value": 8,
+            "type": "sum"
+          },
+          "dataSize": {
+            "value": 576,
+            "type": "size"
+          },
+          "localMergedBytesRead": {
+            "value": 0,
+            "type": "size"
+          },
+          "numPartitions": {
+            "value": 1,
+            "type": "sum"
+          },
+          "remoteReqsDuration": {
+            "value": 0,
+            "type": "timing"
+          },
+          "remoteBytesReadToDisk": {
+            "value": 0,
+            "type": "size"
+          },
+          "shuffleBytesWritten": {
+            "value": 1008,
+            "type": "size"
+          }
+        }
+      },
+      {
+        "node": "WholeStageCodegen (1)",
+        "metrics": {
+          "pipelineTime": {
+            "value": 829,
+            "type": "timing"
+          }
+        }
+      },
+      {
+        "node": "HashAggregate",
+        "metrics": {
+          "spillSize": {
+            "value": 0,
+            "type": "size"
+          },
+          "aggTime": {
+            "value": 828,
+            "type": "timing"
+          },
+          "peakMemory": {
+            "value": 0,
+            "type": "size"
+          },
+          "numOutputRows": {
+            "value": 12,
+            "type": "sum"
+          },
+          "numTasksFallBacked": {
+            "value": 0,
+            "type": "sum"
+          },
+          "avgHashProbe": {
+            "value": 0,
+            "type": "average"
+          }
+        }
+      },
+      {
+        "node": "Filter",
+        "metrics": {
+          "numOutputRows": {
+            "value": 659521,
+            "type": "sum"
+          }
+        }
+      },
+      {
+        "node": "ColumnarToRow",
+        "metrics": {
+          "numOutputRows": {
+            "value": 659521,
+            "type": "sum"
+          },
+          "numInputBatches": {
+            "value": 168,
+            "type": "sum"
+          }
+        }
+      },
+      {
+        "node": "Scan parquet ",
+        "metrics": {
+          "numFiles": {
+            "value": 24,
+            "type": "sum"
+          },
+          "scanTime": {
+            "value": 750,
+            "type": "timing"
+          },
+          "pruningTime": {
+            "value": 0,
+            "type": "timing"
+          },
+          "metadataTime": {
+            "value": 0,
+            "type": "timing"
+          },
+          "filesSize": {
+            "value": 363792677,
+            "type": "size"
+          },
+          "numOutputRows": {
+            "value": 659521,
+            "type": "sum"
+          },
+          "numPartitions": {
+            "value": 1,
+            "type": "sum"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "node": "WholeStageCodegen (2)",
+        "metrics": {
+          "pipelineTime": {
+            "value": 0,
+            "type": "timing"
+          }
+        }
+      },
+      {
+        "node": "HashAggregate",
+        "metrics": {
+          "spillSize": {
+            "value": 0,
+            "type": "size"
+          },
+          "aggTime": {
+            "value": 0,
+            "type": "timing"
+          },
+          "peakMemory": {
+            "value": 0,
+            "type": "size"
+          },
+          "numOutputRows": {
+            "value": 1,
+            "type": "sum"
+          },
+          "numTasksFallBacked": {
+            "value": 0,
+            "type": "sum"
+          },
+          "avgHashProbe": {
+            "value": 0,
+            "type": "average"
+          }
+        }
+      },
+      {
+        "node": "Exchange",
+        "metrics": {
+          "shuffleRecordsWritten": {
+            "value": 12,
+            "type": "sum"
+          },
+          "localMergedChunksFetched": {
+            "value": 0,
+            "type": "sum"
+          },
+          "shuffleWriteTime": {
+            "value": 2245216,
+            "type": "nsTiming"
+          },
+          "remoteMergedBytesRead": {
+            "value": 0,
+            "type": "size"
+          },
+          "localMergedBlocksFetched": {
+            "value": 0,
+            "type": "sum"
+          },
+          "corruptMergedBlockChunks": {
+            "value": 0,
+            "type": "sum"
+          },
+          "remoteMergedReqsDuration": {
+            "value": 0,
+            "type": "timing"
+          },
+          "remoteMergedBlocksFetched": {
+            "value": 0,
+            "type": "sum"
+          },
+          "recordsRead": {
+            "value": 12,
+            "type": "sum"
+          },
+          "localBytesRead": {
+            "value": 336,
+            "type": "size"
+          },
+          "fetchWaitTime": {
+            "value": 0,
+            "type": "timing"
+          },
+          "remoteBytesRead": {
+            "value": 672,
+            "type": "size"
+          },
+          "mergedFetchFallbackCount": {
+            "value": 0,
+            "type": "sum"
+          },
+          "localBlocksFetched": {
+            "value": 4,
+            "type": "sum"
+          },
+          "remoteMergedChunksFetched": {
+            "value": 0,
+            "type": "sum"
+          },
+          "remoteBlocksFetched": {
+            "value": 8,
+            "type": "sum"
+          },
+          "dataSize": {
+            "value": 576,
+            "type": "size"
+          },
+          "localMergedBytesRead": {
+            "value": 0,
+            "type": "size"
+          },
+          "numPartitions": {
+            "value": 1,
+            "type": "sum"
+          },
+          "remoteReqsDuration": {
+            "value": 0,
+            "type": "timing"
+          },
+          "remoteBytesReadToDisk": {
+            "value": 0,
+            "type": "size"
+          },
+          "shuffleBytesWritten": {
+            "value": 1008,
+            "type": "size"
+          }
+        }
+      },
+      {
+        "node": "WholeStageCodegen (1)",
+        "metrics": {
+          "pipelineTime": {
+            "value": 485,
+            "type": "timing"
+          }
+        }
+      },
+      {
+        "node": "HashAggregate",
+        "metrics": {
+          "spillSize": {
+            "value": 0,
+            "type": "size"
+          },
+          "aggTime": {
+            "value": 483,
+            "type": "timing"
+          },
+          "peakMemory": {
+            "value": 0,
+            "type": "size"
+          },
+          "numOutputRows": {
+            "value": 12,
+            "type": "sum"
+          },
+          "numTasksFallBacked": {
+            "value": 0,
+            "type": "sum"
+          },
+          "avgHashProbe": {
+            "value": 0,
+            "type": "average"
+          }
+        }
+      },
+      {
+        "node": "Filter",
+        "metrics": {
+          "numOutputRows": {
+            "value": 659521,
+            "type": "sum"
+          }
+        }
+      },
+      {
+        "node": "ColumnarToRow",
+        "metrics": {
+          "numOutputRows": {
+            "value": 659521,
+            "type": "sum"
+          },
+          "numInputBatches": {
+            "value": 168,
+            "type": "sum"
+          }
+        }
+      },
+      {
+        "node": "Scan parquet ",
+        "metrics": {
+          "numFiles": {
+            "value": 24,
+            "type": "sum"
+          },
+          "scanTime": {
+            "value": 418,
+            "type": "timing"
+          },
+          "pruningTime": {
+            "value": 0,
+            "type": "timing"
+          },
+          "metadataTime": {
+            "value": 0,
+            "type": "timing"
+          },
+          "filesSize": {
+            "value": 363792677,
+            "type": "size"
+          },
+          "numOutputRows": {
+            "value": 659521,
+            "type": "sum"
+          },
+          "numPartitions": {
+            "value": 1,
+            "type": "sum"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "node": "WholeStageCodegen (2)",
+        "metrics": {
+          "pipelineTime": {
+            "value": 0,
+            "type": "timing"
+          }
+        }
+      },
+      {
+        "node": "HashAggregate",
+        "metrics": {
+          "spillSize": {
+            "value": 0,
+            "type": "size"
+          },
+          "aggTime": {
+            "value": 0,
+            "type": "timing"
+          },
+          "peakMemory": {
+            "value": 0,
+            "type": "size"
+          },
+          "numOutputRows": {
+            "value": 1,
+            "type": "sum"
+          },
+          "numTasksFallBacked": {
+            "value": 0,
+            "type": "sum"
+          },
+          "avgHashProbe": {
+            "value": 0,
+            "type": "average"
+          }
+        }
+      },
+      {
+        "node": "Exchange",
+        "metrics": {
+          "shuffleRecordsWritten": {
+            "value": 12,
+            "type": "sum"
+          },
+          "localMergedChunksFetched": {
+            "value": 0,
+            "type": "sum"
+          },
+          "shuffleWriteTime": {
+            "value": 3213131,
+            "type": "nsTiming"
+          },
+          "remoteMergedBytesRead": {
+            "value": 0,
+            "type": "size"
+          },
+          "localMergedBlocksFetched": {
+            "value": 0,
+            "type": "sum"
+          },
+          "corruptMergedBlockChunks": {
+            "value": 0,
+            "type": "sum"
+          },
+          "remoteMergedReqsDuration": {
+            "value": 0,
+            "type": "timing"
+          },
+          "remoteMergedBlocksFetched": {
+            "value": 0,
+            "type": "sum"
+          },
+          "recordsRead": {
+            "value": 12,
+            "type": "sum"
+          },
+          "localBytesRead": {
+            "value": 336,
+            "type": "size"
+          },
+          "fetchWaitTime": {
+            "value": 0,
+            "type": "timing"
+          },
+          "remoteBytesRead": {
+            "value": 672,
+            "type": "size"
+          },
+          "mergedFetchFallbackCount": {
+            "value": 0,
+            "type": "sum"
+          },
+          "localBlocksFetched": {
+            "value": 4,
+            "type": "sum"
+          },
+          "remoteMergedChunksFetched": {
+            "value": 0,
+            "type": "sum"
+          },
+          "remoteBlocksFetched": {
+            "value": 8,
+            "type": "sum"
+          },
+          "dataSize": {
+            "value": 576,
+            "type": "size"
+          },
+          "localMergedBytesRead": {
+            "value": 0,
+            "type": "size"
+          },
+          "numPartitions": {
+            "value": 1,
+            "type": "sum"
+          },
+          "remoteReqsDuration": {
+            "value": 0,
+            "type": "timing"
+          },
+          "remoteBytesReadToDisk": {
+            "value": 0,
+            "type": "size"
+          },
+          "shuffleBytesWritten": {
+            "value": 1008,
+            "type": "size"
+          }
+        }
+      },
+      {
+        "node": "WholeStageCodegen (1)",
+        "metrics": {
+          "pipelineTime": {
+            "value": 466,
+            "type": "timing"
+          }
+        }
+      },
+      {
+        "node": "HashAggregate",
+        "metrics": {
+          "spillSize": {
+            "value": 0,
+            "type": "size"
+          },
+          "aggTime": {
+            "value": 461,
+            "type": "timing"
+          },
+          "peakMemory": {
+            "value": 0,
+            "type": "size"
+          },
+          "numOutputRows": {
+            "value": 12,
+            "type": "sum"
+          },
+          "numTasksFallBacked": {
+            "value": 0,
+            "type": "sum"
+          },
+          "avgHashProbe": {
+            "value": 0,
+            "type": "average"
+          }
+        }
+      },
+      {
+        "node": "Filter",
+        "metrics": {
+          "numOutputRows": {
+            "value": 659521,
+            "type": "sum"
+          }
+        }
+      },
+      {
+        "node": "ColumnarToRow",
+        "metrics": {
+          "numOutputRows": {
+            "value": 659521,
+            "type": "sum"
+          },
+          "numInputBatches": {
+            "value": 168,
+            "type": "sum"
+          }
+        }
+      },
+      {
+        "node": "Scan parquet ",
+        "metrics": {
+          "numFiles": {
+            "value": 24,
+            "type": "sum"
+          },
+          "scanTime": {
+            "value": 400,
+            "type": "timing"
+          },
+          "pruningTime": {
+            "value": 0,
+            "type": "timing"
+          },
+          "metadataTime": {
+            "value": 0,
+            "type": "timing"
+          },
+          "filesSize": {
+            "value": 363792677,
+            "type": "size"
+          },
+          "numOutputRows": {
+            "value": 659521,
+            "type": "sum"
+          },
+          "numPartitions": {
+            "value": 1,
+            "type": "sum"
+          }
+        }
+      }
+    ]
+  ],
+  "request_samples": [
+    {
+      "HEAD": 96,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 72,
+      "HTTP_502": 0,
+      "POST": 0
+    },
+    {
+      "HEAD": 96,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 72,
+      "HTTP_502": 0,
+      "POST": 0
+    },
+    {
+      "HEAD": 96,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 72,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  ]
+}

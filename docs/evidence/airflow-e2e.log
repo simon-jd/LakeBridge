@@ -1,0 +1,642 @@
+ Container lakebridge-minio-1 Running 
+ Container lakebridge-postgres-1 Running 
+ Container lakebridge-minio-init-1 Starting 
+ Container lakebridge-minio-init-1 Started 
+ Container lakebridge-minio-init-1 Waiting 
+ Container lakebridge-postgres-1 Waiting 
+ Container lakebridge-postgres-1 Healthy 
+ Container lakebridge-minio-init-1 Exited 
+ Container lakebridge-airflow-run-8dedcb5f08f8 Creating 
+ Container lakebridge-airflow-run-8dedcb5f08f8 Created 
+
+[2026-09-06T23:00:02.047+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags
+[2026-09-06T23:00:02.086+0000] {dag.py:4435} INFO - dagrun id: lakebridge_history
+[2026-09-06T23:00:02.094+0000] {dag.py:4451} INFO - created dagrun <DagRun lakebridge_history @ 2026-09-06 00:00:00+00:00: manual__2026-09-06T00:00:00+00:00, state:running, queued_at: None. externally triggered: False>
+[2026-09-06T23:00:02.108+0000] {dag.py:4396} INFO - [DAG TEST] starting task_id=verify map_index=-1
+[2026-09-06T23:00:02.108+0000] {dag.py:4399} INFO - [DAG TEST] running task <TaskInstance: lakebridge_history.verify manual__2026-09-06T00:00:00+00:00 [scheduled]>
+[2026-09-06 23:00:02,422] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='lakebridge_history' AIRFLOW_CTX_TASK_ID='verify' AIRFLOW_CTX_EXECUTION_DATE='2026-09-06T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-06T00:00:00+00:00'
+[2026-09-06T23:00:02.422+0000] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='lakebridge_history' AIRFLOW_CTX_TASK_ID='verify' AIRFLOW_CTX_EXECUTION_DATE='2026-09-06T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-06T00:00:00+00:00'
+[2026-09-06T23:00:02.423+0000] {taskinstance.py:732} INFO - ::endgroup::
+{
+  "passed": true,
+  "high_watermark": 3,
+  "files": 12,
+  "sha256": "f72e05c949058a628e465adb3caf28a3b9b28179a355c4b82e468892152517d9"
+}
+[2026-09-06 23:00:02,680] {python.py:240} INFO - Done. Returned value was: None
+[2026-09-06T23:00:02.680+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-09-06T23:00:02.683+0000] {taskinstance.py:341} INFO - ::group::Post task execution logs
+[2026-09-06T23:00:02.683+0000] {taskinstance.py:353} INFO - Marking task as SUCCESS. dag_id=lakebridge_history, task_id=verify, run_id=manual__2026-09-06T00:00:00+00:00, execution_date=20260906T000000, start_date=, end_date=20260906T230002
+[2026-09-06T23:00:02.690+0000] {dag.py:4410} INFO - [DAG TEST] end task task_id=verify map_index=-1
+[2026-09-06T23:00:02.698+0000] {dag.py:4396} INFO - [DAG TEST] starting task_id=dry_run map_index=-1
+[2026-09-06T23:00:02.698+0000] {dag.py:4399} INFO - [DAG TEST] running task <TaskInstance: lakebridge_history.dry_run manual__2026-09-06T00:00:00+00:00 [scheduled]>
+[2026-09-06 23:00:02,709] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='lakebridge_history' AIRFLOW_CTX_TASK_ID='dry_run' AIRFLOW_CTX_EXECUTION_DATE='2026-09-06T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-06T00:00:00+00:00'
+[2026-09-06T23:00:02.709+0000] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='lakebridge_history' AIRFLOW_CTX_TASK_ID='dry_run' AIRFLOW_CTX_EXECUTION_DATE='2026-09-06T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-06T00:00:00+00:00'
+[2026-09-06T23:00:02.709+0000] {taskinstance.py:732} INFO - ::endgroup::
+26/09/06 23:00:03 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/09/06 23:00:03 WARN SparkConf: Note that spark.local.dir will be overridden by the value set by the cluster manager (via SPARK_LOCAL_DIRS in mesos/standalone/kubernetes and LOCAL_DIRS in YARN).
+{
+  "input_high_watermark": 3,
+  "manifest_sha256": "f72e05c949058a628e465adb3caf28a3b9b28179a355c4b82e468892152517d9",
+  "rule_version": "v1",
+  "scope": null,
+  "affected_keys": 102,
+  "affected_partitions": 8,
+  "evidence": "/workspace/artifacts/airflow/dry-runs/ac2a39b07d584ee7812154fc5308e660",
+  "published": false
+}
+[2026-09-06 23:00:09,172] {python.py:240} INFO - Done. Returned value was: None
+[2026-09-06T23:00:09.172+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-09-06T23:00:09.173+0000] {taskinstance.py:341} INFO - ::group::Post task execution logs
+[2026-09-06T23:00:09.173+0000] {taskinstance.py:353} INFO - Marking task as SUCCESS. dag_id=lakebridge_history, task_id=dry_run, run_id=manual__2026-09-06T00:00:00+00:00, execution_date=20260906T000000, start_date=, end_date=20260906T230009
+[2026-09-06T23:00:09.181+0000] {dag.py:4410} INFO - [DAG TEST] end task task_id=dry_run map_index=-1
+[2026-09-06T23:00:09.191+0000] {dag.py:4396} INFO - [DAG TEST] starting task_id=write_validate_publish map_index=-1
+[2026-09-06T23:00:09.192+0000] {dag.py:4399} INFO - [DAG TEST] running task <TaskInstance: lakebridge_history.write_validate_publish manual__2026-09-06T00:00:00+00:00 [scheduled]>
+[2026-09-06 23:00:09,205] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='lakebridge_history' AIRFLOW_CTX_TASK_ID='write_validate_publish' AIRFLOW_CTX_EXECUTION_DATE='2026-09-06T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-06T00:00:00+00:00'
+[2026-09-06T23:00:09.205+0000] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='lakebridge_history' AIRFLOW_CTX_TASK_ID='write_validate_publish' AIRFLOW_CTX_EXECUTION_DATE='2026-09-06T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-06T00:00:00+00:00'
+[2026-09-06T23:00:09.206+0000] {taskinstance.py:732} INFO - ::endgroup::
+26/09/06 23:00:10 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/09/06 23:00:10 WARN SparkConf: Note that spark.local.dir will be overridden by the value set by the cluster manager (via SPARK_LOCAL_DIRS in mesos/standalone/kubernetes and LOCAL_DIRS in YARN).
+26/09/06 23:00:14 WARN JdbcCatalog: JDBC catalog is initialized without view support. To auto-migrate the database's schema and enable view support, set jdbc.schema-version=V1
+{
+  "release_id": "rel_airflow_a8f67a735539de18974be633a37fb062",
+  "run_id": "airflow_a8f67a735539de18974be633a37fb062",
+  "created_at": "2026-09-06T23:00:18.917094+00:00",
+  "rule_version": "v1",
+  "rule_scope": "all",
+  "input_high_watermark": 3,
+  "previous_input_high_watermark": 3,
+  "manifest_sha256": "f72e05c949058a628e465adb3caf28a3b9b28179a355c4b82e468892152517d9",
+  "input_files": [
+    {
+      "path": "plans/history.parquet",
+      "kind": "plans",
+      "batch": 1,
+      "sha256": "b2010f4290cde68203f39788f6c26d0bc3abaabe4e1351cdded0012e8e50d631",
+      "bytes": 1632,
+      "rows": 10,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "plan_id",
+          "type": "string"
+        },
+        {
+          "name": "effective_from",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "effective_to",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "attributes",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0001/date=2025-01-06/part-000000.parquet",
+      "kind": "events",
+      "batch": 1,
+      "sha256": "7e0095993be2d9fecf55dc02aab56577afdac5755ba09d645a81166654a4c829",
+      "bytes": 2503,
+      "rows": 14,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0001/date=2025-01-04/part-000000.parquet",
+      "kind": "events",
+      "batch": 1,
+      "sha256": "b529342ccfafb0ca1549a9c4ae1f274ada8beb1d9eca89a99777fdb0b31e7635",
+      "bytes": 2507,
+      "rows": 14,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0001/date=2025-01-02/part-000000.parquet",
+      "kind": "events",
+      "batch": 1,
+      "sha256": "140059c00d0af28acb988bd742016d9c1d1bcd73f6d700d6a7c70ac747ae2476",
+      "bytes": 2609,
+      "rows": 19,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0001/date=2025-01-07/part-000000.parquet",
+      "kind": "events",
+      "batch": 1,
+      "sha256": "6fbf58716adc23c5bf2d45fe57eb970fed670c92da2622fc672ebf338e23ced5",
+      "bytes": 2472,
+      "rows": 12,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0001/date=2025-01-03/part-000000.parquet",
+      "kind": "events",
+      "batch": 1,
+      "sha256": "fcc1279a1483af82bddc0567fe515c6d4befa609c5eec14bf60b1cd3aefeb6db",
+      "bytes": 2533,
+      "rows": 16,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0001/date=2025-01-01/part-000000.parquet",
+      "kind": "events",
+      "batch": 1,
+      "sha256": "34e672784fd74330a4493b4a77445c8b4fcd5ecb1911711d3ef65cec56eaef13",
+      "bytes": 2496,
+      "rows": 14,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0001/date=2025-01-05/part-000000.parquet",
+      "kind": "events",
+      "batch": 1,
+      "sha256": "8ff9652862da7f0b501a508e424e84caac723407f25eab91fd09b47774843c3b",
+      "bytes": 2456,
+      "rows": 11,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0002/date=2025-01-04/part-000000.parquet",
+      "kind": "events",
+      "batch": 2,
+      "sha256": "28e97460e1b01d36d19431e37dd723ec703884b951ac7318d0cd839676fb983d",
+      "bytes": 2240,
+      "rows": 3,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0002/date=2025-01-02/part-000000.parquet",
+      "kind": "events",
+      "batch": 2,
+      "sha256": "aa0a5c9781d264d69ac9c00e18f3b1faca21e4bfe06ae6dab23b154703c2e74d",
+      "bytes": 2268,
+      "rows": 6,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0002/date=2025-01-06/part-000000.parquet",
+      "kind": "events",
+      "batch": 2,
+      "sha256": "6fa6bafe446d523d6f9a723c32d354d4991a89d7f05d30d13c706624fd13aeae",
+      "bytes": 2277,
+      "rows": 6,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "events/batch=0003/date=2025-01-08/part-000000.parquet",
+      "kind": "events",
+      "batch": 3,
+      "sha256": "11fce183d21d2955c8cce325a7ef4af914ed79ba573c258038957e936f52f5cd",
+      "bytes": 2245,
+      "rows": 2,
+      "schema": [
+        {
+          "name": "tenant_id",
+          "type": "string"
+        },
+        {
+          "name": "event_id",
+          "type": "string"
+        },
+        {
+          "name": "event_time",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "ingested_at",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "units",
+          "type": "decimal128(18, 6)"
+        },
+        {
+          "name": "source_version",
+          "type": "int64"
+        },
+        {
+          "name": "is_deleted",
+          "type": "bool"
+        }
+      ]
+    }
+  ],
+  "tables": {
+    "detail": {
+      "table": "lake.saas.detail",
+      "snapshot_id": 4088405452087322694
+    },
+    "plans": {
+      "table": "lake.saas.plans",
+      "snapshot_id": 9009694568952213929
+    },
+    "daily": {
+      "table": "lake.saas.daily",
+      "snapshot_id": 4138495334849138296
+    }
+  },
+  "validation": {
+    "keys": {
+      "missing": 0,
+      "unexpected": 0,
+      "passed": true
+    },
+    "detail": {
+      "missing": 0,
+      "unexpected": 0,
+      "passed": true
+    },
+    "daily": {
+      "missing": 0,
+      "unexpected": 0,
+      "passed": true
+    },
+    "duplicate_keys": 0,
+    "null_keys": 0,
+    "tombstones": 1,
+    "detail_rows": 102,
+    "live_rows": 101,
+    "passed": true
+  },
+  "queue_seconds": 0.011633861002337653,
+  "application_id": "local-1788735610809",
+  "reason": "Airflow end to end validation",
+  "evidence": "/workspace/artifacts/airflow/runs/airflow_a8f67a735539de18974be633a37fb062",
+  "execution_seconds": 7.752517672000977
+}
+[2026-09-06 23:00:19,269] {python.py:240} INFO - Done. Returned value was: None
+[2026-09-06T23:00:19.269+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-09-06T23:00:19.271+0000] {taskinstance.py:341} INFO - ::group::Post task execution logs
+[2026-09-06T23:00:19.271+0000] {taskinstance.py:353} INFO - Marking task as SUCCESS. dag_id=lakebridge_history, task_id=write_validate_publish, run_id=manual__2026-09-06T00:00:00+00:00, execution_date=20260906T000000, start_date=, end_date=20260906T230019
+[2026-09-06T23:00:19.280+0000] {dag.py:4410} INFO - [DAG TEST] end task task_id=write_validate_publish map_index=-1
+[2026-09-06T23:00:19.286+0000] {dag.py:4396} INFO - [DAG TEST] starting task_id=verify_consumer map_index=-1
+[2026-09-06T23:00:19.286+0000] {dag.py:4399} INFO - [DAG TEST] running task <TaskInstance: lakebridge_history.verify_consumer manual__2026-09-06T00:00:00+00:00 [scheduled]>
+[2026-09-06 23:00:19,297] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='lakebridge_history' AIRFLOW_CTX_TASK_ID='verify_consumer' AIRFLOW_CTX_EXECUTION_DATE='2026-09-06T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-06T00:00:00+00:00'
+[2026-09-06T23:00:19.297+0000] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='lakebridge_history' AIRFLOW_CTX_TASK_ID='verify_consumer' AIRFLOW_CTX_EXECUTION_DATE='2026-09-06T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-06T00:00:00+00:00'
+[2026-09-06T23:00:19.297+0000] {taskinstance.py:732} INFO - ::endgroup::
+26/09/06 23:00:20 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/09/06 23:00:20 WARN SparkConf: Note that spark.local.dir will be overridden by the value set by the cluster manager (via SPARK_LOCAL_DIRS in mesos/standalone/kubernetes and LOCAL_DIRS in YARN).
+26/09/06 23:00:21 WARN JdbcCatalog: JDBC catalog is initialized without view support. To auto-migrate the database's schema and enable view support, set jdbc.schema-version=V1
+{
+  "release_id": "rel_airflow_a8f67a735539de18974be633a37fb062",
+  "tables": {
+    "detail": {
+      "table": "lake.saas.detail",
+      "snapshot_id": 4088405452087322694
+    },
+    "plans": {
+      "table": "lake.saas.plans",
+      "snapshot_id": 9009694568952213929
+    },
+    "daily": {
+      "table": "lake.saas.daily",
+      "snapshot_id": 4138495334849138296
+    }
+  },
+  "rows": [
+    {
+      "tenant_id": "t0000",
+      "business_date": "2025-01-01",
+      "event_count": 7,
+      "total_units": "518.906000",
+      "billable_units": "518.906000"
+    },
+    {
+      "tenant_id": "t0001",
+      "business_date": "2025-01-01",
+      "event_count": 4,
+      "total_units": "320.858000",
+      "billable_units": "320.858000"
+    },
+    {
+      "tenant_id": "t0003",
+      "business_date": "2025-01-01",
+      "event_count": 2,
+      "total_units": "12.622000",
+      "billable_units": "12.622000"
+    },
+    {
+      "tenant_id": "t0004",
+      "business_date": "2025-01-01",
+      "event_count": 1,
+      "total_units": "14.663000",
+      "billable_units": "14.663000"
+    },
+    {
+      "tenant_id": "t0000",
+      "business_date": "2025-01-02",
+      "event_count": 11,
+      "total_units": "657.117844",
+      "billable_units": "657.117844"
+    }
+  ]
+}
+[2026-09-06 23:00:23,547] {python.py:240} INFO - Done. Returned value was: None
+[2026-09-06T23:00:23.547+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-09-06T23:00:23.549+0000] {taskinstance.py:341} INFO - ::group::Post task execution logs
+[2026-09-06T23:00:23.549+0000] {taskinstance.py:353} INFO - Marking task as SUCCESS. dag_id=lakebridge_history, task_id=verify_consumer, run_id=manual__2026-09-06T00:00:00+00:00, execution_date=20260906T000000, start_date=, end_date=20260906T230023
+[2026-09-06T23:00:23.556+0000] {dag.py:4410} INFO - [DAG TEST] end task task_id=verify_consumer map_index=-1
+[2026-09-06T23:00:23.557+0000] {dagrun.py:854} INFO - Marking run <DagRun lakebridge_history @ 2026-09-06 00:00:00+00:00: manual__2026-09-06T00:00:00+00:00, state:running, queued_at: None. externally triggered: False> successful
+[2026-09-06T23:00:23.557+0000] {dagrun.py:905} INFO - DagRun Finished: dag_id=lakebridge_history, execution_date=2026-09-06 00:00:00+00:00, run_id=manual__2026-09-06T00:00:00+00:00, run_start_date=2026-09-06 00:00:00+00:00, run_end_date=2026-09-06 23:00:23.557660+00:00, run_duration=82823.55766, state=success, external_trigger=False, run_type=manual, data_interval_start=2026-09-06 00:00:00+00:00, data_interval_end=2026-09-06 00:00:00+00:00, dag_hash=None

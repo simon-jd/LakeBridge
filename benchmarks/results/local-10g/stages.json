@@ -1,0 +1,514 @@
+[
+  {
+    "name": "calibrate",
+    "started_at": "2026-09-06T23:39:41.604506+00:00",
+    "status": "passed",
+    "pilot_rows": 120000,
+    "bytes_per_row": 553.8855833333333,
+    "planned_rows": 19773338,
+    "seconds": 3.744859432998055,
+    "finished_at": "2026-09-06T23:39:45.349359+00:00",
+    "s3_requests": {
+      "HEAD": 139,
+      "HTTP_404": 91,
+      "LIST": 107,
+      "PUT": 38,
+      "DELETE": 51,
+      "GET": 0,
+      "HTTP_502": 0
+    }
+  },
+  {
+    "name": "generate_source",
+    "started_at": "2026-09-06T23:39:45.351491+00:00",
+    "status": "passed",
+    "files": 720,
+    "compressed_bytes": 10906497067,
+    "compressed_gib": 10.157466928474605,
+    "rows": 19773338,
+    "seconds": 52.65383627799747,
+    "finished_at": "2026-09-06T23:40:38.005330+00:00",
+    "s3_requests": {
+      "HEAD": 6596,
+      "HTTP_404": 3716,
+      "LIST": 4503,
+      "PUT": 2200,
+      "DELETE": 2923,
+      "GET": 0,
+      "HTTP_502": 0
+    }
+  },
+  {
+    "name": "source_fingerprint",
+    "started_at": "2026-09-06T23:40:38.358037+00:00",
+    "status": "passed",
+    "fingerprint": {
+      "rows": 19773338,
+      "min_id": 0,
+      "max_id": 19773337,
+      "units": "9888492088.339000",
+      "row_hash_sum": "-32006094410024511283836"
+    },
+    "seconds": 11.454044103000342,
+    "finished_at": "2026-09-06T23:40:49.812084+00:00",
+    "s3_requests": {
+      "HEAD": 2880,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 2160,
+      "HTTP_502": 0
+    }
+  },
+  {
+    "name": "write_unpartitioned",
+    "started_at": "2026-09-06T23:40:49.843290+00:00",
+    "status": "passed",
+    "seconds": 38.212016754001525,
+    "finished_at": "2026-09-06T23:41:28.055309+00:00",
+    "s3_requests": {
+      "HEAD": 2881,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 406,
+      "DELETE": 0,
+      "GET": 2161,
+      "HTTP_502": 0,
+      "POST": 182
+    }
+  },
+  {
+    "name": "validate_unpartitioned",
+    "started_at": "2026-09-06T23:41:28.073691+00:00",
+    "status": "passed",
+    "seconds": 99.18998788200042,
+    "finished_at": "2026-09-06T23:43:07.263681+00:00",
+    "s3_requests": {
+      "HEAD": 5761,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 5837,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  },
+  {
+    "name": "write_partitioned",
+    "started_at": "2026-09-06T23:43:07.676639+00:00",
+    "status": "passed",
+    "seconds": 40.36498233500242,
+    "finished_at": "2026-09-06T23:43:48.041624+00:00",
+    "s3_requests": {
+      "HEAD": 2881,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 723,
+      "DELETE": 0,
+      "GET": 2161,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  },
+  {
+    "name": "validate_partitioned",
+    "started_at": "2026-09-06T23:43:48.066186+00:00",
+    "status": "passed",
+    "seconds": 103.96967540800324,
+    "finished_at": "2026-09-06T23:45:32.035864+00:00",
+    "s3_requests": {
+      "HEAD": 5761,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 10805,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  },
+  {
+    "name": "legacy_date_warmup",
+    "started_at": "2026-09-06T23:45:32.539166+00:00",
+    "status": "passed",
+    "seconds": 0.19199635699987994,
+    "finished_at": "2026-09-06T23:45:32.731162+00:00",
+    "s3_requests": {
+      "HEAD": 96,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 72,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  },
+  {
+    "name": "legacy_date_repeat_1",
+    "started_at": "2026-09-06T23:45:32.734258+00:00",
+    "status": "passed",
+    "seconds": 0.19583935699847643,
+    "finished_at": "2026-09-06T23:45:32.930099+00:00",
+    "s3_requests": {
+      "HEAD": 96,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 72,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  },
+  {
+    "name": "legacy_date_repeat_2",
+    "started_at": "2026-09-06T23:45:32.931493+00:00",
+    "status": "passed",
+    "seconds": 0.10885202400095295,
+    "finished_at": "2026-09-06T23:45:33.040347+00:00",
+    "s3_requests": {
+      "HEAD": 96,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 72,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  },
+  {
+    "name": "legacy_date_repeat_3",
+    "started_at": "2026-09-06T23:45:33.042375+00:00",
+    "status": "passed",
+    "seconds": 0.1027870499965502,
+    "finished_at": "2026-09-06T23:45:33.145164+00:00",
+    "s3_requests": {
+      "HEAD": 96,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 72,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  },
+  {
+    "name": "unpartitioned_date_warmup",
+    "started_at": "2026-09-06T23:45:33.188701+00:00",
+    "status": "passed",
+    "seconds": 1.0435538830024598,
+    "finished_at": "2026-09-06T23:45:34.232257+00:00",
+    "s3_requests": {
+      "HEAD": 0,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 457,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  },
+  {
+    "name": "unpartitioned_date_repeat_1",
+    "started_at": "2026-09-06T23:45:34.235588+00:00",
+    "status": "passed",
+    "seconds": 0.6916866989995469,
+    "finished_at": "2026-09-06T23:45:34.927276+00:00",
+    "s3_requests": {
+      "HEAD": 0,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 457,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  },
+  {
+    "name": "unpartitioned_date_repeat_2",
+    "started_at": "2026-09-06T23:45:34.929365+00:00",
+    "status": "passed",
+    "seconds": 0.9479002349980874,
+    "finished_at": "2026-09-06T23:45:35.877267+00:00",
+    "s3_requests": {
+      "HEAD": 0,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 457,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  },
+  {
+    "name": "unpartitioned_date_repeat_3",
+    "started_at": "2026-09-06T23:45:35.879304+00:00",
+    "status": "passed",
+    "seconds": 0.5512226860009832,
+    "finished_at": "2026-09-06T23:45:36.430528+00:00",
+    "s3_requests": {
+      "HEAD": 0,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 457,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  },
+  {
+    "name": "partitioned_date_warmup",
+    "started_at": "2026-09-06T23:45:36.468667+00:00",
+    "status": "passed",
+    "seconds": 0.14146087099652505,
+    "finished_at": "2026-09-06T23:45:36.610128+00:00",
+    "s3_requests": {
+      "HEAD": 0,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 73,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  },
+  {
+    "name": "partitioned_date_repeat_1",
+    "started_at": "2026-09-06T23:45:36.611064+00:00",
+    "status": "passed",
+    "seconds": 0.1048886409989791,
+    "finished_at": "2026-09-06T23:45:36.715954+00:00",
+    "s3_requests": {
+      "HEAD": 0,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 73,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  },
+  {
+    "name": "partitioned_date_repeat_2",
+    "started_at": "2026-09-06T23:45:36.716781+00:00",
+    "status": "passed",
+    "seconds": 0.09550208200016641,
+    "finished_at": "2026-09-06T23:45:36.812286+00:00",
+    "s3_requests": {
+      "HEAD": 0,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 73,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  },
+  {
+    "name": "partitioned_date_repeat_3",
+    "started_at": "2026-09-06T23:45:36.813346+00:00",
+    "status": "passed",
+    "seconds": 0.09168099000089569,
+    "finished_at": "2026-09-06T23:45:36.905029+00:00",
+    "s3_requests": {
+      "HEAD": 0,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 73,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  },
+  {
+    "name": "before_compaction_warmup",
+    "started_at": "2026-09-06T23:45:36.928669+00:00",
+    "status": "passed",
+    "seconds": 9.066037716998835,
+    "finished_at": "2026-09-06T23:45:45.994707+00:00",
+    "s3_requests": {
+      "HEAD": 0,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 2161,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  },
+  {
+    "name": "before_compaction_repeat_1",
+    "started_at": "2026-09-06T23:45:46.004034+00:00",
+    "status": "passed",
+    "seconds": 9.755457223996927,
+    "finished_at": "2026-09-06T23:45:55.759493+00:00",
+    "s3_requests": {
+      "HEAD": 0,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 2161,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  },
+  {
+    "name": "before_compaction_repeat_2",
+    "started_at": "2026-09-06T23:45:55.767500+00:00",
+    "status": "passed",
+    "seconds": 9.721640792999096,
+    "finished_at": "2026-09-06T23:46:05.489143+00:00",
+    "s3_requests": {
+      "HEAD": 0,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 2161,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  },
+  {
+    "name": "before_compaction_repeat_3",
+    "started_at": "2026-09-06T23:46:05.497719+00:00",
+    "status": "passed",
+    "seconds": 9.660314748998644,
+    "finished_at": "2026-09-06T23:46:15.158035+00:00",
+    "s3_requests": {
+      "HEAD": 0,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 2161,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  },
+  {
+    "name": "compaction",
+    "started_at": "2026-09-06T23:46:15.264925+00:00",
+    "status": "passed",
+    "result": [
+      {
+        "rewritten_data_files_count": 720,
+        "added_data_files_count": 90,
+        "rewritten_bytes_count": 10888619040,
+        "failed_data_files_count": 0
+      }
+    ],
+    "seconds": 34.969537510998634,
+    "finished_at": "2026-09-06T23:46:50.234462+00:00",
+    "s3_requests": {
+      "HEAD": 2,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 364,
+      "DELETE": 0,
+      "GET": 2166,
+      "HTTP_502": 0,
+      "POST": 180
+    }
+  },
+  {
+    "name": "validate_compaction",
+    "started_at": "2026-09-06T23:46:50.308822+00:00",
+    "status": "passed",
+    "seconds": 116.92216013900179,
+    "finished_at": "2026-09-06T23:48:47.230985+00:00",
+    "s3_requests": {
+      "HEAD": 1,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 5136,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  },
+  {
+    "name": "after_compaction_warmup",
+    "started_at": "2026-09-06T23:48:47.311156+00:00",
+    "status": "passed",
+    "seconds": 9.719050699000945,
+    "finished_at": "2026-09-06T23:48:57.030207+00:00",
+    "s3_requests": {
+      "HEAD": 0,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 271,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  },
+  {
+    "name": "after_compaction_repeat_1",
+    "started_at": "2026-09-06T23:48:57.033172+00:00",
+    "status": "passed",
+    "seconds": 9.28152386399961,
+    "finished_at": "2026-09-06T23:49:06.314699+00:00",
+    "s3_requests": {
+      "HEAD": 0,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 271,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  },
+  {
+    "name": "after_compaction_repeat_2",
+    "started_at": "2026-09-06T23:49:06.317564+00:00",
+    "status": "passed",
+    "seconds": 8.37345979499878,
+    "finished_at": "2026-09-06T23:49:14.691026+00:00",
+    "s3_requests": {
+      "HEAD": 0,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 271,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  },
+  {
+    "name": "after_compaction_repeat_3",
+    "started_at": "2026-09-06T23:49:14.692817+00:00",
+    "status": "passed",
+    "seconds": 8.412988329000655,
+    "finished_at": "2026-09-06T23:49:23.105807+00:00",
+    "s3_requests": {
+      "HEAD": 0,
+      "HTTP_404": 0,
+      "LIST": 0,
+      "PUT": 0,
+      "DELETE": 0,
+      "GET": 271,
+      "HTTP_502": 0,
+      "POST": 0
+    }
+  }
+]

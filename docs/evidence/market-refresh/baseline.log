@@ -1,0 +1,167 @@
+FF.F......F.                                                             [100%]
+=================================== FAILURES ===================================
+_______________ test_activation_serializes_with_writer_admission _______________
+
+stores = <function stores.<locals>.create at 0x781698d6d580>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x781698d84d50>
+
+    def test_activation_serializes_with_writer_admission(stores, monkeypatch):
+        activator, schema = stores()
+        writer, _ = stores(schema)
+        seed(activator)
+        read, proceed, entered = threading.Event(), threading.Event(), threading.Event()
+        original = activator.status
+    
+        def pause_after_status(*args, **kwargs):
+            status = original(*args, **kwargs)
+            read.set()
+            assert proceed.wait(5), "test barrier timed out"
+            return status
+    
+        monkeypatch.setattr(activator, "status", pause_after_status)
+    
+        def write():
+            with writer.writer("new"):
+                entered.set()
+                writer.finish_writer("new")
+    
+        with ThreadPoolExecutor(2) as pool:
+            activation = pool.submit(activator.activate, "rel_seed", "rollback", 1)
+            assert read.wait(5)
+            execution = pool.submit(write)
+            try:
+>               assert not entered.wait(0.4), "writer entered during an uncommitted activation"
+E               AssertionError: writer entered during an uncommitted activation
+E               assert not True
+E                +  where True = wait(0.4)
+E                +    where wait = <threading.Event at 0x781698d86b50: set>.wait
+
+tests/test_postgres_control.py:78: AssertionError
+_______ test_independent_audit_schemas_have_independent_execution_locks ________
+
+stores = <function stores.<locals>.create at 0x78169a5b1300>
+
+    def test_independent_audit_schemas_have_independent_execution_locks(stores):
+        first, _ = stores()
+        second, _ = stores()
+>       with first.writer("first"), second.writer("second"):
+
+tests/test_postgres_control.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/tmp/lakebridge-python/cpython-3.11.11-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <lakebridge.control.Control object at 0x78169a3e9050>, run_id = 'second'
+timeout = 0
+
+    @contextlib.contextmanager
+    def writer(self, run_id, timeout=0):
+        started = time.monotonic()
+        handle = None
+        acquired = False
+        try:
+            if not self.pg:
+                handle = (self.root / "writer.lock").open("a")
+            while not acquired:
+                if self.pg:
+                    acquired = self.execute(
+                        "SELECT pg_try_advisory_lock(78431069) AS locked"
+                    ).fetchone()["locked"]
+                else:
+                    try:
+                        fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                        acquired = True
+                    except BlockingIOError:
+                        pass
+                if not acquired:
+                    if time.monotonic() - started >= timeout:
+>                       raise ConflictError("Another writer is executing; queue or retry later")
+E                       lakebridge.common.ConflictError: Another writer is executing; queue or retry later
+
+src/lakebridge/control.py:135: ConflictError
+_____________ test_concurrent_activations_require_fresh_generation _____________
+
+stores = <function stores.<locals>.create at 0x781698da9440>
+
+    def test_concurrent_activations_require_fresh_generation(stores):
+        first, schema = stores()
+        second, _ = stores(schema)
+        seed(first)
+        barrier = threading.Barrier(2)
+    
+        def activate(control):
+            barrier.wait(timeout=5)
+            try:
+                return control.activate("rel_seed", "concurrent rollback", 1)
+            except ConflictError:
+                return "conflict"
+    
+        with ThreadPoolExecutor(2) as pool:
+            futures = [pool.submit(activate, control) for control in (first, second)]
+>           assert sorted(str(f.result(timeout=5)) for f in futures) == ["2", "conflict"]
+
+tests/test_postgres_control.py:125: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_postgres_control.py:125: in <genexpr>
+    assert sorted(str(f.result(timeout=5)) for f in futures) == ["2", "conflict"]
+/tmp/lakebridge-python/cpython-3.11.11-linux-x86_64-gnu/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+/tmp/lakebridge-python/cpython-3.11.11-linux-x86_64-gnu/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+/tmp/lakebridge-python/cpython-3.11.11-linux-x86_64-gnu/lib/python3.11/concurrent/futures/thread.py:58: in run
+    result = self.fn(*self.args, **self.kwargs)
+tests/test_postgres_control.py:119: in activate
+    return control.activate("rel_seed", "concurrent rollback", 1)
+src/lakebridge/control.py:195: in activate
+    self.execute(
+src/lakebridge/control.py:68: in execute
+    return self.db.execute(statement.replace("?", "%s") if self.pg else statement, parameters)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <psycopg.Connection [IDLE] (host=127.0.0.1 port=55439 database=postgres) at 0x781698dea9d0>
+query = 'INSERT INTO activations VALUES (%s,%s,%s,%s)'
+params = (2, 'rel_seed', 'concurrent rollback', '2026-09-07T00:09:59.739772+00:00')
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool = False,
+    ) -> Cursor[Row]:
+        """Execute a query and return a cursor to read its results."""
+        try:
+            cur = self.cursor()
+            if binary:
+                cur.format = BINARY
+    
+            return cur.execute(query, params, prepare=prepare)
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.UniqueViolation: duplicate key value violates unique constraint "activations_pkey"
+E           DETAIL:  Key (generation)=(2) already exists.
+
+.venv/lib/python3.11/site-packages/psycopg/connection.py:249: UniqueViolation
+________ test_release_id_rejects_changed_payload_without_mutating_audit ________
+
+control = <lakebridge.control.Control object at 0x7816989eab10>
+
+    def test_release_id_rejects_changed_payload_without_mutating_audit(control):
+        release = {**candidate(), "tables": {"detail": 123}, "execution_seconds": 1}
+        with control.writer("run_one"):
+            control.publish(release, 0)
+            # Retry timings are telemetry, not immutable release identity.
+            control.publish({**release, "execution_seconds": 2, "queue_seconds": 0.1}, 0)
+>           with pytest.raises(ConflictError, match="different immutable"):
+E           Failed: DID NOT RAISE <class 'lakebridge.common.ConflictError'>
+
+tests/test_control.py:85: Failed
+- generated xml file: /home/postedism/Desktop/LakeBridge/docs/evidence/market-refresh/baseline.xml -
+=========================== short test summary info ============================
+FAILED tests/test_postgres_control.py::test_activation_serializes_with_writer_admission
+FAILED tests/test_postgres_control.py::test_independent_audit_schemas_have_independent_execution_locks
+FAILED tests/test_postgres_control.py::test_concurrent_activations_require_fresh_generation
+FAILED tests/test_control.py::test_release_id_rejects_changed_payload_without_mutating_audit
+4 failed, 8 passed in 0.49s

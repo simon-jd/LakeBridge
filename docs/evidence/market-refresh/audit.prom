@@ -1,0 +1,34 @@
+# HELP lakebridge_audit_up Whether the configured audit store was read successfully.
+# TYPE lakebridge_audit_up gauge
+lakebridge_audit_up 1
+# HELP lakebridge_audit_observed_timestamp_seconds Unix time of this collection attempt.
+# TYPE lakebridge_audit_observed_timestamp_seconds gauge
+lakebridge_audit_observed_timestamp_seconds 1788740520.947166
+# HELP lakebridge_release_generation Current consumer release generation.
+# TYPE lakebridge_release_generation gauge
+lakebridge_release_generation 6
+# HELP lakebridge_releases Number of immutable audited releases.
+# TYPE lakebridge_releases gauge
+lakebridge_releases 5
+# HELP lakebridge_active_release_validated Active release carries a passing validation result.
+# TYPE lakebridge_active_release_validated gauge
+lakebridge_active_release_validated 1
+# HELP lakebridge_last_publish_timestamp_seconds Latest audit publication time; zero if none.
+# TYPE lakebridge_last_publish_timestamp_seconds gauge
+lakebridge_last_publish_timestamp_seconds 1788740520.319905
+# HELP lakebridge_writer_owned Persistent writer ownership; not proof of a live executor.
+# TYPE lakebridge_writer_owned gauge
+lakebridge_writer_owned 0
+# HELP lakebridge_writer_state_missing Writer ownership has no matching audit run.
+# TYPE lakebridge_writer_state_missing gauge
+lakebridge_writer_state_missing 0
+# HELP lakebridge_runs Audited runs by bounded state.
+# TYPE lakebridge_runs gauge
+lakebridge_runs{state="RUNNING"} 0
+lakebridge_runs{state="WRITING"} 0
+lakebridge_runs{state="VALIDATED"} 0
+lakebridge_runs{state="COMMITTED"} 0
+lakebridge_runs{state="COMPLETED"} 5
+lakebridge_runs{state="FAILED"} 0
+lakebridge_runs{state="ABORTED"} 0
+lakebridge_runs{state="OTHER"} 0

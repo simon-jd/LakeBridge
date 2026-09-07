@@ -1,0 +1,13 @@
+{
+  "application_id": "local-1788735981648",
+  "tasks": 335,
+  "failed_tasks": 0,
+  "task_median_ms": 6,
+  "task_max_ms": 377,
+  "input_bytes": 54827266,
+  "shuffle_read_bytes": 31672281,
+  "shuffle_write_bytes": 31672281,
+  "disk_spill_bytes": 0,
+  "gc_ms": 97,
+  "scope": "all task attempts in the application, including retries and warmups"
+}

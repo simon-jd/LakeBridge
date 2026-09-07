@@ -1,0 +1,44 @@
+ Container lakebridge-minio-1 Running 
+ Container lakebridge-postgres-1 Running 
+ Container lakebridge-minio-init-1 Starting 
+ Container lakebridge-minio-init-1 Started 
+ Container lakebridge-minio-init-1 Waiting 
+ Container lakebridge-postgres-1 Waiting 
+ Container lakebridge-minio-init-1 Exited 
+ Container lakebridge-postgres-1 Healthy 
+ Container lakebridge-spark-run-7f90ec38069e Creating 
+ Container lakebridge-spark-run-7f90ec38069e Created 
+26/09/06 23:10:14 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/09/06 23:10:14 WARN SparkConf: Note that spark.local.dir will be overridden by the value set by the cluster manager (via SPARK_LOCAL_DIRS in mesos/standalone/kubernetes and LOCAL_DIRS in YARN).
+26/09/06 23:10:16 WARN JdbcCatalog: JDBC catalog is initialized without view support. To auto-migrate the database's schema and enable view support, set jdbc.schema-version=V1
+{
+  "spark": "3.5.6",
+  "iceberg": "1.8.1",
+  "python": "3.11.11",
+  "java": "17.0.20.1",
+  "scala": "2.12.18",
+  "warehouse": "s3://lakebridge-warehouse/warehouse",
+  "checks": [
+    "create",
+    "insert",
+    "merge",
+    "branch_isolation",
+    "fast_forward",
+    "tag",
+    "time_travel",
+    "schema_evolution",
+    "partition_evolution",
+    "rollback",
+    "unprotected_snapshot_actually_expired",
+    "compaction",
+    "expiration",
+    "protected_snapshot",
+    "orphan_dry_run",
+    "retained_snapshot_reselected_after_expiration",
+    "divergence_rejected",
+    "divergence_rebuilt_preserving_main"
+  ],
+  "passed": true
+}

@@ -1,0 +1,92 @@
+{
+  "samples": 291,
+  "sample_interval_seconds": 2,
+  "peak_simultaneous_working_set_bytes": 28763348992,
+  "peak_simultaneous_memory_bytes_including_file_cache": 59243573248,
+  "containers": [
+    {
+      "service": "s3proxy",
+      "peak_working_set_bytes": 276942848,
+      "peak_memory_bytes": 287342592,
+      "cpu_nanoseconds_observed_delta": 538204392000,
+      "network_rx_bytes_observed_delta": 342913491711,
+      "network_tx_bytes_observed_delta": 342943200239,
+      "block_read_bytes_observed_delta": 0,
+      "block_write_bytes_observed_delta": 25124864
+    },
+    {
+      "service": "worker3",
+      "peak_working_set_bytes": 8987136000,
+      "peak_memory_bytes": 17179811840,
+      "cpu_nanoseconds_observed_delta": 1653907304000,
+      "network_rx_bytes_observed_delta": 163830922741,
+      "network_tx_bytes_observed_delta": 78959337805,
+      "block_read_bytes_observed_delta": 34793132032,
+      "block_write_bytes_observed_delta": 129100922880
+    },
+    {
+      "service": "worker1",
+      "peak_working_set_bytes": 9515667456,
+      "peak_memory_bytes": 17179942912,
+      "cpu_nanoseconds_observed_delta": 1651774797000,
+      "network_rx_bytes_observed_delta": 162139562384,
+      "network_tx_bytes_observed_delta": 77733702113,
+      "block_read_bytes_observed_delta": 36820930560,
+      "block_write_bytes_observed_delta": 122184364032
+    },
+    {
+      "service": "worker2",
+      "peak_working_set_bytes": 8984481792,
+      "peak_memory_bytes": 17179807744,
+      "cpu_nanoseconds_observed_delta": 1633759891000,
+      "network_rx_bytes_observed_delta": 160944680919,
+      "network_tx_bytes_observed_delta": 78498636020,
+      "block_read_bytes_observed_delta": 36031553536,
+      "block_write_bytes_observed_delta": 124932362240
+    },
+    {
+      "service": "postgres",
+      "peak_working_set_bytes": 36597760,
+      "peak_memory_bytes": 99901440,
+      "cpu_nanoseconds_observed_delta": 5876722000,
+      "network_rx_bytes_observed_delta": 56227,
+      "network_tx_bytes_observed_delta": 12944,
+      "block_read_bytes_observed_delta": 4096,
+      "block_write_bytes_observed_delta": 188416
+    },
+    {
+      "service": "master",
+      "peak_working_set_bytes": 170704896,
+      "peak_memory_bytes": 170831872,
+      "cpu_nanoseconds_observed_delta": 789728000,
+      "network_rx_bytes_observed_delta": 204002,
+      "network_tx_bytes_observed_delta": 30768,
+      "block_read_bytes_observed_delta": 2445312,
+      "block_write_bytes_observed_delta": 1105920
+    },
+    {
+      "service": "minio",
+      "peak_working_set_bytes": 960823296,
+      "peak_memory_bytes": 6453907456,
+      "cpu_nanoseconds_observed_delta": 561993478000,
+      "network_rx_bytes_observed_delta": 44268696973,
+      "network_tx_bytes_observed_delta": 294781671056,
+      "block_read_bytes_observed_delta": 304537124864,
+      "block_write_bytes_observed_delta": 55126142976
+    },
+    {
+      "service": "driver",
+      "peak_working_set_bytes": 1005228032,
+      "peak_memory_bytes": 1035788288,
+      "cpu_nanoseconds_observed_delta": 48078991000,
+      "network_rx_bytes_observed_delta": 43518572,
+      "network_tx_bytes_observed_delta": 1224175992,
+      "block_read_bytes_observed_delta": 5931008,
+      "block_write_bytes_observed_delta": 29147136
+    }
+  ],
+  "sampling_errors": {},
+  "scope": "first-to-last observed counters; startup/exit tails may be missed; peaks sampled, not exact",
+  "network_note": "virtual interfaces; summing services double-counts internal traffic",
+  "memory_note": "working_set = cgroup usage minus inactive_file; other file cache may remain"
+}

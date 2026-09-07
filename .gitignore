@@ -1,0 +1,25 @@
+.venv/
+.cache/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.env
+.env.*
+!.env.example
+.agents/
+.codex/
+.DS_Store
+artifacts/
+.runtime/
+*.egg-info/
+derby.log
+metastore_db/
+.terraform/
+*.tfstate*
+*.tfvars
+
+# Private job-search notes and local bank-maintenance receipts.
+docs/market-refresh-2026-09.md
+docs/evidence/market-refresh/bank-sync.json
+docs/evidence/publication/bank-sync.json

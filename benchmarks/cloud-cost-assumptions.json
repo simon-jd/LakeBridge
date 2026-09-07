@@ -1,0 +1,39 @@
+{
+  "reviewed_on": "2026-09-06",
+  "currency": "USD",
+  "region_scenario": "us-east-1",
+  "pricing_status": "explicit reference assumptions; not an AWS quote or bill",
+  "instance_scenario": "4 m6i.xlarge: 3 Spark workers plus 1 driver/master/self-managed PostgreSQL head",
+  "nodes": 4,
+  "node_usd_per_hour": 0.192,
+  "s3_usd_per_gib_month": 0.023,
+  "s3_read_usd_per_1000": 0.0004,
+  "s3_write_list_usd_per_1000": 0.005,
+  "ebs_gib_per_node": 100,
+  "ebs_usd_per_gib_month": 0.08,
+  "month_days": 30,
+  "queries_per_day": 100,
+  "batches_per_day": 1,
+  "startup_seconds_per_batch": 600,
+  "runtime_multipliers": [0.5, 1, 2],
+  "retained_old_snapshot_days": 30,
+  "sources": {
+    "ec2_reference": "https://docs.aws.amazon.com/prescriptive-guidance/latest/optimize-costs-microsoft-workloads/right-size-selection.html",
+    "s3_rates_reference": "https://aws.amazon.com/blogs/storage/run-spark-31-faster-and-optimize-compute-costs-with-amazon-s3-express-one-zone-on-amazon-emr/",
+    "s3_put_reference": "https://aws.amazon.com/blogs/database/automate-postgresql-audit-log-extraction-and-analysis-with-amazon-s3/",
+    "s3_units_and_pricing": "https://aws.amazon.com/s3/pricing/",
+    "ebs_example_reference": "https://aws.amazon.com/ebs/pricing/"
+  },
+  "notes": [
+    "Local i9 cores, shared NVMe, Docker networking and MinIO do not reproduce EC2 or AWS S3 performance. Multipliers are scenarios, not confidence bounds.",
+    "EC2 uses the documented 0.192 reference. EBS 0.08 is the official example's explicit assumed regional rate. Neither is a live account-specific price quote.",
+    "S3 uses binary GB (GiB). GET and HEAD use read rate; PUT, POST multipart and LIST use write/list rate; DELETE is free. HTTP status counters are diagnostic, not extra requests.",
+    "All observed requests including unsuccessful requests are priced conservatively; AWS can waive some error classes. S3 request count is assumed unchanged in cloud.",
+    "Monthly scenario: fixed dataset, 100 sequential full-payload queries per day, one batch and warmup per day, no new ingestion. Source is already in S3; one initial partitioned load and its exact validation included.",
+    "Optimized scenario performs one compaction with exact validation at month start, then retains the old snapshot for the full 30 days. Both source and current target are charged. No snapshot or source retirement is assumed.",
+    "The four EBS volumes persist for the full month even when instances stop. Driver/catalog are available only during batch hours in the batch scenario.",
+    "Always-on compute is charged for 720 allocated cluster hours independent of query acceleration. Task CPU-seconds are diagnostic and never replace allocated instance time.",
+    "Subtotal excludes EMR, RDS, Airflow hosting, NAT, cross-AZ traffic, Internet egress, public IPv4, backups, monitoring, taxes, support and local power/depreciation. Scenario assumes self-managed Spark and PostgreSQL with private same-AZ networking and S3 endpoint. Extra EBS performance is not provisioned.",
+    "Monthly S3 storage subtotal counts Parquet data files only; small Iceberg metadata objects are omitted and explicitly unpriced. Complete experiment retained storage is separately inventoried."
+  ]
+}

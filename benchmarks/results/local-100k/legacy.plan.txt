@@ -1,0 +1,47 @@
+== Physical Plan ==
+AdaptiveSparkPlan (7)
++- HashAggregate (6)
+   +- Exchange (5)
+      +- HashAggregate (4)
+         +- Project (3)
+            +- Filter (2)
+               +- Scan parquet  (1)
+
+
+(1) Scan parquet 
+Output [2]: [event_time#19, units#20]
+Batched: true
+Location: InMemoryFileIndex [file:/home/postedism/Desktop/LakeBridge/artifacts/fair-performance/benchmarks/bench_b93f24c96e/legacy_parquet]
+PushedFilters: [IsNotNull(event_time), GreaterThanOrEqual(event_time,2025-01-06 16:00:00.0), LessThan(event_time,2025-01-07 16:00:00.0)]
+ReadSchema: struct<event_time:timestamp,units:decimal(18,6)>
+
+(2) Filter
+Input [2]: [event_time#19, units#20]
+Condition : ((isnotnull(event_time#19) AND (event_time#19 >= 2025-01-07 00:00:00)) AND (event_time#19 < 2025-01-08 00:00:00))
+
+(3) Project
+Output [1]: [units#20]
+Input [2]: [event_time#19, units#20]
+
+(4) HashAggregate
+Input [1]: [units#20]
+Keys: []
+Functions [2]: [partial_count(1), partial_sum(units#20)]
+Aggregate Attributes [3]: [count#67L, sum#68, isEmpty#69]
+Results [3]: [count#70L, sum#71, isEmpty#72]
+
+(5) Exchange
+Input [3]: [count#70L, sum#71, isEmpty#72]
+Arguments: SinglePartition, ENSURE_REQUIREMENTS, [plan_id=161]
+
+(6) HashAggregate
+Input [3]: [count#70L, sum#71, isEmpty#72]
+Keys: []
+Functions [2]: [count(1), sum(units#20)]
+Aggregate Attributes [2]: [count(1)#65L, sum(units#20)#66]
+Results [2]: [count(1)#65L AS events#58L, sum(units#20)#66 AS units#59]
+
+(7) AdaptiveSparkPlan
+Output [2]: [events#58L, units#59]
+Arguments: isFinalPlan=false
+

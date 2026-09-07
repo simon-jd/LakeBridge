@@ -1,0 +1,13 @@
+{
+  "seed": 42,
+  "base_events": 30,
+  "tenants": 3,
+  "days": 7,
+  "hot_tenant_probability": 0.55,
+  "raw_rows": 53,
+  "compressed_bytes": 26722,
+  "file_count": 12,
+  "start": "2025-01-01",
+  "end": "2025-01-07",
+  "late_revision_keys": 5
+}

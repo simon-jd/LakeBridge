@@ -1,0 +1,131 @@
+{
+  "compatibility": {
+    "spark": "3.5.9",
+    "iceberg": "1.10.2",
+    "python": "3.11.11",
+    "java": "17.0.20",
+    "scala": "2.12.18",
+    "warehouse": "s3://lakebridge-warehouse/market-refresh-0906",
+    "checks": [
+      "create",
+      "insert",
+      "merge",
+      "branch_isolation",
+      "fast_forward",
+      "tag",
+      "time_travel",
+      "schema_evolution",
+      "partition_evolution",
+      "rollback",
+      "unprotected_snapshot_actually_expired",
+      "compaction",
+      "expiration",
+      "protected_snapshot",
+      "orphan_dry_run",
+      "retained_snapshot_reselected_after_expiration",
+      "divergence_rejected",
+      "divergence_rebuilt_preserving_main"
+    ],
+    "passed": true
+  },
+  "demo": {
+    "scope": "local functional demonstration",
+    "rows": 40,
+    "scenarios": [
+      {
+        "name": "full_migration_and_idempotent_retry",
+        "passed": true,
+        "release": "rel_demo_initial"
+      },
+      {
+        "name": "late_revision_backfill_and_commit_recovery",
+        "passed": true,
+        "dry_run": {
+          "input_high_watermark": 2,
+          "manifest_sha256": "0ba58c1c69463a4eeea26c275864bacacf234e8bcd388fbf4e0cf741597afb26",
+          "rule_version": "v1",
+          "scope": [
+            "2025-01-01",
+            "2025-01-07"
+          ],
+          "affected_keys": 40,
+          "affected_partitions": 7,
+          "evidence": "/home/postedism/Desktop/LakeBridge/artifacts/market-refresh/s3/dry-runs/d055e490cd1a42a6aa854451083ded6e",
+          "published": false
+        },
+        "release": "rel_demo_late",
+        "recovery_seconds": 3.784856645997934,
+        "tombstones": 1
+      },
+      {
+        "name": "concurrent_writer_blocked_then_resumed",
+        "passed": true
+      },
+      {
+        "name": "consumer_rollback_and_legal_data_forward_correction",
+        "passed": true,
+        "bad_release": "rel_demo_rule",
+        "rolled_back_to": "rel_demo_late",
+        "corrected_release": "rel_demo_corrected",
+        "consumer_recovery_seconds": 0.21469174400044722,
+        "legal_new_events_preserved": 2
+      }
+    ],
+    "passed": true,
+    "total_seconds": 21.90957083399917,
+    "final_release": "rel_demo_corrected"
+  },
+  "compaction": {
+    "table": "lake.refresh_0906.detail",
+    "action": "compact",
+    "execute": true,
+    "older_than": "2026-08-31 00:22:00",
+    "orphan_minimum_age_hours": 72,
+    "result": [
+      {
+        "rewritten_data_files_count": 0,
+        "added_data_files_count": 0,
+        "rewritten_bytes_count": 0,
+        "failed_data_files_count": 0,
+        "removed_delete_files_count": 0
+      }
+    ]
+  },
+  "orphan_plan": {
+    "table": "lake.refresh_0906.detail",
+    "action": "orphans",
+    "execute": false,
+    "older_than": "2026-09-04 00:22:00",
+    "orphan_minimum_age_hours": 72,
+    "candidates": 0,
+    "evidence": "/home/postedism/Desktop/LakeBridge/artifacts/market-refresh/s3/maintenance/detail/20260907002200850807"
+  },
+  "audit": {
+    "id": 1,
+    "generation": 6,
+    "active_release": "rel_demo_corrected",
+    "writer_run": null,
+    "audit_available": true,
+    "observed_at": "2026-09-07T00:22:00.947166+00:00",
+    "observed_timestamp_seconds": 1788740520.947166,
+    "backend": "postgresql",
+    "active_release_validated": true,
+    "release_count": 5,
+    "last_publish_at": "2026-09-07T00:22:00.319905+00:00",
+    "last_publish_timestamp_seconds": 1788740520.319905,
+    "run_counts": {
+      "RUNNING": 0,
+      "WRITING": 0,
+      "VALIDATED": 0,
+      "COMMITTED": 0,
+      "COMPLETED": 5,
+      "FAILED": 0,
+      "ABORTED": 0,
+      "OTHER": 0
+    },
+    "writer_state": null,
+    "writer_state_age_seconds": null,
+    "writer_state_missing": false
+  },
+  "passed": true
+}

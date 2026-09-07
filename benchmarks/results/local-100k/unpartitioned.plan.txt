@@ -1,0 +1,44 @@
+== Physical Plan ==
+AdaptiveSparkPlan (7)
++- HashAggregate (6)
+   +- Exchange (5)
+      +- HashAggregate (4)
+         +- Project (3)
+            +- Filter (2)
+               +- BatchScan lake.fair_performance.bench_b93f24c96e_unpartitioned (1)
+
+
+(1) BatchScan lake.fair_performance.bench_b93f24c96e_unpartitioned
+Output [2]: [event_time#146, units#147]
+lake.fair_performance.bench_b93f24c96e_unpartitioned (branch=null) [filters=event_time IS NOT NULL, event_time >= 1736208000000000, event_time < 1736294400000000, groupedBy=]
+
+(2) Filter
+Input [2]: [event_time#146, units#147]
+Condition : ((isnotnull(event_time#146) AND (event_time#146 >= 2025-01-07 00:00:00)) AND (event_time#146 < 2025-01-08 00:00:00))
+
+(3) Project
+Output [1]: [units#147]
+Input [2]: [event_time#146, units#147]
+
+(4) HashAggregate
+Input [1]: [units#147]
+Keys: []
+Functions [2]: [partial_count(1), partial_sum(units#147)]
+Aggregate Attributes [3]: [count#158L, sum#159, isEmpty#160]
+Results [3]: [count#161L, sum#162, isEmpty#163]
+
+(5) Exchange
+Input [3]: [count#161L, sum#162, isEmpty#163]
+Arguments: SinglePartition, ENSURE_REQUIREMENTS, [plan_id=399]
+
+(6) HashAggregate
+Input [3]: [count#161L, sum#162, isEmpty#163]
+Keys: []
+Functions [2]: [count(1), sum(units#147)]
+Aggregate Attributes [2]: [count(1)#149L, sum(units#147)#150]
+Results [2]: [count(1)#149L AS events#137L, sum(units#147)#150 AS units#138]
+
+(7) AdaptiveSparkPlan
+Output [2]: [events#137L, units#138]
+Arguments: isFinalPlan=false
+

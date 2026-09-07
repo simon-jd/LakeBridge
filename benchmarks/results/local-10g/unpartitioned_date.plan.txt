@@ -1,0 +1,44 @@
+== Physical Plan ==
+AdaptiveSparkPlan (7)
++- HashAggregate (6)
+   +- Exchange (5)
+      +- HashAggregate (4)
+         +- Project (3)
+            +- Filter (2)
+               +- BatchScan lake.simulation.sim_10g_20260906_unpartitioned (1)
+
+
+(1) BatchScan lake.simulation.sim_10g_20260906_unpartitioned
+Output [2]: [event_time#639, units#640]
+lake.simulation.sim_10g_20260906_unpartitioned (branch=null) [filters=event_time IS NOT NULL, event_time >= 1736899200000000, event_time < 1736985600000000, groupedBy=]
+
+(2) Filter
+Input [2]: [event_time#639, units#640]
+Condition : ((isnotnull(event_time#639) AND (event_time#639 >= 2025-01-15 00:00:00)) AND (event_time#639 < 2025-01-16 00:00:00))
+
+(3) Project
+Output [1]: [units#640]
+Input [2]: [event_time#639, units#640]
+
+(4) HashAggregate
+Input [1]: [units#640]
+Keys: []
+Functions [2]: [partial_count(1), partial_sum(units#640)]
+Aggregate Attributes [3]: [count#652L, sum#653, isEmpty#654]
+Results [3]: [count#655L, sum#656, isEmpty#657]
+
+(5) Exchange
+Input [3]: [count#655L, sum#656, isEmpty#657]
+Arguments: SinglePartition, ENSURE_REQUIREMENTS, [plan_id=1363]
+
+(6) HashAggregate
+Input [3]: [count#655L, sum#656, isEmpty#657]
+Keys: []
+Functions [2]: [count(1), sum(units#640)]
+Aggregate Attributes [2]: [count(1)#643L, sum(units#640)#644]
+Results [2]: [count(1)#643L AS events#630L, sum(units#640)#644 AS units#631]
+
+(7) AdaptiveSparkPlan
+Output [2]: [events#630L, units#631]
+Arguments: isFinalPlan=false
+
