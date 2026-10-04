@@ -1,0 +1,32 @@
+{
+  "files": {
+    "consumer-dbt/dbt_project.yml": "bb24def8fc5d4849b9458f4988a9ed0b8809d330e59e973032c9a5e8ef24d52b",
+    "consumer-dbt/models/schema.yml": "6f01f1a7e6dfc535d8b7d976a18fc4019dc2cec9d2691cdfa34f1e5451272f21",
+    "consumer-dbt/models/stg_usage.sql": "ea9767a09c5133569ede0f26b5ff346284607bea612594218da2cd92e913bb53",
+    "consumer-dbt/models/tenant_daily_usage.sql": "2a527abda63452441606ed69d85a7b580b2129601b97f30f360a6e1351dfe371",
+    "consumer-dbt/profiles.yml": "6e6d2d75f40fe9323e196e7611645aca58cd53ea501a28ef2c9acb0e53181693",
+    "consumer-dbt/requirements.lock": "c849962deb2baf7c907d960272bd62f457d026c87850749eb98dd1fc3b826ed5",
+    "pyproject.toml": "c62178eb753dd8247e4d76f4eb20807baba5e1d0ea3143431a186d8cd74b10bd",
+    "scripts/consumer_demo.py": "2430c041b35c2d0885e9cce2a07201c260da9a69c84bb15527a6b4a6a1259166",
+    "src/lakebridge/consumer/__init__.py": "cb6651a43c229af0e26bb77fd285d68f419f82e479149a35481c97630a598f96",
+    "src/lakebridge/consumer/api.py": "e5aea711560ec9d688a5e676783f097e46dcfbbc71109c09244e1385c414519e",
+    "src/lakebridge/consumer/cli.py": "9b030f3f07cfbd7da9419adc2a82ad60bc30da3196e5da7bce356449d09c8192",
+    "src/lakebridge/consumer/diff_backend.py": "b1fbaec44ad408135d9a2d83ce9edec60b655b3961c6b089b1a434de89de8c2c",
+    "src/lakebridge/consumer/impact.py": "3af0e7223aea71d6f9103ecef6bf8749e796a0f8215fad7575217c883e0dffd4",
+    "src/lakebridge/consumer/jobs.py": "39cafcc081fd2747be0a2457b9092ad80d16d62133e0b2d1dfdf11a2504481ea",
+    "src/lakebridge/consumer/plans.py": "9f9d023c6daf15c9f964ad8c0161169ebc024ee0f51edbc90f503cc8f84ae1ea",
+    "src/lakebridge/consumer/protocol.py": "293ce911e4ecb9f12277a43273e7f6b904764450e98ec47e8ff0e63d2366b9e1",
+    "src/lakebridge/consumer/releases.py": "d3fa083ffaab9f65c89febbfe3b5407ceb2ea2c6c92584aa9d7c2446dd7ec706",
+    "src/lakebridge/consumer/retention.py": "cdca42bd48cbec83b7edc91e07eff0b1cf9a326ee94b14741f4e72b6a35bcb51",
+    "src/lakebridge/consumer/sink_postgres.py": "66c0274de09c5fbbe459e6185be56d5dc92aa45c1292cb0c9f22d07abd5f60b7",
+    "src/lakebridge/consumer/store.py": "51e11369a4c421336765242d35fd6c88cfe59c27924c6042ca015a76ddc7955a",
+    "src/lakebridge/maintenance.py": "f77caedfef332b6831d5bcf5f957e0f61d06f6a7291657db84395304fee76244",
+    "tests/test_consumer_api.py": "a479bc6c6f53cc8b918d58a2f5a7b8154409eea3cf850978b497f5a2fa5b0991",
+    "tests/test_consumer_diff.py": "9222c2ef84b3a5d57c9d1d7d0bdc6f99bcfdc91fc1fff782417057b8b8a699d8",
+    "tests/test_consumer_integration.py": "3a09cc789c04666bfe541ec912082e5d6c047c1e747bedaad16c75f1a1d34072",
+    "tests/test_consumer_service.py": "bfbdb34544b4aa7b56cffc0272cf430408cfaa84b4b418657856801e4ee8b4aa",
+    "uv.lock": "2d34667a880816ce939b90578efda8e8db4b0916fc2748caa779a32be60eff8b"
+  },
+  "git_base": "9aa5bf96346e9921b8fd75b8f83123008524547a",
+  "state": "uncommitted working tree; prior lifecycle edits retained"
+}

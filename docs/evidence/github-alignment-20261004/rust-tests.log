@@ -1,0 +1,275 @@
+   Compiling serde_core v1.0.229
+   Compiling serde v1.0.229
+   Compiling smallvec v1.16.1
+   Compiling futures-channel v0.3.34
+   Compiling object v0.39.1
+   Compiling crc32fast v1.5.2
+   Compiling zstd-safe v7.3.0
+   Compiling memchr v2.8.3
+   Compiling adler2 v2.0.1
+   Compiling form_urlencoded v1.2.2
+   Compiling simd-adler32 v0.3.10
+   Compiling syn v3.0.5
+   Compiling getrandom v0.2.17
+   Compiling socket2 v0.6.5
+   Compiling chrono v0.4.45
+   Compiling zlib-rs v0.6.7
+   Compiling zstd-sys v2.1.0+zstd.1.5.7
+   Compiling stacker v0.1.25
+   Compiling ring v0.17.14
+   Compiling untrusted v0.9.0
+   Compiling recursive-proc-macro-impl v0.1.1
+   Compiling sqlparser_derive v0.5.0
+   Compiling subtle v2.6.1
+   Compiling miniz_oxide v0.9.1
+   Compiling blake3 v1.8.7
+   Compiling arrayvec v0.7.8
+   Compiling constant_time_eq v0.4.2
+   Compiling cpufeatures v0.3.1
+   Compiling liblzma-sys v0.4.9
+   Compiling zstd-safe v8.0.0
+   Compiling libbz2-rs-sys v0.2.5
+   Compiling strsim v0.11.1
+   Compiling compression-core v0.4.33
+   Compiling ident_case v1.0.1
+   Compiling bigdecimal v0.4.10
+   Compiling rand_core v0.6.4
+   Compiling parking_lot_core v0.9.12
+   Compiling fnv v1.0.7
+   Compiling http-body v1.1.0
+   Compiling prettyplease v0.3.0
+   Compiling httparse v1.10.1
+   Compiling heck v0.5.0
+   Compiling inout v0.1.4
+   Compiling try-lock v0.2.5
+   Compiling parking v2.2.1
+   Compiling typeid v1.0.3
+   Compiling tower-service v0.3.3
+   Compiling sync_wrapper v1.0.2
+   Compiling crypto-common v0.1.7
+   Compiling tower-layer v0.3.3
+   Compiling opaque-debug v0.3.1
+   Compiling want v0.3.1
+   Compiling atomic-waker v1.1.2
+   Compiling portable-atomic v1.15.0
+   Compiling darling_core v0.20.11
+   Compiling event-listener v5.4.2
+   Compiling parking_lot v0.12.5
+   Compiling dashmap v6.2.1
+   Compiling erased-serde v0.4.10
+   Compiling crossbeam-epoch v0.9.21
+   Compiling ipnet v2.12.2
+   Compiling digest v0.10.7
+   Compiling universal-hash v0.5.1
+   Compiling cipher v0.4.4
+   Compiling anyhow v1.0.104
+   Compiling strum_macros v0.27.2
+   Compiling fastnum v0.7.5
+   Compiling typetag v0.2.23
+   Compiling aead v0.5.2
+   Compiling http-body-util v0.1.5
+   Compiling crossbeam-channel v0.5.17
+   Compiling polyval v0.6.2
+   Compiling blake2 v0.10.6
+   Compiling md-5 v0.10.6
+   Compiling sha2 v0.10.9
+   Compiling event-listener-strategy v0.5.4
+   Compiling miniz_oxide v0.8.9
+   Compiling aes v0.8.4
+   Compiling ctr v0.9.2
+   Compiling typed-builder-macro v0.20.1
+   Compiling bzip2 v0.6.1
+   Compiling ghash v0.5.1
+   Compiling async-lock v3.4.2
+   Compiling regex-lite v0.1.9
+   Compiling tagptr v0.2.0
+   Compiling inventory v0.3.24
+   Compiling dissimilar v1.0.11
+   Compiling bytemuck v1.25.2
+   Compiling itertools v0.13.0
+   Compiling ordered-float v4.6.0
+   Compiling as-any v0.3.2
+   Compiling zeroize v1.9.0
+   Compiling array-init v2.1.0
+   Compiling bimap v0.6.3
+   Compiling murmur3 v0.5.2
+   Compiling utf8parse v0.2.2
+   Compiling anstyle-query v1.1.5
+   Compiling anstyle-parse v1.0.0
+   Compiling is_terminal_polyfill v1.70.2
+   Compiling expect-test v1.5.1
+   Compiling colorchoice v1.0.5
+   Compiling roaring v0.11.5
+   Compiling anstyle v1.0.14
+   Compiling clap_lex v1.1.0
+   Compiling aes-gcm v0.10.3
+   Compiling chrono-tz v0.10.4
+   Compiling anstream v1.0.0
+   Compiling clap_builder v4.6.6
+   Compiling typed-builder v0.20.1
+   Compiling darling_macro v0.20.11
+   Compiling darling v0.20.11
+   Compiling strum v0.27.2
+   Compiling derive_builder_core v0.20.2
+   Compiling serde_json v1.0.151
+   Compiling csv v1.4.0
+   Compiling uuid v1.26.1
+   Compiling serde_bytes v0.11.19
+   Compiling derive_builder_macro v0.20.2
+   Compiling derive_builder v0.20.2
+   Compiling arrow-schema v58.4.0
+   Compiling liblzma v0.4.8
+   Compiling flate2 v1.1.10
+   Compiling darling_core v0.24.1
+   Compiling serde_derive v1.0.229
+   Compiling zerovec-derive v0.11.6
+   Compiling displaydoc v0.2.7
+   Compiling tokio-macros v2.7.2
+   Compiling futures-macro v0.3.34
+   Compiling thiserror-impl v2.0.20
+   Compiling async-trait v0.1.92
+   Compiling typetag-impl v0.2.23
+   Compiling serde_repr v0.1.21
+   Compiling clap_derive v4.6.4
+   Compiling futures-util v0.3.34
+   Compiling zerotrie v0.2.5
+   Compiling tokio v1.53.1
+   Compiling ar_archive_writer v0.5.3
+   Compiling zstd v0.14.0
+   Compiling zstd v0.13.3
+   Compiling zerovec v0.11.8
+   Compiling thiserror v2.0.20
+   Compiling compression-codecs v0.4.41
+   Compiling tinystr v0.8.4
+   Compiling potential_utf v0.1.6
+   Compiling psm v0.1.32
+   Compiling icu_collections v2.3.0
+   Compiling icu_locale_core v2.3.0
+   Compiling clap v4.6.6
+   Compiling darling_macro v0.24.1
+   Compiling recursive v0.1.1
+   Compiling sqlparser v0.61.0
+   Compiling darling v0.24.1
+   Compiling bon-macros v3.10.1
+   Compiling serde_with_macros v3.23.0
+   Compiling icu_provider v2.3.1
+   Compiling icu_properties v2.3.0
+   Compiling icu_normalizer v2.3.0
+   Compiling serde_with v3.23.0
+   Compiling num-bigint v0.4.8
+   Compiling serde-big-array v0.5.1
+   Compiling serde_urlencoded v0.7.1
+   Compiling bnum v0.12.1
+   Compiling futures-executor v0.3.34
+   Compiling moka v0.12.16
+   Compiling futures v0.3.34
+   Compiling idna_adapter v1.2.2
+   Compiling idna v1.1.0
+   Compiling url v2.5.8
+   Compiling arrow-buffer v58.4.0
+   Compiling arrow-data v58.4.0
+   Compiling object_store v0.13.2
+   Compiling datafusion-common-runtime v53.1.0
+   Compiling tokio-util v0.7.19
+   Compiling async-compression v0.4.46
+   Compiling tower v0.5.3
+   Compiling hyper v1.11.1
+   Compiling backon v1.6.0
+   Compiling arrow-array v58.4.0
+   Compiling bon v3.10.1
+   Compiling apache-avro v0.21.0
+   Compiling tokio-stream v0.1.19
+   Compiling tower-http v0.6.11
+   Compiling hyper-util v0.1.20
+   Compiling reqwest v0.12.28
+   Compiling arrow-select v58.4.0
+   Compiling arrow-arith v58.4.0
+   Compiling arrow-row v58.4.0
+   Compiling arrow-ord v58.4.0
+   Compiling arrow-ipc v58.4.0
+   Compiling arrow-string v58.4.0
+   Compiling parquet v58.4.0
+   Compiling arrow-cast v58.4.0
+   Compiling arrow-json v58.4.0
+   Compiling arrow-csv v58.4.0
+   Compiling arrow v58.4.0
+   Compiling datafusion-common v53.1.0
+   Compiling iceberg v0.10.0
+   Compiling datafusion-expr-common v53.1.0
+   Compiling datafusion-physical-expr-common v53.1.0
+   Compiling datafusion-functions-window-common v53.1.0
+   Compiling datafusion-functions-aggregate-common v53.1.0
+   Compiling datafusion-expr v53.1.0
+   Compiling datafusion-physical-expr v53.1.0
+   Compiling datafusion-execution v53.1.0
+   Compiling datafusion-functions v53.1.0
+   Compiling datafusion-functions-aggregate v53.1.0
+   Compiling datafusion-optimizer v53.1.0
+   Compiling datafusion-functions-window v53.1.0
+   Compiling datafusion-physical-plan v53.1.0
+   Compiling datafusion-physical-expr-adapter v53.1.0
+   Compiling datafusion-functions-nested v53.1.0
+   Compiling datafusion-sql v53.1.0
+   Compiling datafusion-session v53.1.0
+   Compiling datafusion-datasource v53.1.0
+   Compiling datafusion-pruning v53.1.0
+   Compiling datafusion-catalog v53.1.0
+   Compiling datafusion-datasource-csv v53.1.0
+   Compiling datafusion-datasource-json v53.1.0
+   Compiling datafusion-datasource-arrow v53.1.0
+   Compiling datafusion-physical-optimizer v53.1.0
+   Compiling datafusion-datasource-parquet v53.1.0
+   Compiling datafusion-catalog-listing v53.1.0
+   Compiling datafusion-functions-table v53.1.0
+   Compiling datafusion v53.1.0
+   Compiling releasequery-core v0.1.0 (/home/postedism/Desktop/Find work/github-alignment/repos/LakeBridge/release-query/crates/releasequery-core)
+   Compiling iceberg-datafusion v0.10.1
+   Compiling releasequery-lakebridge v0.1.0 (/home/postedism/Desktop/Find work/github-alignment/repos/LakeBridge/release-query/crates/releasequery-lakebridge)
+   Compiling releasequery-cli v0.1.0 (/home/postedism/Desktop/Find work/github-alignment/repos/LakeBridge/release-query/crates/releasequery-cli)
+    Finished `test` profile [unoptimized] target(s) in 1m 04s
+     Running unittests src/main.rs (/tmp/ml-lakebridge-target/debug/deps/release_query-8a19731a82fa4d71)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (/tmp/ml-lakebridge-target/debug/deps/releasequery_core-65e128921cf54d39)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/merge.rs (/tmp/ml-lakebridge-target/debug/deps/merge-608759acd5a5343f)
+
+running 11 tests
+test numeric_tolerance_nan_infinity_zero_and_nontransitivity ... ok
+test schemas_and_partition_contract ... ok
+test drop_cancels_without_more_pulls_and_releases_reservations ... ok
+test decimal_and_timestamp_are_compared_even_when_other_payload_is_equal ... ok
+test numeric_merge_uses_exact_keys_nullable_payloads_and_each_column ... ok
+test memory_pressure_flushes_pending_rows_then_continues ... ok
+test numeric_duplicate_descending_keys_and_schema_drift_fail_closed ... ok
+test typed_merge_cross_batch_pending_null_and_all_eof_shapes ... ok
+test memory_and_value_limits_fail_cleanly ... ok
+test duplicate_reverse_empty_key_and_upstream_failure_release_memory ... ok
+test numeric_64k_batches_remain_bounded_and_errors_release_memory ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+     Running unittests src/lib.rs (/tmp/ml-lakebridge-target/debug/deps/releasequery_lakebridge-138e87a151d70bd4)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests releasequery_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests releasequery_lakebridge
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

@@ -1,5 +1,15 @@
 # LakeBridge · 历史数据湖仓迁移与性能治理
 
+本次代码回归与云端结果分别记录：参见 [数值快照比较契约](docs/releasequery-numeric-contract.md)
+与 [本地验证记录](docs/github-alignment-validation.md)。`numeric-diff` 支持五列投影、
+浮点容差和显式 NaN 策略；原有固定 release 的 `diff` 接口保持精确比较。
+
+2026-09-07 更新：恢复参数与写者归属在同一事务中提交；终止操作在锁内重读状态，原子终止并释放归属；
+已完成发布后的报告写入失败不会把 run 改回 FAILED。本轮本地回归 **73 项通过**
+（含 8 项真实 Spark/Iceberg、8 项 PostgreSQL），新增 9 项生命周期测试。
+详见[恢复说明](docs/run-lifecycle.md)、[招聘与技术维护依据](docs/reliability-refresh-2026-09-07.md)
+及[本轮验证](docs/evidence/run-lifecycle/verification.json)。旧性能/S3 记录保持各自环境与日期。
+
 [English README](README.md)
 
 将不可变的历史 Parquet 与追加批次迁移到 Apache Iceberg，用 PySpark 完成版本归并、
@@ -28,6 +38,52 @@ flowchart LR
   J[Airflow + 持久写入锁] -.-> D
   K[JDBC Catalog / PostgreSQL] -.-> D
 ```
+
+## Cloud qualification results
+
+These results follow the project owner’s separately run cloud qualification recorded in the experience bank. The workload, environment, denominators and limitations below belong to that round; local regression checks for this checkout are separate. [Result record](docs/experience-bank-results.json).
+
+### LakeBridge — Auditable Lakehouse and Versioned Consumer Refresh
+
+- Built an immutable release manifest holding per-table Iceberg snapshot_ids behind a PostgreSQL active-release pointer, so a consumer reads one release_id and gets one consistent multi-table view; single-table snapshots commit atomically by themselves, while the multi-table view exists only through the manifest plus the control-plane pointer, and bypassing the release to query tables directly is not covered.
+
+- Bound tenant refresh plans to their full content: old and new release, tenant, date range and diff hash are part of the plan, an independent approver signs plan_hash, the worker has no approval rights, and execution re-verifies plan and generation before switching the pointer.
+
+- Published consumer results and completion status in one PostgreSQL transaction after temporary-table validation, with the dataset generation guarded by a row lock (SELECT FOR UPDATE, compare generation, switch pointer) under a dataset advisory lock; a report-generation failure cannot undo already-committed data.
+
+- Matched 2,000/2,000 difference business keys (1,000 added, 200 deleted, 800 modified) per key against a SQL oracle with tenant and date impact sets exactly equal, across the 100-test new round: 75 lifecycle/recovery plus 25 consumer bridge tests, with the 19 runtime-compatibility scenarios a labeled subset of the 100 rather than extra cases.
+
+- Injected 20 faults across 5 windows × 4 repetitions (after data write, after a single-table snapshot, after manifest write, after the PostgreSQL pointer commit, before report write): the first 12 left the old release active and the last 8 left the new release active, and retries returned the same release instead of republishing; orphaned files are left to the retention policy, and object storage is not claimed to roll back with the PostgreSQL transaction.
+
+- Held 4 concurrent identical refresh requests to a single job and one consumer publication, and rejected all 8 attempts to reuse a valid approval token with a different tenant or target release.
+
+- Exposed status through REPEATABLE READ snapshot reads and an atomically replaced Prometheus textfile, and explicitly exported a failure state when collection failed.
+
+### LakeBridge Ops Agent — MCP Investigation and Approved Refresh
+
+- Built a LangGraph companion agent with 7 typed MCP tools (list_releases, describe_release, preview_diff, create_plan, approval_status, submit_refresh, get_job), synchronous SQLite checkpoints and a cumulative call budget of at most 12 calls per run that persists across restarts instead of resetting.
+
+- Kept model claims subordinate to complete tool facts: on the fixed old-R1/new-R2 change (tenant A affected 3 days, tenant B affected 2 days) the standard 9-call path produced a plan with exactly 5 tenant/date combinations, and when the scripted model claimed only 1 day was affected the final answer still cited all 5 combinations and marked the inconsistency.
+
+- Bound approval to an independent human identity on the service side: the PostgreSQL approval is tied to plan_hash and expires after 15 minutes, and because the agent token cannot call approve, 2 self-approval attempts returned HTTP 403 while 2 explicit human rejections ended in DENIED with no submit.
+
+- Recovered from ambiguous execution: a submit whose reply was lost reused the original idempotency key to return the same job and publish only once, two successful refreshes each created 1 independent job with no idempotency-key sharing between rounds, and after the checkpointer wrote to disk a killed process recovered with tool results still referencing the same release.
+
+- Exercised a 12-scenario fault matrix (6 classes × 2) covering restart after plan, approval expiry, agent self-approval, plan replacement after approval, lost submit reply and budget exhaustion: restart retained the same plan, expiry and replacement each rejected submission twice, exhaustion stopped new tool calls twice, and retrying submit moved the flow from 9 to 10 calls, still inside the 12-call budget.
+
+- Treated model text and external MCP descriptions as data only — an 'ignore approval' instruction changed nothing about service permissions — while limiting the claim to scripted prompt scenarios rather than all prompt injection or OAuth production systems.
+
+### High-Performance Data Tooling — Rust Arrow/DataFusion Snapshot Diff
+
+- Diffed two primary-key-ordered snapshots of 100M rows each with a streaming merge that never loads a full table, over five projected columns - int64 key, float64 value, timestamp64 and two int32, 32 bytes logical width - in a 22-second core-stage median and 1.1 GiB peak RSS across five warm-file-cache runs on Linux x86_64, 16 vCPU/64 GiB, single local NVMe; the Python baseline took a 540-second median at 6.0 GiB on the same projection.
+
+- Reported throughput honestly as about 9.09 million input rows/s, not output diffs/s, at a fixed 0.1% difference rate, with core output written to a bounded local sink and persistent publication accounted separately; cold-cache results are listed separately and do not reuse the 22 seconds.
+
+- Cut the end-to-end simulated pipeline from 52 to 14 minutes on one full run trajectory per side (baseline preparation 26 min + core 9 min + audit/publish 17 min; candidate preparation 8.5 min + core 22 s + audit/publish 308 s), and scoped it correctly: because preparation changed, this is a whole-pipeline rework, not a merge-algorithm result.
+
+- Made numerical decisions tolerance-aware rather than hash-based: keys are compared exactly, float values use abs(a-b) <= 1e-8 + 1e-6*max(abs(a),abs(b)), NULL equals only NULL, NaN compares by an explicit policy, same-sign infinities and positive/negative zero are equal; xxHash is used only for locating and diagnostics and never bypasses the per-column comparison.
+
+- Treated duplicate primary keys as input errors, used 64K-row RecordBatches with a bounded queue, and ran DataFusion scheduling and outer concurrency under one shared thread budget to avoid nested thread-pool oversubscription; a small-scale independent Python oracle with random differential plus NULL, NaN, infinity and tolerance-boundary cases reconciled added, deleted and changed key sets.
 
 ## 快速运行
 
@@ -169,3 +225,19 @@ HWM 3、规则 v1。首次独立编排数据集应配置独立审计 schema 与 
 阅读顺序：[架构与迁移](docs/migration.md) → [补数](docs/backfill.md) →
 [切换与回退](docs/cutover-rollback.md) → [保留与维护](docs/retention.md) →
 [并发复盘](docs/concurrency-postmortem.md) → [验收](docs/acceptance.md)。
+
+## Consumer Bridge
+
+新增 [Consumer Bridge](docs/consumer-bridge.md)：比较固定发布版本，生成完整业务差异与
+重算范围，经独立人工审批后，在 PostgreSQL/dbt 中发布 `tenant_daily_usage` 消费者版本。
+API、单 worker 与 Spark 导出分别运行；审批绑定租户日期范围、方案 hash 和消费 generation。
+
+`scripts/consumer_demo.py` 可复现从真实 Iceberg 快照到 PostgreSQL 日汇总的本地流程。
+[Ops Agent](ops-agent/README.md) 提供 7 个 MCP 业务工具、LangGraph 持久调查、累计预算、
+独立审批与任务恢复；[ReleaseQuery](release-query/README.md) 提供 Rust/Arrow/DataFusion
+精确归并算子、CLI 和固定 Iceberg 原生快照读取。
+
+组合演示已接通实际 stdio MCP、HTTP、Rust 原生扫描、PostgreSQL 和 dbt。
+演示使用显式版本 ID 与脚本化独立人工审批；模型 HTTP 适配器通过确定性模拟端点验证，
+未声称调用付费模型或部署 OAuth。SQL 保留为默认 backend。
+[实施审计](docs/implementation-roadmap-2026-09-13.md) 汇总完整证据与性能测量。

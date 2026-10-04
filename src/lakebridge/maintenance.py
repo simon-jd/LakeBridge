@@ -73,6 +73,9 @@ def maintain(
     run_id = "maintenance"
     with pipeline.control.writer(run_id):
         try:
+            from lakebridge.consumer.retention import configured_references
+
+            report["consumer_dependencies"] = configured_references(pipeline, name)
             # Every published snapshot must still be pinned. Do not repair silently.
             for release in pipeline.control.releases():
                 pointer = release["tables"][name]

@@ -1,0 +1,26 @@
+[package]
+name = "releasequery-cli"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "release-query"
+path = "src/main.rs"
+
+[dependencies]
+releasequery-core = { path = "../releasequery-core" }
+releasequery-lakebridge = { path = "../releasequery-lakebridge" }
+arrow.workspace = true
+parquet.workspace = true
+datafusion.workspace = true
+tokio.workspace = true
+futures.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+tempfile.workspace = true
+clap.workspace = true
+
+rustix.workspace = true

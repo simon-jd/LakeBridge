@@ -24,8 +24,8 @@ def test_queued_duplicate_reloads_completed_run_before_spark(tmp_path, monkeypat
     original = control.writer
 
     @contextlib.contextmanager
-    def finish_while_queued(run_id, timeout=0):
-        with original(run_id, timeout):
+    def finish_while_queued(run_id, timeout=0, **kwargs):
+        with original(run_id, timeout, **kwargs):
             release = {"run_id": run_id, "release_id": "rel_same", "validation": {"passed": True}}
             control.publish(release, 0)
             control.save_run(

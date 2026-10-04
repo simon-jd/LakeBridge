@@ -1,0 +1,80 @@
+{
+  "request": {
+    "from_pin": {
+      "dataset_id": "saas_seed_42",
+      "release_id": "rel_demo_1",
+      "tables": [
+        {
+          "name": "daily",
+          "table": "lake.consumer_demo_20260913.daily",
+          "snapshot_id": "996376450467074408"
+        },
+        {
+          "name": "detail",
+          "table": "lake.consumer_demo_20260913.detail",
+          "snapshot_id": "2722780289479196381"
+        },
+        {
+          "name": "plans",
+          "table": "lake.consumer_demo_20260913.plans",
+          "snapshot_id": "3766545344931770905"
+        }
+      ],
+      "schema_fingerprint": "a85c81c8fe904119e0433d8ac86676c3efbd7d20bc4043954d089121eda5c378",
+      "semantic_view_version": "detail.utc.v1",
+      "protocol_version": "lakebridge.consumer.v1"
+    },
+    "to_pin": {
+      "dataset_id": "saas_seed_42",
+      "release_id": "rel_demo_2",
+      "tables": [
+        {
+          "name": "daily",
+          "table": "lake.consumer_demo_20260913.daily",
+          "snapshot_id": "5567291339616529795"
+        },
+        {
+          "name": "detail",
+          "table": "lake.consumer_demo_20260913.detail",
+          "snapshot_id": "7440127840202415206"
+        },
+        {
+          "name": "plans",
+          "table": "lake.consumer_demo_20260913.plans",
+          "snapshot_id": "2734685941631437404"
+        }
+      ],
+      "schema_fingerprint": "a85c81c8fe904119e0433d8ac86676c3efbd7d20bc4043954d089121eda5c378",
+      "semantic_view_version": "detail.utc.v1",
+      "protocol_version": "lakebridge.consumer.v1"
+    },
+    "scope": {
+      "tenant_id": "t0000",
+      "start": "2025-01-01",
+      "end": "2025-01-08"
+    },
+    "key_columns": [
+      "tenant_id",
+      "event_id"
+    ],
+    "compare_columns": [
+      "event_time",
+      "units",
+      "plan_id",
+      "billable_units",
+      "rule_version"
+    ],
+    "comparison_version": "usage.exact.v1",
+    "protocol_version": "lakebridge.consumer.v1"
+  },
+  "left_source": {
+    "kind": "parquet_export",
+    "manifest_path": "examples/consumer/pinned-exports/saas_seed_42/rel_demo_1/manifest.json",
+    "manifest_hash": "230ac733f9e4426514dfd7e26fe8a69ece7320bead5f362398380f22b26deab5"
+  },
+  "right_source": {
+    "kind": "parquet_export",
+    "manifest_path": "examples/consumer/pinned-exports/saas_seed_42/rel_demo_2/manifest.json",
+    "manifest_hash": "8f58207247f25756107482c1bce638492839f2ed7690ddd5cf6b3e8630542082"
+  }
+}

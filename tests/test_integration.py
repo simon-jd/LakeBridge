@@ -122,3 +122,51 @@ def test_scope_cannot_advance_past_outside_revisions(spark, tmp_path):
         pipeline.control.finish_writer("unfinished")
     finally:
         pipeline.close()
+
+
+def test_admitted_run_recovers_and_report_failure_preserves_release(spark, tmp_path, monkeypatch):
+    import contextlib
+
+    import lakebridge.pipeline as module
+
+    manifest = generate(tmp_path / "source", rows=20, tenants=2, days=7)
+    pipeline = Pipeline(spark, Settings(tmp_path / "lake", "lifecycle_recovery"))
+    original_writer = pipeline.control.writer
+    original_json_write = module.json_write
+
+    @contextlib.contextmanager
+    def interrupted(*args, **kwargs):
+        with original_writer(*args, **kwargs):
+            raise RuntimeError("executor stopped after admission")
+            yield  # pragma: no cover - contextmanager deliberately never yields
+
+    def report_disk_full(path, payload):
+        if path.name == "release.json":
+            raise OSError("report disk full")
+        return original_json_write(path, payload)
+
+    try:
+        with monkeypatch.context() as patch:
+            patch.setattr(pipeline.control, "writer", interrupted)
+            with pytest.raises(RuntimeError, match="after admission"):
+                pipeline.execute(manifest, 1, reason="initial", run_id="admitted")
+        assert pipeline.control.run("admitted")["state"] == "RUNNING"
+        with monkeypatch.context() as patch:
+            patch.setattr(module, "json_write", report_disk_full)
+            with pytest.raises(OSError, match="report disk full"):
+                pipeline.recover("admitted")
+        assert pipeline.control.run("admitted")["state"] == "COMPLETED"
+        assert pipeline.control.status()["writer_run"] is None
+        audited = pipeline.control.release()
+        assert audited["validation"]["passed"]
+        snapshots = {name: pipeline.snapshot(name) for name in audited["tables"]}
+        # A repeated recovery must not call Spark or advance any snapshot.
+        with monkeypatch.context() as patch:
+            patch.setattr(pipeline, "spark", None)
+            assert pipeline.recover("admitted") == audited
+        assert pipeline.control.status()["generation"] == 1
+        assert len(pipeline.control.releases()) == 1
+        assert {name: pipeline.snapshot(name) for name in snapshots} == snapshots
+        assert pipeline.query()["rows"]
+    finally:
+        pipeline.close()

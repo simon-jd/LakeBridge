@@ -164,7 +164,7 @@ class Pipeline:
             context = previous
         run_dir = self.settings.root / "runs" / run_id
         run_dir.mkdir(parents=True, exist_ok=True)
-        with self.control.writer(run_id, lock_timeout) as waited:
+        with self.control.writer(run_id, lock_timeout, initial_run=context) as waited:
             # Another invocation of this run may finish while we wait for its
             # session lock. Never replay a stale pre-queue RUNNING/empty context.
             latest = self.control.run(run_id)
@@ -339,13 +339,16 @@ class Pipeline:
                 with self.control.transaction():
                     self.control.save_run(run_id, "COMPLETED", context)
                     self.control.finish_writer(run_id)
-                json_write(run_dir / "release.json", candidate)
-                return candidate
             except BaseException as exc:
                 context["last_error"] = f"{type(exc).__name__}: {exc}"
                 self.control.save_run(run_id, "FAILED", context)
                 json_write(run_dir / "failure.json", context)
                 raise
+            # This diagnostic file is outside the durable lifecycle transaction.
+            # A full/unwritable local disk must not demote a committed COMPLETED
+            # run. Retrying the same run returns the audited release without work.
+            json_write(run_dir / "release.json", candidate)
+            return candidate
 
     @staticmethod
     def _fault(requested, stage):
@@ -374,13 +377,20 @@ class Pipeline:
         if not run or run["state"] in ("COMPLETED", "ABORTED"):
             raise LakeBridgeError("Only an unfinished run can be aborted")
         with self.control.writer(run_id):
+            # Execution may have completed between the optimistic read and lock
+            # acquisition. Never overwrite a fresh terminal state with stale data.
+            run = self.control.run(run_id)
+            if not run or run["state"] in ("COMPLETED", "ABORTED"):
+                self.control.finish_writer(run_id)
+                raise LakeBridgeError("Only an unfinished run can be aborted")
             if any(self.snapshot(n) != snap for n, snap in run.get("base_snapshots", {}).items()):
                 raise LakeBridgeError(
                     "Main already changed; recover this run, then forward-correct"
                 )
             run["abort_reason"] = reason
-            self.control.save_run(run_id, "ABORTED", run)
-            self.control.finish_writer(run_id)
+            with self.control.transaction():
+                self.control.save_run(run_id, "ABORTED", run)
+                self.control.finish_writer(run_id)
         return {"run_id": run_id, "state": "ABORTED"}
 
     def activate(self, release_id, reason):

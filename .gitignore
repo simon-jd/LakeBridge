@@ -1,4 +1,9 @@
 .venv/
+.venv-dbt/
+.venv-agent/
+release-query/target/
+consumer-dbt/target/
+consumer-dbt/logs/
 .cache/
 __pycache__/
 *.pyc

@@ -1,0 +1,8 @@
+name: lakebridge_consumer
+version: '1.0.0'
+config-version: 2
+profile: lakebridge_consumer
+model-paths: [models]
+models:
+  lakebridge_consumer:
+    +materialized: table

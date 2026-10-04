@@ -1,0 +1,112 @@
+{
+  "verified_at": "2026-09-07T22:32:05.014785+00:00",
+  "base_commit": "9aa5bf96346e9921b8fd75b8f83123008524547a",
+  "status": "passed_local_only",
+  "working_tree": "uncommitted",
+  "environment": {
+    "mode": "local",
+    "os": "Linux-7.0.0-29-generic-x86_64-with-glibc2.43",
+    "cpu": "13th Gen Intel(R) Core(TM) i9-13900K",
+    "logical_cpus": 32,
+    "memory_kib": 129209084,
+    "runtime": "3.11.11",
+    "java": "openjdk version \"17.0.20\" 2026-07-21\nOpenJDK Runtime Environment Temurin-17.0.20+8 (build 17.0.20+8)\nOpenJDK 64-Bit Server VM Temurin-17.0.20+8 (build 17.0.20+8, mixed mode, sharing)",
+    "dependencies": {
+      "pyspark": "3.5.9",
+      "pyarrow": "19.0.1",
+      "duckdb": "1.2.2",
+      "psycopg": "3.2.6",
+      "pytest": "8.3.5",
+      "ruff": "0.11.2"
+    },
+    "iceberg": "1.10.2",
+    "postgresql": "17.6 (local Docker postgres:17.6-alpine)",
+    "topology": "Spark local[2], Hadoop Catalog + local files + SQLite; PostgreSQL concurrency tested separately in random schemas on localhost:55439; no S3/JDBC combined run",
+    "dataset": "New Spark lifecycle case: seeded synthetic SaaS input, 20 base events, 2 tenants, 7 days; existing suite uses small synthetic inputs."
+  },
+  "results": {
+    "unit_and_postgres": {
+      "tests": 65,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 3.305,
+      "timestamp": "2026-09-07T15:25:38.704688-07:00"
+    },
+    "spark": {
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 38.403,
+      "timestamp": "2026-09-07T15:25:43.259562-07:00"
+    }
+  },
+  "total_passed": 73,
+  "new_lifecycle_cases": 9,
+  "new_lifecycle_breakdown": {
+    "sqlite_process_and_pipeline": 6,
+    "postgresql": 2,
+    "spark": 1
+  },
+  "checks": [
+    {
+      "command": ".venv/bin/ruff check src scripts tests orchestration",
+      "exit_code": 0,
+      "output": "All checks passed!\n"
+    },
+    {
+      "command": ".venv/bin/ruff format --check src scripts tests orchestration",
+      "exit_code": 0,
+      "output": "38 files already formatted\n"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "output": ""
+    }
+  ],
+  "commands": {
+    "unit_and_postgres": "LAKEBRIDGE_TEST_POSTGRES_DSN='postgresql://postgres:postgres_local@127.0.0.1:55439/postgres' .venv/bin/pytest -m 'not integration' -q --junitxml=/tmp/lakebridge-lifecycle-unit-verified.xml",
+    "spark": "JAVA_HOME='/home/postedism/.local/share/mise/installs/java/temurin-17.0.20+8' LAKEBRIDGE_INTEGRATION=1 .venv/bin/pytest -m integration -q --basetemp=/tmp/lakebridge-lifecycle-spark-verified --junitxml=/tmp/lakebridge-lifecycle-spark-verified.xml"
+  },
+  "initial_restricted_attempts": {
+    "unit": {
+      "tests": 65,
+      "failures": 0,
+      "errors": 8,
+      "skipped": 0,
+      "seconds": 2.382,
+      "timestamp": "2026-09-07T15:24:57.900314-07:00"
+    },
+    "spark": {
+      "tests": 8,
+      "failures": 0,
+      "errors": 8,
+      "skipped": 0,
+      "seconds": 1.48,
+      "timestamp": "2026-09-07T15:24:59.075332-07:00"
+    },
+    "reason": "Restricted network blocked local PostgreSQL connection and JVM server socket (Operation not permitted); same tests rerun successfully with approved local network access.",
+    "logs": [
+      "/tmp/lakebridge-lifecycle-unit.log",
+      "/tmp/lakebridge-lifecycle-spark.log"
+    ]
+  },
+  "limitations": [
+    "Local synthetic workloads only; no production, cloud or hardware-fault qualification.",
+    "No new performance/availability measurements; test elapsed time is not a latency benchmark.",
+    "Historical S3/JDBC, 10 GiB and hosted CI evidence was not rerun for these local changes.",
+    "No storage fencing or recovery of pre-upgrade owner-without-run records.",
+    "Interrupted maintenance remains outside pipeline admission guarantee.",
+    "Post-completion report failure surfaces an error; retry returns audit release without recreating the diagnostic file.",
+    "Injected OSError is not a physically full filesystem; os._exit bypasses cleanup but is not a host power failure."
+  ],
+  "remote_preflight": {
+    "command": "git ls-remote --symref origin HEAD",
+    "default_branch": "main",
+    "remote_head": "9aa5bf96346e9921b8fd75b8f83123008524547a",
+    "repository": "https://github.com/JDinSeattle/LakeBridge",
+    "scope": "read-only remote ref verification; current changes remain uncommitted and unpushed"
+  }
+}

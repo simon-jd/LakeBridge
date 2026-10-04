@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "request_hash": "65333beb4754e923e3e0891d591a7a027a279fa217047365239aa26353e709d3",
+  "binary_sha256": "156f2e0d1ef93b84e5d1a33868acb06a0f59aa884ba0c14f0c54b4b4030d4d99",
+  "results": [
+    {
+      "memory_mib": 32,
+      "status": "resource_failure",
+      "code": "RESOURCE_EXHAUSTED",
+      "error": "Rust diff failed: Failed staging diagnostics: /home/postedism/Desktop/LakeBridge/artifacts/releasequery-resources-final-20260913/.release-query-uXMKJD\n{\"error\":\"Not enough memory to continue external sort. Consider increasing the memory limit config: 'datafusion.runtime.memory_limit', or decreasing the config: 'datafusion.execution.sort_spill_reservation_bytes'.\\ncaused by\\nResources exhausted: Failed to allocate additional 9.1 MB for ExternalSorter[0] with 0.0 B already allocated for this reservation - 8.3 MB remain available for the total pool\",\"status\":\"failed\"}\n",
+      "complete_output_absent": true
+    },
+    {
+      "memory_mib": 48,
+      "status": "resource_failure",
+      "code": "RESOURCE_EXHAUSTED",
+      "error": "Rust diff failed: Failed staging diagnostics: /home/postedism/Desktop/LakeBridge/artifacts/releasequery-resources-final-20260913/.release-query-sH6cW9\n{\"error\":\"Not enough memory to continue external sort. Consider increasing the memory limit config: 'datafusion.runtime.memory_limit', or decreasing the config: 'datafusion.execution.sort_spill_reservation_bytes'.\\ncaused by\\nResources exhausted: Failed to allocate additional 9.1 MB for ExternalSorter[0] with 0.0 B already allocated for this reservation - 6.1 MB remain available for the total pool\",\"status\":\"failed\"}\n",
+      "complete_output_absent": true
+    },
+    {
+      "memory_mib": 64,
+      "status": "passed",
+      "sort_spill_count": 6,
+      "full_sql_parity": true,
+      "manifest": "artifacts/releasequery-resources-final-20260913/memory-64m/manifest.json"
+    }
+  ],
+  "scope": "Single local synthetic 50,000-row-per-side wide unsorted case; pool budgets are not process RSS bounds"
+}

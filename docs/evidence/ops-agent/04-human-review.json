@@ -1,0 +1,93 @@
+{
+  "steps": [
+    "export pinned target scope",
+    "COPY job staging",
+    "dbt daily aggregate",
+    "build complete consumer release",
+    "atomically publish and record success"
+  ],
+  "plan_id": "plan_59c9dc35911b43b588e0a815d207b7e1",
+  "diff_hash": "af1d7dabd5dcd23bc238ea94da4b24de84ee1386d1eb2c3f9c486d2ef611b99d",
+  "expires_at": "2026-09-14T06:34:28.016035Z",
+  "consumer_id": "daily_t0000",
+  "source_pins": [
+    {
+      "tables": [
+        {
+          "name": "daily",
+          "table": "lake.consumer_demo_20260913.daily",
+          "snapshot_id": "996376450467074408"
+        },
+        {
+          "name": "detail",
+          "table": "lake.consumer_demo_20260913.detail",
+          "snapshot_id": "2722780289479196381"
+        },
+        {
+          "name": "plans",
+          "table": "lake.consumer_demo_20260913.plans",
+          "snapshot_id": "3766545344931770905"
+        }
+      ],
+      "dataset_id": "saas_seed_42",
+      "release_id": "rel_demo_1",
+      "protocol_version": "lakebridge.consumer.v1",
+      "schema_fingerprint": "a85c81c8fe904119e0433d8ac86676c3efbd7d20bc4043954d089121eda5c378",
+      "semantic_view_version": "detail.utc.v1"
+    },
+    {
+      "tables": [
+        {
+          "name": "daily",
+          "table": "lake.consumer_demo_20260913.daily",
+          "snapshot_id": "5567291339616529795"
+        },
+        {
+          "name": "detail",
+          "table": "lake.consumer_demo_20260913.detail",
+          "snapshot_id": "7440127840202415206"
+        },
+        {
+          "name": "plans",
+          "table": "lake.consumer_demo_20260913.plans",
+          "snapshot_id": "2734685941631437404"
+        }
+      ],
+      "dataset_id": "saas_seed_42",
+      "release_id": "rel_demo_2",
+      "protocol_version": "lakebridge.consumer.v1",
+      "schema_fingerprint": "a85c81c8fe904119e0433d8ac86676c3efbd7d20bc4043954d089121eda5c378",
+      "semantic_view_version": "detail.utc.v1"
+    }
+  ],
+  "full_rebuild": false,
+  "comparison_id": "cmp_027ad651d0c6c08317177beb30176f2ee7d42de5",
+  "affected_scope": [
+    {
+      "tenant_id": "t0000",
+      "business_date": "2025-01-02"
+    },
+    {
+      "tenant_id": "t0000",
+      "business_date": "2025-01-04"
+    },
+    {
+      "tenant_id": "t0000",
+      "business_date": "2025-01-06"
+    }
+  ],
+  "partition_count": 3,
+  "protocol_version": "lakebridge.consumer.v1",
+  "registered_scope": {
+    "end": "2025-01-08",
+    "start": "2025-01-01",
+    "tenant_id": "t0000"
+  },
+  "transform_version": "tenant_daily_usage.v1",
+  "comparison_version": "usage.exact.v1",
+  "expected_generation": 1,
+  "base_consumer_release": "cr_96ed4ae1dafabbdb186807f7bbb2fba67956604e",
+  "expected_transform_version": "tenant_daily_usage.v1",
+  "expected_comparison_version": "usage.exact.v1",
+  "plan_hash": "b2fd6ea177f2b9eecffbb00ae48b8645c6efaa166fde28e3fd28ed68bb455410"
+}

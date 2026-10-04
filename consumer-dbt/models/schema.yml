@@ -1,0 +1,15 @@
+version: 2
+sources:
+  - name: work
+    schema: "{{ var('work_schema') }}"
+    tables:
+      - name: raw_events
+models:
+  - name: tenant_daily_usage
+    columns:
+      - name: tenant_id
+        data_tests: [not_null]
+      - name: business_date
+        data_tests: [not_null]
+      - name: event_count
+        data_tests: [not_null]

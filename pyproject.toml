@@ -16,9 +16,11 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest==8.3.5", "ruff==0.11.2", "jsonschema==4.23.0"]
+consumer = ["fastapi==0.141.1", "uvicorn==0.52.4", "httpx==0.28.1"]
 
 [project.scripts]
 lakebridge = "lakebridge.cli:main"
+lakebridge-consumer = "lakebridge.consumer.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/lakebridge"]
@@ -36,3 +38,6 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends", "fastapi.Header"]

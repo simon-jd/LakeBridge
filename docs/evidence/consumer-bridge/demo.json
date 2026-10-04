@@ -1,0 +1,900 @@
+{
+  "status": "passed",
+  "scope": "local synthetic data, real Spark/Iceberg/PostgreSQL/dbt",
+  "rows_match_target_full_aggregate": true,
+  "trace": [
+    {
+      "comparison": {
+        "comparison_id": "cmp_397cd2ead24025b210a7f82965afe90b8b427a8d",
+        "consumer_id": "daily_t0000",
+        "expected_generation": 0,
+        "requested_by": "agent",
+        "request": {
+          "scope": {
+            "end": "2025-01-08",
+            "start": "2025-01-01",
+            "tenant_id": "t0000"
+          },
+          "to_pin": {
+            "tables": [
+              {
+                "name": "daily",
+                "table": "lake.consumer_demo_20260913.daily",
+                "snapshot_id": "996376450467074408"
+              },
+              {
+                "name": "detail",
+                "table": "lake.consumer_demo_20260913.detail",
+                "snapshot_id": "2722780289479196381"
+              },
+              {
+                "name": "plans",
+                "table": "lake.consumer_demo_20260913.plans",
+                "snapshot_id": "3766545344931770905"
+              }
+            ],
+            "dataset_id": "saas_seed_42",
+            "release_id": "rel_demo_1",
+            "protocol_version": "lakebridge.consumer.v1",
+            "schema_fingerprint": "a85c81c8fe904119e0433d8ac86676c3efbd7d20bc4043954d089121eda5c378",
+            "semantic_view_version": "detail.utc.v1"
+          },
+          "from_pin": null,
+          "key_columns": [
+            "tenant_id",
+            "event_id"
+          ],
+          "compare_columns": [
+            "event_time",
+            "units",
+            "plan_id",
+            "billable_units",
+            "rule_version"
+          ],
+          "protocol_version": "lakebridge.consumer.v1",
+          "comparison_version": "usage.exact.v1"
+        },
+        "state": "COMPLETE",
+        "artifact_hash": "f0f487d7ce25cd6e263181b58b209dc336bc5530ea7286c333371d8e94aad595",
+        "error": null,
+        "result": {
+          "counts": {
+            "DELETE": 0,
+            "INSERT": 18,
+            "UPDATE": 0
+          },
+          "backend": "duckdb-sql",
+          "preview": {
+            "rows": [
+              {
+                "key": {
+                  "event_id": "e000000000001",
+                  "tenant_id": "t0000"
+                },
+                "after": {
+                  "units": "16.122000",
+                  "plan_id": "pro",
+                  "event_id": "e000000000001",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-06T19:51:22.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "16.122000"
+                },
+                "before": null,
+                "change_type": "INSERT"
+              },
+              {
+                "key": {
+                  "event_id": "e000000000002",
+                  "tenant_id": "t0000"
+                },
+                "after": {
+                  "units": "4.680947",
+                  "plan_id": "pro",
+                  "event_id": "e000000000002",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-04T01:05:05.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "4.680947"
+                },
+                "before": null,
+                "change_type": "INSERT"
+              },
+              {
+                "key": {
+                  "event_id": "e000000000003",
+                  "tenant_id": "t0000"
+                },
+                "after": {
+                  "units": "69.007477",
+                  "plan_id": "basic",
+                  "event_id": "e000000000003",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-02T21:55:07.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "69.007477"
+                },
+                "before": null,
+                "change_type": "INSERT"
+              },
+              {
+                "key": {
+                  "event_id": "e000000000004",
+                  "tenant_id": "t0000"
+                },
+                "after": {
+                  "units": "97.775004",
+                  "plan_id": "basic",
+                  "event_id": "e000000000004",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-02T23:39:41.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "97.775004"
+                },
+                "before": null,
+                "change_type": "INSERT"
+              },
+              {
+                "key": {
+                  "event_id": "e000000000006",
+                  "tenant_id": "t0000"
+                },
+                "after": {
+                  "units": "1.052317",
+                  "plan_id": "pro",
+                  "event_id": "e000000000006",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-07T05:48:46.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "1.052317"
+                },
+                "before": null,
+                "change_type": "INSERT"
+              },
+              {
+                "key": {
+                  "event_id": "e000000000009",
+                  "tenant_id": "t0000"
+                },
+                "after": {
+                  "units": "55.682644",
+                  "plan_id": "pro",
+                  "event_id": "e000000000009",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-07T21:58:51.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "55.682644"
+                },
+                "before": null,
+                "change_type": "INSERT"
+              },
+              {
+                "key": {
+                  "event_id": "e000000000010",
+                  "tenant_id": "t0000"
+                },
+                "after": {
+                  "units": "95.648000",
+                  "plan_id": "basic",
+                  "event_id": "e000000000010",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-01T16:43:37.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "95.648000"
+                },
+                "before": null,
+                "change_type": "INSERT"
+              },
+              {
+                "key": {
+                  "event_id": "e000000000011",
+                  "tenant_id": "t0000"
+                },
+                "after": {
+                  "units": "11.605737",
+                  "plan_id": "pro",
+                  "event_id": "e000000000011",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-04T20:05:57.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "11.605737"
+                },
+                "before": null,
+                "change_type": "INSERT"
+              },
+              {
+                "key": {
+                  "event_id": "e000000000012",
+                  "tenant_id": "t0000"
+                },
+                "after": {
+                  "units": "97.285200",
+                  "plan_id": "pro",
+                  "event_id": "e000000000012",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-06T13:10:00.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "97.285200"
+                },
+                "before": null,
+                "change_type": "INSERT"
+              },
+              {
+                "key": {
+                  "event_id": "e000000000015",
+                  "tenant_id": "t0000"
+                },
+                "after": {
+                  "units": "93.620059",
+                  "plan_id": "pro",
+                  "event_id": "e000000000015",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-04T13:16:59.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "93.620059"
+                },
+                "before": null,
+                "change_type": "INSERT"
+              },
+              {
+                "key": {
+                  "event_id": "e000000000016",
+                  "tenant_id": "t0000"
+                },
+                "after": {
+                  "units": "29.744794",
+                  "plan_id": "basic",
+                  "event_id": "e000000000016",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-03T09:43:13.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "29.744794"
+                },
+                "before": null,
+                "change_type": "INSERT"
+              },
+              {
+                "key": {
+                  "event_id": "e000000000018",
+                  "tenant_id": "t0000"
+                },
+                "after": {
+                  "units": "22.313508",
+                  "plan_id": "basic",
+                  "event_id": "e000000000018",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-02T16:49:49.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "22.313508"
+                },
+                "before": null,
+                "change_type": "INSERT"
+              },
+              {
+                "key": {
+                  "event_id": "e000000000019",
+                  "tenant_id": "t0000"
+                },
+                "after": {
+                  "units": "108.238800",
+                  "plan_id": "pro",
+                  "event_id": "e000000000019",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-06T20:16:40.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "108.238800"
+                },
+                "before": null,
+                "change_type": "INSERT"
+              },
+              {
+                "key": {
+                  "event_id": "e000000000020",
+                  "tenant_id": "t0000"
+                },
+                "after": {
+                  "units": "7.941766",
+                  "plan_id": "basic",
+                  "event_id": "e000000000020",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-03T08:20:21.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "7.941766"
+                },
+                "before": null,
+                "change_type": "INSERT"
+              },
+              {
+                "key": {
+                  "event_id": "e000000000022",
+                  "tenant_id": "t0000"
+                },
+                "after": {
+                  "units": "109.408437",
+                  "plan_id": "pro",
+                  "event_id": "e000000000022",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-05T11:27:25.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "109.408437"
+                },
+                "before": null,
+                "change_type": "INSERT"
+              },
+              {
+                "key": {
+                  "event_id": "e000000000023",
+                  "tenant_id": "t0000"
+                },
+                "after": {
+                  "units": "58.266888",
+                  "plan_id": "pro",
+                  "event_id": "e000000000023",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-04T23:24:19.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "58.266888"
+                },
+                "before": null,
+                "change_type": "INSERT"
+              },
+              {
+                "key": {
+                  "event_id": "e000000000024",
+                  "tenant_id": "t0000"
+                },
+                "after": {
+                  "units": "19.824086",
+                  "plan_id": "basic",
+                  "event_id": "e000000000024",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-03T08:58:45.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "19.824086"
+                },
+                "before": null,
+                "change_type": "INSERT"
+              },
+              {
+                "key": {
+                  "event_id": "e000000000027",
+                  "tenant_id": "t0000"
+                },
+                "after": {
+                  "units": "99.062000",
+                  "plan_id": "basic",
+                  "event_id": "e000000000027",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-01T01:42:55.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "99.062000"
+                },
+                "before": null,
+                "change_type": "INSERT"
+              }
+            ],
+            "truncated": false,
+            "total_rows": 18
+          },
+          "checksum": "f0f487d7ce25cd6e263181b58b209dc336bc5530ea7286c333371d8e94aad595",
+          "artifact_id": "cmp_397cd2ead24025b210a7f82965afe90b8b427a8d"
+        }
+      },
+      "plan": {
+        "protocol_version": "lakebridge.consumer.v1",
+        "plan_id": "plan_8c3ec14340e54879b2f572407b627623",
+        "source_pins": [
+          null,
+          {
+            "dataset_id": "saas_seed_42",
+            "release_id": "rel_demo_1",
+            "tables": [
+              {
+                "name": "daily",
+                "table": "lake.consumer_demo_20260913.daily",
+                "snapshot_id": "996376450467074408"
+              },
+              {
+                "name": "detail",
+                "table": "lake.consumer_demo_20260913.detail",
+                "snapshot_id": "2722780289479196381"
+              },
+              {
+                "name": "plans",
+                "table": "lake.consumer_demo_20260913.plans",
+                "snapshot_id": "3766545344931770905"
+              }
+            ],
+            "schema_fingerprint": "a85c81c8fe904119e0433d8ac86676c3efbd7d20bc4043954d089121eda5c378",
+            "semantic_view_version": "detail.utc.v1",
+            "protocol_version": "lakebridge.consumer.v1"
+          }
+        ],
+        "comparison_id": "cmp_397cd2ead24025b210a7f82965afe90b8b427a8d",
+        "diff_hash": "f0f487d7ce25cd6e263181b58b209dc336bc5530ea7286c333371d8e94aad595",
+        "comparison_version": "usage.exact.v1",
+        "consumer_id": "daily_t0000",
+        "expected_generation": 0,
+        "expected_transform_version": "tenant_daily_usage.v1",
+        "expected_comparison_version": "usage.exact.v1",
+        "base_consumer_release": null,
+        "registered_scope": {
+          "tenant_id": "t0000",
+          "start": "2025-01-01",
+          "end": "2025-01-08"
+        },
+        "affected_scope": [
+          {
+            "tenant_id": "t0000",
+            "business_date": "2025-01-01"
+          },
+          {
+            "tenant_id": "t0000",
+            "business_date": "2025-01-02"
+          },
+          {
+            "tenant_id": "t0000",
+            "business_date": "2025-01-03"
+          },
+          {
+            "tenant_id": "t0000",
+            "business_date": "2025-01-04"
+          },
+          {
+            "tenant_id": "t0000",
+            "business_date": "2025-01-05"
+          },
+          {
+            "tenant_id": "t0000",
+            "business_date": "2025-01-06"
+          },
+          {
+            "tenant_id": "t0000",
+            "business_date": "2025-01-07"
+          }
+        ],
+        "partition_count": 7,
+        "full_rebuild": true,
+        "transform_version": "tenant_daily_usage.v1",
+        "expires_at": "2026-09-14T05:29:48.997871Z",
+        "steps": [
+          "export pinned target scope",
+          "COPY job staging",
+          "dbt daily aggregate",
+          "build complete consumer release",
+          "atomically publish and record success"
+        ],
+        "plan_hash": "d9c11f94e9b8943e54bf74d5538b7a675f8f8713e48ae13756ff2a98bd787f30"
+      },
+      "approval": {
+        "approval_id": "approval_029472ec762e4134bb6704da879cecf5",
+        "plan_id": "plan_8c3ec14340e54879b2f572407b627623",
+        "plan_hash": "d9c11f94e9b8943e54bf74d5538b7a675f8f8713e48ae13756ff2a98bd787f30",
+        "principal_id": "human",
+        "decision": "approved",
+        "expires_at": "2026-09-14T05:29:48.997871Z"
+      },
+      "job": {
+        "job_id": "job_daa92b25a757aa860579203e8bc854c046fa4591",
+        "plan_id": "plan_8c3ec14340e54879b2f572407b627623",
+        "approval_id": "approval_029472ec762e4134bb6704da879cecf5",
+        "principal_id": "agent",
+        "idempotency_key": "demo-0",
+        "state": "SUCCEEDED",
+        "output_consumer_release": "cr_daa92b25a757aa860579203e8bc854c046fa4591",
+        "error": null,
+        "confirmed": false,
+        "consumer_id": "daily_t0000"
+      },
+      "retry_job_id": "job_daa92b25a757aa860579203e8bc854c046fa4591"
+    },
+    {
+      "comparison": {
+        "comparison_id": "cmp_027ad651d0c6c08317177beb30176f2ee7d42de5",
+        "consumer_id": "daily_t0000",
+        "expected_generation": 1,
+        "requested_by": "agent",
+        "request": {
+          "scope": {
+            "end": "2025-01-08",
+            "start": "2025-01-01",
+            "tenant_id": "t0000"
+          },
+          "to_pin": {
+            "tables": [
+              {
+                "name": "daily",
+                "table": "lake.consumer_demo_20260913.daily",
+                "snapshot_id": "5567291339616529795"
+              },
+              {
+                "name": "detail",
+                "table": "lake.consumer_demo_20260913.detail",
+                "snapshot_id": "7440127840202415206"
+              },
+              {
+                "name": "plans",
+                "table": "lake.consumer_demo_20260913.plans",
+                "snapshot_id": "2734685941631437404"
+              }
+            ],
+            "dataset_id": "saas_seed_42",
+            "release_id": "rel_demo_2",
+            "protocol_version": "lakebridge.consumer.v1",
+            "schema_fingerprint": "a85c81c8fe904119e0433d8ac86676c3efbd7d20bc4043954d089121eda5c378",
+            "semantic_view_version": "detail.utc.v1"
+          },
+          "from_pin": {
+            "tables": [
+              {
+                "name": "daily",
+                "table": "lake.consumer_demo_20260913.daily",
+                "snapshot_id": "996376450467074408"
+              },
+              {
+                "name": "detail",
+                "table": "lake.consumer_demo_20260913.detail",
+                "snapshot_id": "2722780289479196381"
+              },
+              {
+                "name": "plans",
+                "table": "lake.consumer_demo_20260913.plans",
+                "snapshot_id": "3766545344931770905"
+              }
+            ],
+            "dataset_id": "saas_seed_42",
+            "release_id": "rel_demo_1",
+            "protocol_version": "lakebridge.consumer.v1",
+            "schema_fingerprint": "a85c81c8fe904119e0433d8ac86676c3efbd7d20bc4043954d089121eda5c378",
+            "semantic_view_version": "detail.utc.v1"
+          },
+          "key_columns": [
+            "tenant_id",
+            "event_id"
+          ],
+          "compare_columns": [
+            "event_time",
+            "units",
+            "plan_id",
+            "billable_units",
+            "rule_version"
+          ],
+          "protocol_version": "lakebridge.consumer.v1",
+          "comparison_version": "usage.exact.v1"
+        },
+        "state": "COMPLETE",
+        "artifact_hash": "f92fb97e7e41efdb4b1843a3fb4fbc2fdb3e20f90601624e3c415371270dd8e4",
+        "error": null,
+        "result": {
+          "counts": {
+            "DELETE": 0,
+            "INSERT": 0,
+            "UPDATE": 4
+          },
+          "backend": "duckdb-sql",
+          "preview": {
+            "rows": [
+              {
+                "key": {
+                  "event_id": "e000000000001",
+                  "tenant_id": "t0000"
+                },
+                "after": {
+                  "units": "17.122000",
+                  "plan_id": "pro",
+                  "event_id": "e000000000001",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-06T19:51:22.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "17.122000"
+                },
+                "before": {
+                  "units": "16.122000",
+                  "plan_id": "pro",
+                  "event_id": "e000000000001",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-06T19:51:22.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "16.122000"
+                },
+                "change_type": "UPDATE"
+              },
+              {
+                "key": {
+                  "event_id": "e000000000002",
+                  "tenant_id": "t0000"
+                },
+                "after": {
+                  "units": "5.680947",
+                  "plan_id": "pro",
+                  "event_id": "e000000000002",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-04T01:05:05.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "5.680947"
+                },
+                "before": {
+                  "units": "4.680947",
+                  "plan_id": "pro",
+                  "event_id": "e000000000002",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-04T01:05:05.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "4.680947"
+                },
+                "change_type": "UPDATE"
+              },
+              {
+                "key": {
+                  "event_id": "e000000000003",
+                  "tenant_id": "t0000"
+                },
+                "after": {
+                  "units": "70.007477",
+                  "plan_id": "basic",
+                  "event_id": "e000000000003",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-02T21:55:07.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "70.007477"
+                },
+                "before": {
+                  "units": "69.007477",
+                  "plan_id": "basic",
+                  "event_id": "e000000000003",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-02T21:55:07.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "69.007477"
+                },
+                "change_type": "UPDATE"
+              },
+              {
+                "key": {
+                  "event_id": "e000000000004",
+                  "tenant_id": "t0000"
+                },
+                "after": {
+                  "units": "98.775004",
+                  "plan_id": "basic",
+                  "event_id": "e000000000004",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-02T23:39:41.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "98.775004"
+                },
+                "before": {
+                  "units": "97.775004",
+                  "plan_id": "basic",
+                  "event_id": "e000000000004",
+                  "tenant_id": "t0000",
+                  "event_time": "2025-01-02T23:39:41.000000Z",
+                  "rule_version": "v1",
+                  "billable_units": "97.775004"
+                },
+                "change_type": "UPDATE"
+              }
+            ],
+            "truncated": false,
+            "total_rows": 4
+          },
+          "checksum": "f92fb97e7e41efdb4b1843a3fb4fbc2fdb3e20f90601624e3c415371270dd8e4",
+          "artifact_id": "cmp_027ad651d0c6c08317177beb30176f2ee7d42de5"
+        }
+      },
+      "plan": {
+        "protocol_version": "lakebridge.consumer.v1",
+        "plan_id": "plan_11cec88b462d41eb80a844a200500227",
+        "source_pins": [
+          {
+            "dataset_id": "saas_seed_42",
+            "release_id": "rel_demo_1",
+            "tables": [
+              {
+                "name": "daily",
+                "table": "lake.consumer_demo_20260913.daily",
+                "snapshot_id": "996376450467074408"
+              },
+              {
+                "name": "detail",
+                "table": "lake.consumer_demo_20260913.detail",
+                "snapshot_id": "2722780289479196381"
+              },
+              {
+                "name": "plans",
+                "table": "lake.consumer_demo_20260913.plans",
+                "snapshot_id": "3766545344931770905"
+              }
+            ],
+            "schema_fingerprint": "a85c81c8fe904119e0433d8ac86676c3efbd7d20bc4043954d089121eda5c378",
+            "semantic_view_version": "detail.utc.v1",
+            "protocol_version": "lakebridge.consumer.v1"
+          },
+          {
+            "dataset_id": "saas_seed_42",
+            "release_id": "rel_demo_2",
+            "tables": [
+              {
+                "name": "daily",
+                "table": "lake.consumer_demo_20260913.daily",
+                "snapshot_id": "5567291339616529795"
+              },
+              {
+                "name": "detail",
+                "table": "lake.consumer_demo_20260913.detail",
+                "snapshot_id": "7440127840202415206"
+              },
+              {
+                "name": "plans",
+                "table": "lake.consumer_demo_20260913.plans",
+                "snapshot_id": "2734685941631437404"
+              }
+            ],
+            "schema_fingerprint": "a85c81c8fe904119e0433d8ac86676c3efbd7d20bc4043954d089121eda5c378",
+            "semantic_view_version": "detail.utc.v1",
+            "protocol_version": "lakebridge.consumer.v1"
+          }
+        ],
+        "comparison_id": "cmp_027ad651d0c6c08317177beb30176f2ee7d42de5",
+        "diff_hash": "f92fb97e7e41efdb4b1843a3fb4fbc2fdb3e20f90601624e3c415371270dd8e4",
+        "comparison_version": "usage.exact.v1",
+        "consumer_id": "daily_t0000",
+        "expected_generation": 1,
+        "expected_transform_version": "tenant_daily_usage.v1",
+        "expected_comparison_version": "usage.exact.v1",
+        "base_consumer_release": "cr_daa92b25a757aa860579203e8bc854c046fa4591",
+        "registered_scope": {
+          "tenant_id": "t0000",
+          "start": "2025-01-01",
+          "end": "2025-01-08"
+        },
+        "affected_scope": [
+          {
+            "tenant_id": "t0000",
+            "business_date": "2025-01-02"
+          },
+          {
+            "tenant_id": "t0000",
+            "business_date": "2025-01-04"
+          },
+          {
+            "tenant_id": "t0000",
+            "business_date": "2025-01-06"
+          }
+        ],
+        "partition_count": 3,
+        "full_rebuild": false,
+        "transform_version": "tenant_daily_usage.v1",
+        "expires_at": "2026-09-14T05:29:51.296472Z",
+        "steps": [
+          "export pinned target scope",
+          "COPY job staging",
+          "dbt daily aggregate",
+          "build complete consumer release",
+          "atomically publish and record success"
+        ],
+        "plan_hash": "000583cbe0d469dda64b5c47adc8095a981a8ec31c6a5d9cf8a641a8b24016aa"
+      },
+      "approval": {
+        "approval_id": "approval_b909100d8df74fd9b07beaf6c687b484",
+        "plan_id": "plan_11cec88b462d41eb80a844a200500227",
+        "plan_hash": "000583cbe0d469dda64b5c47adc8095a981a8ec31c6a5d9cf8a641a8b24016aa",
+        "principal_id": "human",
+        "decision": "approved",
+        "expires_at": "2026-09-14T05:29:51.296472Z"
+      },
+      "job": {
+        "job_id": "job_917df52cd68ae36f64b57837c0f23eb73ea4f664",
+        "plan_id": "plan_11cec88b462d41eb80a844a200500227",
+        "approval_id": "approval_b909100d8df74fd9b07beaf6c687b484",
+        "principal_id": "agent",
+        "idempotency_key": "demo-1",
+        "state": "SUCCEEDED",
+        "output_consumer_release": "cr_917df52cd68ae36f64b57837c0f23eb73ea4f664",
+        "error": null,
+        "confirmed": false,
+        "consumer_id": "daily_t0000"
+      },
+      "retry_job_id": "job_917df52cd68ae36f64b57837c0f23eb73ea4f664"
+    }
+  ],
+  "usage": [
+    {
+      "tenant_id": "t0000",
+      "business_date": "2025-01-01",
+      "event_count": 2,
+      "total_units": "194.710000",
+      "billable_units": "194.710000"
+    },
+    {
+      "tenant_id": "t0000",
+      "business_date": "2025-01-02",
+      "event_count": 3,
+      "total_units": "191.095989",
+      "billable_units": "191.095989"
+    },
+    {
+      "tenant_id": "t0000",
+      "business_date": "2025-01-03",
+      "event_count": 3,
+      "total_units": "57.510646",
+      "billable_units": "57.510646"
+    },
+    {
+      "tenant_id": "t0000",
+      "business_date": "2025-01-04",
+      "event_count": 4,
+      "total_units": "169.173631",
+      "billable_units": "169.173631"
+    },
+    {
+      "tenant_id": "t0000",
+      "business_date": "2025-01-05",
+      "event_count": 1,
+      "total_units": "109.408437",
+      "billable_units": "109.408437"
+    },
+    {
+      "tenant_id": "t0000",
+      "business_date": "2025-01-06",
+      "event_count": 3,
+      "total_units": "222.646000",
+      "billable_units": "222.646000"
+    },
+    {
+      "tenant_id": "t0000",
+      "business_date": "2025-01-07",
+      "event_count": 2,
+      "total_units": "56.734961",
+      "billable_units": "56.734961"
+    }
+  ],
+  "source_manifest_sha256": "2706b0eeac6e9b0572438067d77fe11ccc831127d2ba3788288d9634de57dd94",
+  "schemas": {
+    "control": "consumer_demo_20260913_control",
+    "work": "consumer_demo_20260913_work",
+    "serving": "consumer_demo_20260913_serving"
+  },
+  "python": "3.11.11",
+  "consumer": {
+    "consumer_id": "daily_t0000",
+    "registration": {
+      "model": "tenant_daily_usage",
+      "scope": {
+        "end": "2025-01-08",
+        "start": "2025-01-01",
+        "tenant_id": "t0000"
+      },
+      "dataset_id": "saas_seed_42"
+    },
+    "generation": 2,
+    "source_pin": {
+      "tables": [
+        {
+          "name": "daily",
+          "table": "lake.consumer_demo_20260913.daily",
+          "snapshot_id": "5567291339616529795"
+        },
+        {
+          "name": "detail",
+          "table": "lake.consumer_demo_20260913.detail",
+          "snapshot_id": "7440127840202415206"
+        },
+        {
+          "name": "plans",
+          "table": "lake.consumer_demo_20260913.plans",
+          "snapshot_id": "2734685941631437404"
+        }
+      ],
+      "dataset_id": "saas_seed_42",
+      "release_id": "rel_demo_2",
+      "protocol_version": "lakebridge.consumer.v1",
+      "schema_fingerprint": "a85c81c8fe904119e0433d8ac86676c3efbd7d20bc4043954d089121eda5c378",
+      "semantic_view_version": "detail.utc.v1"
+    },
+    "consumer_release_id": "cr_917df52cd68ae36f64b57837c0f23eb73ea4f664",
+    "transform_version": "tenant_daily_usage.v1",
+    "comparison_version": "usage.exact.v1"
+  },
+  "approval_mode": "scripted human identity; no model approval tool"
+}

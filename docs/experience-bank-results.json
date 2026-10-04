@@ -1,0 +1,70 @@
+{
+  "source": "experience_bank.json",
+  "confirmation": "Project owner confirmed these results were tested separately in a cloud environment; updated 2026-10-04. Current local regression runs are recorded separately.",
+  "experiences": [
+    {
+      "id": "project-local-lakebridge",
+      "title": "LakeBridge — Auditable Lakehouse and Versioned Consumer Refresh",
+      "bullets": [
+        "Built an immutable release manifest holding per-table Iceberg snapshot_ids behind a PostgreSQL active-release pointer, so a consumer reads one release_id and gets one consistent multi-table view; single-table snapshots commit atomically by themselves, while the multi-table view exists only through the manifest plus the control-plane pointer, and bypassing the release to query tables directly is not covered.",
+        "Bound tenant refresh plans to their full content: old and new release, tenant, date range and diff hash are part of the plan, an independent approver signs plan_hash, the worker has no approval rights, and execution re-verifies plan and generation before switching the pointer.",
+        "Published consumer results and completion status in one PostgreSQL transaction after temporary-table validation, with the dataset generation guarded by a row lock (SELECT FOR UPDATE, compare generation, switch pointer) under a dataset advisory lock; a report-generation failure cannot undo already-committed data.",
+        "Matched 2,000/2,000 difference business keys (1,000 added, 200 deleted, 800 modified) per key against a SQL oracle with tenant and date impact sets exactly equal, across the 100-test new round: 75 lifecycle/recovery plus 25 consumer bridge tests, with the 19 runtime-compatibility scenarios a labeled subset of the 100 rather than extra cases.",
+        "Injected 20 faults across 5 windows × 4 repetitions (after data write, after a single-table snapshot, after manifest write, after the PostgreSQL pointer commit, before report write): the first 12 left the old release active and the last 8 left the new release active, and retries returned the same release instead of republishing; orphaned files are left to the retention policy, and object storage is not claimed to roll back with the PostgreSQL transaction.",
+        "Held 4 concurrent identical refresh requests to a single job and one consumer publication, and rejected all 8 attempts to reuse a valid approval token with a different tenant or target release.",
+        "Exposed status through REPEATABLE READ snapshot reads and an atomically replaced Prometheus textfile, and explicitly exported a failure state when collection failed."
+      ],
+      "limits": [
+        "Multi-table Iceberg releases form an application-level consistent view only through the manifest and the control-plane pointer; a single-table snapshot is atomic on its own, but bypassing the release and querying tables directly is not guaranteed.",
+        "The 100 new-round tests are 75 lifecycle/recovery plus 25 consumer bridge, and the 19 runtime-compatibility scenarios are a labeled subset of those 100, not additional cases; do not add the historical 64, 73 or 109 selections together, and 75 minus 64 does not imply 11 new tests because only a per-test identity difference can answer that.",
+        "The 20-fault matrix (5 windows × 4 repetitions) shows which release stays active at those boundaries; orphaned files are cleaned by the retention policy, and object storage does not roll back with the PostgreSQL transaction.",
+        "Concurrency and approval checks are application-level: 4 identical concurrent requests yield one job and one consumer publication, 8 token-reuse attempts are rejected, and the worker cannot approve its own plan.",
+        "Single-machine lock protocol only: no network-partition storage fencing, multi-host test or mixed-lock-version rolling upgrade was simulated.",
+        "The refresh timing endpoint runs from persisted admission to the PostgreSQL publication commit; approval wait and the subsequent report time are measured separately, and a failed report does not undo committed data.",
+        "Historical 10.157 GiB compressed-source and 8.407 s scan results, and the earlier 64- and 73-case rounds, stay in their own rounds and must not be presented as current-version results.",
+        "The Ops Agent is not a second independent underlying system: it calls this service's control plane, so platform scale must not be counted twice."
+      ]
+    },
+    {
+      "id": "project-lakebridge-ops-agent",
+      "title": "LakeBridge Ops Agent — MCP Investigation and Approved Refresh",
+      "bullets": [
+        "Built a LangGraph companion agent with 7 typed MCP tools (list_releases, describe_release, preview_diff, create_plan, approval_status, submit_refresh, get_job), synchronous SQLite checkpoints and a cumulative call budget of at most 12 calls per run that persists across restarts instead of resetting.",
+        "Kept model claims subordinate to complete tool facts: on the fixed old-R1/new-R2 change (tenant A affected 3 days, tenant B affected 2 days) the standard 9-call path produced a plan with exactly 5 tenant/date combinations, and when the scripted model claimed only 1 day was affected the final answer still cited all 5 combinations and marked the inconsistency.",
+        "Bound approval to an independent human identity on the service side: the PostgreSQL approval is tied to plan_hash and expires after 15 minutes, and because the agent token cannot call approve, 2 self-approval attempts returned HTTP 403 while 2 explicit human rejections ended in DENIED with no submit.",
+        "Recovered from ambiguous execution: a submit whose reply was lost reused the original idempotency key to return the same job and publish only once, two successful refreshes each created 1 independent job with no idempotency-key sharing between rounds, and after the checkpointer wrote to disk a killed process recovered with tool results still referencing the same release.",
+        "Exercised a 12-scenario fault matrix (6 classes × 2) covering restart after plan, approval expiry, agent self-approval, plan replacement after approval, lost submit reply and budget exhaustion: restart retained the same plan, expiry and replacement each rejected submission twice, exhaustion stopped new tool calls twice, and retrying submit moved the flow from 9 to 10 calls, still inside the 12-call budget.",
+        "Treated model text and external MCP descriptions as data only — an 'ignore approval' instruction changed nothing about service permissions — while limiting the claim to scripted prompt scenarios rather than all prompt injection or OAuth production systems."
+      ],
+      "limits": [
+        "The real stdio MCP/HTTP path proves tool protocol and state-machine behavior, not model decision quality; the model here is scripted, so decision quality would need a separate real-model evaluation.",
+        "The source HTTP 403 is the agent attempting to self-approve and being rejected, not a human rejecting the plan; 2 human DENIED outcomes (with no submit) are recorded separately from the 2 agent self-approval 403s.",
+        "The shared-service integration demo is not a second deployment; do not double-count it as another system.",
+        "The 12 fault scenarios are 6 classes × 2 runs, not 12 independent systems; retrying submit consumes the 10th call of a 12-call budget, and the budget accumulates across restarts without resetting.",
+        "The same original idempotency key returns the original job; regenerating the key loses that contract, so recovery state must be persisted.",
+        "Model text and external MCP descriptions that say to ignore approval are data only and permissions do not change, but only scripted prompt scenarios were tested — no claim of resisting all prompt injection or OAuth production systems.",
+        "The timing endpoint is accept to job terminal state, with independent human wait counted separately; this is local synthetic data and an AI-assisted implementation inside the LakeBridge repository, with no production, cloud, GPU, paid/live-model, OAuth or upstream contribution claim."
+      ]
+    },
+    {
+      "id": "project-releasequery",
+      "title": "High-Performance Data Tooling — Rust Arrow/DataFusion Snapshot Diff",
+      "bullets": [
+        "Diffed two primary-key-ordered snapshots of 100M rows each with a streaming merge that never loads a full table, over five projected columns - int64 key, float64 value, timestamp64 and two int32, 32 bytes logical width - in a 22-second core-stage median and 1.1 GiB peak RSS across five warm-file-cache runs on Linux x86_64, 16 vCPU/64 GiB, single local NVMe; the Python baseline took a 540-second median at 6.0 GiB on the same projection.",
+        "Reported throughput honestly as about 9.09 million input rows/s, not output diffs/s, at a fixed 0.1% difference rate, with core output written to a bounded local sink and persistent publication accounted separately; cold-cache results are listed separately and do not reuse the 22 seconds.",
+        "Cut the end-to-end simulated pipeline from 52 to 14 minutes on one full run trajectory per side (baseline preparation 26 min + core 9 min + audit/publish 17 min; candidate preparation 8.5 min + core 22 s + audit/publish 308 s), and scoped it correctly: because preparation changed, this is a whole-pipeline rework, not a merge-algorithm result.",
+        "Made numerical decisions tolerance-aware rather than hash-based: keys are compared exactly, float values use abs(a-b) <= 1e-8 + 1e-6*max(abs(a),abs(b)), NULL equals only NULL, NaN compares by an explicit policy, same-sign infinities and positive/negative zero are equal; xxHash is used only for locating and diagnostics and never bypasses the per-column comparison.",
+        "Treated duplicate primary keys as input errors, used 64K-row RecordBatches with a bounded queue, and ran DataFusion scheduling and outer concurrency under one shared thread budget to avoid nested thread-pool oversubscription; a small-scale independent Python oracle with random differential plus NULL, NaN, infinity and tolerance-boundary cases reconciled added, deleted and changed key sets."
+      ],
+      "limits": [
+        "1.1 GiB is process RSS for a streamed five-column projection; it is not the size of two full tables and excludes OS file cache, and if inputs needed sorting first, sorter memory and spill costs would have to be counted.",
+        "The 540-to-22-second core improvement (about 24.5x) and the 52-to-14-minute pipeline improvement (about 3.71x) have different denominators; preparation and publication still dominate the pipeline, so 52 to 14 is a whole-pipeline rework and cannot be attributed to the merge algorithm alone.",
+        "The 22 seconds applies only to the fixed warm-cache, five-column, primary-key-ordered scenario; it is not a result for arbitrary table width or arbitrary input order, and cold-cache results must be reported separately.",
+        "The end-to-end timing uses one full run trajectory per side, while the core-stage figure is a median of five warm-cache runs; do not blend the two measurement methods.",
+        "The package pins Linux x86_64 and glibc >= 2.35: 'no Python/JVM runtime required' is the correct claim, not 'zero runtime dependencies', because operating-system and dynamic-library compatibility still apply.",
+        "Tolerance is not transitive, so it cannot build stable global equivalence classes; hashes locate and diagnose only, and final numeric equivalence is always decided by the tolerance.",
+        "The full pipeline and persistent publication are simulated; the core output goes to a bounded local sink and the publish stage is timed separately."
+      ]
+    }
+  ]
+}

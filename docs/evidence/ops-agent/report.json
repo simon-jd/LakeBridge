@@ -1,0 +1,139 @@
+{
+  "status": "passed",
+  "source_root": "artifacts/consumer-demo-20260913",
+  "transport": "real stdio MCP child -> real HTTP FastAPI -> separate workers -> PostgreSQL/dbt",
+  "diff_backend": "rust",
+  "native_source_descriptors": true,
+  "model_mode": "factual_only; no paid/live model call",
+  "question": "Compare rel_demo_1 to rel_demo_2 for tenant t0000; explain usage changes and propose a refresh.",
+  "phases": [
+    "Investigating",
+    "WaitingApproval",
+    "Tracking",
+    "Tracking",
+    "Completed"
+  ],
+  "agent_approval_http_status": 403,
+  "budget": {
+    "model_calls": 0,
+    "tool_calls": 10,
+    "active_ms": 798
+  },
+  "pins": [
+    {
+      "dataset_id": "saas_seed_42",
+      "release_id": "rel_demo_1",
+      "tables": [
+        {
+          "name": "daily",
+          "table": "lake.consumer_demo_20260913.daily",
+          "snapshot_id": "996376450467074408"
+        },
+        {
+          "name": "detail",
+          "table": "lake.consumer_demo_20260913.detail",
+          "snapshot_id": "2722780289479196381"
+        },
+        {
+          "name": "plans",
+          "table": "lake.consumer_demo_20260913.plans",
+          "snapshot_id": "3766545344931770905"
+        }
+      ],
+      "schema_fingerprint": "a85c81c8fe904119e0433d8ac86676c3efbd7d20bc4043954d089121eda5c378",
+      "semantic_view_version": "detail.utc.v1",
+      "protocol_version": "lakebridge.consumer.v1"
+    },
+    {
+      "dataset_id": "saas_seed_42",
+      "release_id": "rel_demo_2",
+      "tables": [
+        {
+          "name": "daily",
+          "table": "lake.consumer_demo_20260913.daily",
+          "snapshot_id": "5567291339616529795"
+        },
+        {
+          "name": "detail",
+          "table": "lake.consumer_demo_20260913.detail",
+          "snapshot_id": "7440127840202415206"
+        },
+        {
+          "name": "plans",
+          "table": "lake.consumer_demo_20260913.plans",
+          "snapshot_id": "2734685941631437404"
+        }
+      ],
+      "schema_fingerprint": "a85c81c8fe904119e0433d8ac86676c3efbd7d20bc4043954d089121eda5c378",
+      "semantic_view_version": "detail.utc.v1",
+      "protocol_version": "lakebridge.consumer.v1"
+    }
+  ],
+  "plan_hash": "b2fd6ea177f2b9eecffbb00ae48b8645c6efaa166fde28e3fd28ed68bb455410",
+  "job_id": "job_59ea005af4aa9d886df67b48e6561b48818d36f7",
+  "consumer_release_id": "cr_59ea005af4aa9d886df67b48e6561b48818d36f7",
+  "target_full_aggregate_matches": true,
+  "usage": [
+    {
+      "consumer_release_id": "cr_59ea005af4aa9d886df67b48e6561b48818d36f7",
+      "tenant_id": "t0000",
+      "business_date": "2025-01-01",
+      "event_count": 2,
+      "total_units": "194.710000",
+      "billable_units": "194.710000"
+    },
+    {
+      "consumer_release_id": "cr_59ea005af4aa9d886df67b48e6561b48818d36f7",
+      "tenant_id": "t0000",
+      "business_date": "2025-01-02",
+      "event_count": 3,
+      "total_units": "191.095989",
+      "billable_units": "191.095989"
+    },
+    {
+      "consumer_release_id": "cr_59ea005af4aa9d886df67b48e6561b48818d36f7",
+      "tenant_id": "t0000",
+      "business_date": "2025-01-03",
+      "event_count": 3,
+      "total_units": "57.510646",
+      "billable_units": "57.510646"
+    },
+    {
+      "consumer_release_id": "cr_59ea005af4aa9d886df67b48e6561b48818d36f7",
+      "tenant_id": "t0000",
+      "business_date": "2025-01-04",
+      "event_count": 4,
+      "total_units": "169.173631",
+      "billable_units": "169.173631"
+    },
+    {
+      "consumer_release_id": "cr_59ea005af4aa9d886df67b48e6561b48818d36f7",
+      "tenant_id": "t0000",
+      "business_date": "2025-01-05",
+      "event_count": 1,
+      "total_units": "109.408437",
+      "billable_units": "109.408437"
+    },
+    {
+      "consumer_release_id": "cr_59ea005af4aa9d886df67b48e6561b48818d36f7",
+      "tenant_id": "t0000",
+      "business_date": "2025-01-06",
+      "event_count": 3,
+      "total_units": "222.646000",
+      "billable_units": "222.646000"
+    },
+    {
+      "consumer_release_id": "cr_59ea005af4aa9d886df67b48e6561b48818d36f7",
+      "tenant_id": "t0000",
+      "business_date": "2025-01-07",
+      "event_count": 2,
+      "total_units": "56.734961",
+      "billable_units": "56.734961"
+    }
+  ],
+  "schemas": {
+    "control": "ops_rust_final_20260913_control",
+    "work": "ops_rust_final_20260913_work",
+    "serving": "ops_rust_final_20260913_serving"
+  }
+}

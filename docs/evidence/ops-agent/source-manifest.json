@@ -1,0 +1,13 @@
+{
+  "ops-agent/pyproject.toml": "49de0ef5d767b724f7614acdb6881812c71d344a94f7cddc1a4025e000fe283f",
+  "ops-agent/src/lakebridge_ops/__init__.py": "d38829b6b0fe7c09482f72d99db4751374521b2e7302f6bdea8ac1e957daccef",
+  "ops-agent/src/lakebridge_ops/cli.py": "b74530ccf63bf464d236b522c24717bb880f6e64bb86fed3795666f42c48b97e",
+  "ops-agent/src/lakebridge_ops/ledger.py": "92f0d44779033017a6979245ba3378cbfeb1180a48369de45f8dad07c2df76de",
+  "ops-agent/src/lakebridge_ops/model.py": "45cbd495fc25ae163b7c2f388c2cd7118d69b69cc8b8b9512c4c3a2b8e3b0384",
+  "ops-agent/src/lakebridge_ops/runtime.py": "2cf9ec5758e0cb5ac489fbd688ba2b76b64da4dd3779d2df9019bcca061cfc4a",
+  "ops-agent/src/lakebridge_ops/tools.py": "5c0890f1bf2b3db989723f6c38e2c010d7b964873a3f8277553bce6482a5ea22",
+  "ops-agent/tests/test_runtime.py": "944cbb3c2e5c34518900a8d90d1994d5c5e4bf01cc7623402f466536d38042dd",
+  "ops-agent/tests/test_tools.py": "c2a9fb1a20b223c4ab96b4d7629f309ad8ef18c060df3587e0c2ddde0a450325",
+  "ops-agent/uv.lock": "a0f8e4b6c236ddfbb9dd6632f1a4fdd24f9e11d8de96f4a03fae7e0c06349718",
+  "scripts/ops_agent_demo.py": "a71f3802438e81b51453216e7e1712f5821603c0de9d3e765e46dedf02db3cac"
+}

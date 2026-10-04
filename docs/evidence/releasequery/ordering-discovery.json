@@ -1,0 +1,9 @@
+{
+  "status": "fixed_and_regression_verified",
+  "initial_partial_benchmark": "artifacts/releasequery-benchmark-20260913",
+  "failure": "sorted-p1-w512 rejected raw descending keys after parallel Parquet byte-range partition coalescing; no complete manifest",
+  "fix": "inputs_sorted fast path uses a single scan partition; raw/core validators remain mandatory",
+  "regression": "test_sorted_large_parquet_uses_one_scan_partition",
+  "final_matrix": "benchmark.json",
+  "upstream_bug_claim": false
+}

@@ -1,0 +1,205 @@
+{
+  "status": "passed",
+  "source_root": "artifacts/consumer-demo-20260913",
+  "request_hash": "6ab76f36e2db2826f84c84e92cc3159fbe22f1c29586e41da6dfba31f5b1b3d6",
+  "pins": [
+    {
+      "dataset_id": "saas_seed_42",
+      "release_id": "rel_demo_1",
+      "tables": [
+        {
+          "name": "daily",
+          "table": "lake.consumer_demo_20260913.daily",
+          "snapshot_id": "996376450467074408"
+        },
+        {
+          "name": "detail",
+          "table": "lake.consumer_demo_20260913.detail",
+          "snapshot_id": "2722780289479196381"
+        },
+        {
+          "name": "plans",
+          "table": "lake.consumer_demo_20260913.plans",
+          "snapshot_id": "3766545344931770905"
+        }
+      ],
+      "schema_fingerprint": "a85c81c8fe904119e0433d8ac86676c3efbd7d20bc4043954d089121eda5c378",
+      "semantic_view_version": "detail.utc.v1",
+      "protocol_version": "lakebridge.consumer.v1"
+    },
+    {
+      "dataset_id": "saas_seed_42",
+      "release_id": "rel_demo_2",
+      "tables": [
+        {
+          "name": "daily",
+          "table": "lake.consumer_demo_20260913.daily",
+          "snapshot_id": "5567291339616529795"
+        },
+        {
+          "name": "detail",
+          "table": "lake.consumer_demo_20260913.detail",
+          "snapshot_id": "7440127840202415206"
+        },
+        {
+          "name": "plans",
+          "table": "lake.consumer_demo_20260913.plans",
+          "snapshot_id": "2734685941631437404"
+        }
+      ],
+      "schema_fingerprint": "a85c81c8fe904119e0433d8ac86676c3efbd7d20bc4043954d089121eda5c378",
+      "semantic_view_version": "detail.utc.v1",
+      "protocol_version": "lakebridge.consumer.v1"
+    }
+  ],
+  "rows_equal": true,
+  "native_provider": "IcebergStaticTableProvider::try_new_from_table_snapshot",
+  "backends": {
+    "sql": {
+      "manifest": "artifacts/releasequery-final-20260913/sql/manifest.json",
+      "counts": {
+        "INSERT": 0,
+        "DELETE": 0,
+        "UPDATE": 4
+      },
+      "metrics": {
+        "total_ms": 31
+      }
+    },
+    "rust_export": {
+      "manifest": "artifacts/releasequery-final-20260913/rust_export/manifest.json",
+      "counts": {
+        "DELETE": 0,
+        "INSERT": 0,
+        "UPDATE": 4
+      },
+      "metrics": {
+        "operator": {
+          "input_pull_ns": 671241,
+          "left_rows": 18,
+          "merge_cpu_ns": 20477,
+          "output_build_ns": 32371,
+          "output_rows": 4,
+          "peak_reserved_bytes": 31488,
+          "right_rows": 18
+        },
+        "output_write_ns": 10800508,
+        "phase_note": "input_pull includes scan/sort/normalization; physical elapsed_compute is attributed CPU work, not additive wall time; total_ms is before manifest publication; RSS is measured externally",
+        "physical_operators": [
+          {
+            "elapsed_compute_ns": 2911,
+            "metrics": "start_timestamp{partition=0}=2026-09-14 05:34:19.580329476 UTC, end_timestamp{partition=0}=2026-09-14 05:34:19.580705708 UTC, elapsed_compute{partition=0}=2.91\u00b5s, output_rows{partition=0}=30, output_bytes{partition=0}=0.0 B, output_batches{partition=0}=0, spill_count{partition=0}=0, spilled_bytes{partition=0}=0.0 B, spilled_rows{partition=0}=0",
+            "operator": "SortExec",
+            "scan_pull_wall_ns": 0,
+            "spill_count": 0
+          },
+          {
+            "elapsed_compute_ns": 0,
+            "metrics": "scan_pull_wall{partition=0}=325.62\u00b5s",
+            "operator": "PinnedScanTimerExec",
+            "scan_pull_wall_ns": 325619,
+            "spill_count": 0
+          },
+          {
+            "elapsed_compute_ns": 0,
+            "metrics": "time_elapsed_opening{partition=0}=69.33\u00b5s, time_elapsed_scanning_until_data{partition=0}=235.25\u00b5s, time_elapsed_scanning_total{partition=0}=264.10\u00b5s, time_elapsed_processing{partition=0}=303.83\u00b5s, file_open_errors{partition=0}=0, file_scan_errors{partition=0}=0, start_timestamp{partition=0}=2026-09-14 05:34:19.580323628 UTC, end_timestamp{partition=0}=2026-09-14 05:34:19.580697617 UTC, elapsed_compute{partition=0}=NOT RECORDED, output_rows{partition=0}=30, output_bytes{partition=0}=2.5 KB, output_batches{partition=0}=1, batches_split{partition=0}=0, row_groups_pruned_bloom_filter{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=1 total \u2192 1 matched, limit_pruned_row_groups{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=0 total \u2192 0 matched, row_groups_pruned_statistics{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=1 total \u2192 1 matched, page_index_pages_pruned{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=0 total \u2192 0 matched, bytes_scanned{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=0, metadata_load_time{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=28.53\u00b5s, files_ranges_pruned_statistics{partition=0}=1 total \u2192 1 matched, scan_efficiency_ratio{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=N/A (0/0), predicate_evaluation_errors{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=0, pushdown_rows_pruned{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=0, pushdown_rows_matched{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=0, row_pushdown_eval_time{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=NOT RECORDED, statistics_eval_time{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=NOT RECORDED, bloom_filter_eval_time{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=NOT RECORDED, page_index_eval_time{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=NOT RECORDED, page_index_rows_pruned{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=0 total \u2192 0 matched, predicate_cache_inner_records{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=0, predicate_cache_records{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=0, row_groups_pruned_bloom_filter{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=0 total \u2192 0 matched, limit_pruned_row_groups{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=0 total \u2192 0 matched, row_groups_pruned_statistics{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=0 total \u2192 0 matched, page_index_pages_pruned{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=0 total \u2192 0 matched, bytes_scanned{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=1.44 K, metadata_load_time{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=NOT RECORDED, files_ranges_pruned_statistics{partition=0}=0 total \u2192 0 matched, scan_efficiency_ratio{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=45% (1.44 K/3.18 K), predicate_evaluation_errors{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=0, pushdown_rows_pruned{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=0, pushdown_rows_matched{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=0, row_pushdown_eval_time{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=NOT RECORDED, statistics_eval_time{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=NOT RECORDED, bloom_filter_eval_time{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=NOT RECORDED, page_index_eval_time{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=NOT RECORDED, page_index_rows_pruned{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=0 total \u2192 0 matched, predicate_cache_inner_records{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=0, predicate_cache_records{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_1/detail.parquet}=0, num_predicate_creation_errors=0",
+            "operator": "DataSourceExec",
+            "scan_pull_wall_ns": 0,
+            "spill_count": 0
+          },
+          {
+            "elapsed_compute_ns": 2695,
+            "metrics": "start_timestamp{partition=0}=2026-09-14 05:34:19.580345392 UTC, end_timestamp{partition=0}=2026-09-14 05:34:19.580998937 UTC, elapsed_compute{partition=0}=2.69\u00b5s, output_rows{partition=0}=30, output_bytes{partition=0}=0.0 B, output_batches{partition=0}=0, spill_count{partition=0}=0, spilled_bytes{partition=0}=0.0 B, spilled_rows{partition=0}=0",
+            "operator": "SortExec",
+            "scan_pull_wall_ns": 0,
+            "spill_count": 0
+          },
+          {
+            "elapsed_compute_ns": 0,
+            "metrics": "scan_pull_wall{partition=0}=178.93\u00b5s",
+            "operator": "PinnedScanTimerExec",
+            "scan_pull_wall_ns": 178933,
+            "spill_count": 0
+          },
+          {
+            "elapsed_compute_ns": 0,
+            "metrics": "time_elapsed_opening{partition=0}=31.61\u00b5s, time_elapsed_scanning_until_data{partition=0}=134.10\u00b5s, time_elapsed_scanning_total{partition=0}=151.52\u00b5s, time_elapsed_processing{partition=0}=162.53\u00b5s, file_open_errors{partition=0}=0, file_scan_errors{partition=0}=0, start_timestamp{partition=0}=2026-09-14 05:34:19.580342313 UTC, end_timestamp{partition=0}=2026-09-14 05:34:19.580993105 UTC, elapsed_compute{partition=0}=NOT RECORDED, output_rows{partition=0}=30, output_bytes{partition=0}=2.6 KB, output_batches{partition=0}=1, batches_split{partition=0}=0, row_groups_pruned_bloom_filter{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=1 total \u2192 1 matched, limit_pruned_row_groups{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=0 total \u2192 0 matched, row_groups_pruned_statistics{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=1 total \u2192 1 matched, page_index_pages_pruned{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=0 total \u2192 0 matched, bytes_scanned{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=0, metadata_load_time{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=13.11\u00b5s, files_ranges_pruned_statistics{partition=0}=1 total \u2192 1 matched, scan_efficiency_ratio{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=N/A (0/0), predicate_evaluation_errors{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=0, pushdown_rows_pruned{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=0, pushdown_rows_matched{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=0, row_pushdown_eval_time{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=NOT RECORDED, statistics_eval_time{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=NOT RECORDED, bloom_filter_eval_time{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=NOT RECORDED, page_index_eval_time{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=NOT RECORDED, page_index_rows_pruned{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=0 total \u2192 0 matched, predicate_cache_inner_records{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=0, predicate_cache_records{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=0, row_groups_pruned_bloom_filter{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=0 total \u2192 0 matched, limit_pruned_row_groups{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=0 total \u2192 0 matched, row_groups_pruned_statistics{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=0 total \u2192 0 matched, page_index_pages_pruned{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=0 total \u2192 0 matched, bytes_scanned{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=1.48 K, metadata_load_time{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=NOT RECORDED, files_ranges_pruned_statistics{partition=0}=0 total \u2192 0 matched, scan_efficiency_ratio{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=47% (1.48 K/3.18 K), predicate_evaluation_errors{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=0, pushdown_rows_pruned{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=0, pushdown_rows_matched{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=0, row_pushdown_eval_time{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=NOT RECORDED, statistics_eval_time{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=NOT RECORDED, bloom_filter_eval_time{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=NOT RECORDED, page_index_eval_time{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=NOT RECORDED, page_index_rows_pruned{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=0 total \u2192 0 matched, predicate_cache_inner_records{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=0, predicate_cache_records{partition=0, filename=home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/exports/saas_seed_42/rel_demo_2/detail.parquet}=0, num_predicate_creation_errors=0",
+            "operator": "DataSourceExec",
+            "scan_pull_wall_ns": 0,
+            "spill_count": 0
+          }
+        ],
+        "prepare_ns": 3081972,
+        "total_ms": 14
+      }
+    },
+    "rust_native": {
+      "manifest": "artifacts/releasequery-final-20260913/rust_native/manifest.json",
+      "counts": {
+        "DELETE": 0,
+        "INSERT": 0,
+        "UPDATE": 4
+      },
+      "metrics": {
+        "operator": {
+          "input_pull_ns": 3441720,
+          "left_rows": 18,
+          "merge_cpu_ns": 20205,
+          "output_build_ns": 34266,
+          "output_rows": 4,
+          "peak_reserved_bytes": 31488,
+          "right_rows": 18
+        },
+        "output_write_ns": 6437966,
+        "phase_note": "input_pull includes scan/sort/normalization; physical elapsed_compute is attributed CPU work, not additive wall time; total_ms is before manifest publication; RSS is measured externally",
+        "physical_operators": [
+          {
+            "elapsed_compute_ns": 39710,
+            "metrics": "start_timestamp{partition=0}=2026-09-14 05:34:19.629692985 UTC, end_timestamp{partition=0}=2026-09-14 05:34:19.631597427 UTC, elapsed_compute{partition=0}=39.71\u00b5s, output_rows{partition=0}=30, output_bytes{partition=0}=0.0 B, output_batches{partition=0}=0, spill_count{partition=0}=0, spilled_bytes{partition=0}=0.0 B, spilled_rows{partition=0}=0",
+            "operator": "SortExec",
+            "scan_pull_wall_ns": 0,
+            "spill_count": 0
+          },
+          {
+            "elapsed_compute_ns": 0,
+            "metrics": "scan_pull_wall{partition=0}=1.81ms",
+            "operator": "PinnedScanTimerExec",
+            "scan_pull_wall_ns": 1808577,
+            "spill_count": 0
+          },
+          {
+            "elapsed_compute_ns": 9547,
+            "metrics": "expr_0_eval_time{partition=0, expr=tenant_id AS tenant_id}=1.47\u00b5s, expr_1_eval_time{partition=0, expr=event_id AS event_id}=348ns, expr_2_eval_time{partition=0, expr=event_time AS event_time}=424ns, expr_3_eval_time{partition=0, expr=units AS units}=319ns, expr_4_eval_time{partition=0, expr=plan_id AS plan_id}=295ns, expr_5_eval_time{partition=0, expr=billable_units AS billable_units}=299ns, expr_6_eval_time{partition=0, expr=rule_version AS rule_version}=290ns, expr_7_eval_time{partition=0, expr=is_deleted AS is_deleted}=410ns, start_timestamp{partition=0}=2026-09-14 05:34:19.629687983 UTC, end_timestamp{partition=0}=2026-09-14 05:34:19.631555548 UTC, elapsed_compute{partition=0}=9.55\u00b5s, output_rows{partition=0}=30, output_bytes{partition=0}=170.4 KB, output_batches{partition=0}=7",
+            "operator": "ProjectionExec",
+            "scan_pull_wall_ns": 0,
+            "spill_count": 0
+          },
+          {
+            "elapsed_compute_ns": 31847,
+            "metrics": "start_timestamp{partition=0}=2026-09-14 05:34:19.629707788 UTC, end_timestamp{partition=0}=2026-09-14 05:34:19.633122142 UTC, elapsed_compute{partition=0}=31.85\u00b5s, output_rows{partition=0}=30, output_bytes{partition=0}=0.0 B, output_batches{partition=0}=0, spill_count{partition=0}=0, spilled_bytes{partition=0}=0.0 B, spilled_rows{partition=0}=0",
+            "operator": "SortExec",
+            "scan_pull_wall_ns": 0,
+            "spill_count": 0
+          },
+          {
+            "elapsed_compute_ns": 0,
+            "metrics": "scan_pull_wall{partition=0}=1.37ms",
+            "operator": "PinnedScanTimerExec",
+            "scan_pull_wall_ns": 1374055,
+            "spill_count": 0
+          },
+          {
+            "elapsed_compute_ns": 9143,
+            "metrics": "expr_0_eval_time{partition=0, expr=tenant_id AS tenant_id}=1.18\u00b5s, expr_1_eval_time{partition=0, expr=event_id AS event_id}=329ns, expr_2_eval_time{partition=0, expr=event_time AS event_time}=407ns, expr_3_eval_time{partition=0, expr=units AS units}=349ns, expr_4_eval_time{partition=0, expr=plan_id AS plan_id}=330ns, expr_5_eval_time{partition=0, expr=billable_units AS billable_units}=310ns, expr_6_eval_time{partition=0, expr=rule_version AS rule_version}=317ns, expr_7_eval_time{partition=0, expr=is_deleted AS is_deleted}=426ns, start_timestamp{partition=0}=2026-09-14 05:34:19.629705081 UTC, end_timestamp{partition=0}=2026-09-14 05:34:19.633089010 UTC, elapsed_compute{partition=0}=9.14\u00b5s, output_rows{partition=0}=30, output_bytes{partition=0}=170.4 KB, output_batches{partition=0}=7",
+            "operator": "ProjectionExec",
+            "scan_pull_wall_ns": 0,
+            "spill_count": 0
+          }
+        ],
+        "prepare_ns": 7349378,
+        "total_ms": 17
+      }
+    }
+  },
+  "binary_sha256": "156f2e0d1ef93b84e5d1a33868acb06a0f59aa884ba0c14f0c54b4b4030d4d99"
+}

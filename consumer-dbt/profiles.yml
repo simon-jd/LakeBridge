@@ -1,0 +1,13 @@
+lakebridge_consumer:
+  target: local
+  outputs:
+    local:
+      type: postgres
+      host: "{{ env_var('LB_DBT_HOST') }}"
+      port: "{{ env_var('LB_DBT_PORT') | int }}"
+      user: "{{ env_var('LB_DBT_USER') }}"
+      password: "{{ env_var('LB_DBT_PASSWORD') }}"
+      dbname: "{{ env_var('LB_DBT_DATABASE') }}"
+      schema: "{{ env_var('LB_DBT_SCHEMA') }}"
+      threads: 1
+      connect_timeout: 5

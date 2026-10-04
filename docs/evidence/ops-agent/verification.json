@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "tests": 10,
+  "tests_command": "ops-agent/.venv/bin/pytest -q ops-agent/tests",
+  "demo_root": "artifacts/ops-rust-final-20260913",
+  "actual_components": [
+    "official MCP SDK stdio client/server",
+    "LangGraph synchronous SQLite checkpoint",
+    "loopback authenticated HTTP",
+    "PostgreSQL",
+    "dbt",
+    "Rust ReleaseDiffExec and fixed native Iceberg provider"
+  ],
+  "model_evidence": "HTTP model adapter tested with deterministic mocked endpoint; full demo uses explicit IDs and no paid/live model",
+  "human_evidence": "separate scripted human review/approval CLI; agent token approval rejected HTTP 403",
+  "scope": "local synthetic pinned release data; exact target-export aggregate parity",
+  "source_manifest": "source-manifest.json",
+  "full_demo_backend": "Rust native Iceberg"
+}

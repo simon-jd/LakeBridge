@@ -1,0 +1,39 @@
+{
+  "status": "consumer_core_verified_agent_rust_pending",
+  "verified_at_utc": "2026-09-13",
+  "results": {
+    "unit-postgres": {
+      "tests": "86",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "18.155"
+    },
+    "spark": {
+      "tests": "9",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "43.713"
+    }
+  },
+  "demo": {
+    "source": "demo.json",
+    "rows_match_target_full_aggregate": true,
+    "consumer_generation": 2,
+    "source_kind": "actual Iceberg snapshots from synthetic local events",
+    "identity_mode": "scripted separate human and agent principals"
+  },
+  "boundaries": [
+    "No model-driven Agent implemented yet",
+    "Rust backend and native Iceberg provider pending",
+    "No remote OAuth, cloud execution, performance or production claim",
+    "Local source exports and PostgreSQL schemas retained for review",
+    "Experience banks not yet updated"
+  ],
+  "commands": {
+    "unit_postgres": "LAKEBRIDGE_TEST_POSTGRES_DSN=<local-postgres> .venv/bin/pytest -m 'not integration' -q",
+    "spark": "JAVA_HOME=<java17> LAKEBRIDGE_INTEGRATION=1 .venv/bin/pytest -m integration -q",
+    "demo": "JAVA_HOME=<java17> LAKEBRIDGE_CONSUMER_DSN=<local-postgres> .venv/bin/python scripts/consumer_demo.py --root artifacts/consumer-demo-20260913 --namespace consumer_demo_20260913"
+  }
+}

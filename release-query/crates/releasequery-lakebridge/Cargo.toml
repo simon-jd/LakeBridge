@@ -1,0 +1,21 @@
+[package]
+name = "releasequery-lakebridge"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+releasequery-core = { path = "../releasequery-core" }
+arrow.workspace = true
+datafusion.workspace = true
+iceberg.workspace = true
+iceberg-datafusion.workspace = true
+futures.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+
+parquet.workspace = true
+chrono.workspace = true
+tokio.workspace = true

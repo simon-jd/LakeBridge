@@ -130,7 +130,13 @@ class Control:
         ]
 
     @contextlib.contextmanager
-    def writer(self, run_id, timeout=0):
+    def writer(self, run_id, timeout=0, *, initial_run=None):
+        """Claim execution, optionally admitting a recoverable pipeline run atomically.
+
+        Existing records are never replaced here: the caller must compare their
+        immutable parameters after acquiring the lock. Maintenance callers have
+        no pipeline context and retain the existing explicit ownership protocol.
+        """
         if self._executing:
             raise ConflictError("Nested writer execution on one connection is not supported")
         started = time.monotonic()
@@ -168,6 +174,12 @@ class Control:
                         f"Unfinished writer {status['writer_run']}; recover it first"
                     )
                 self.execute("UPDATE control SET writer_run=? WHERE id=1", (run_id,))
+                if initial_run is not None and self.run(run_id) is None:
+                    self.save_run(
+                        run_id,
+                        "RUNNING",
+                        {**initial_run, "generation": status["generation"], "started_at": now()},
+                    )
             self._executing = True
             yield time.monotonic() - started
         finally:

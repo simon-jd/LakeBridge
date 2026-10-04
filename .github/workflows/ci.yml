@@ -31,7 +31,11 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - run: pip install -e '.[dev]'
+      - run: pip install -e '.[dev,consumer]'
+      - run: python -m venv .venv-dbt && .venv-dbt/bin/pip install -r consumer-dbt/requirements.lock
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --project ops-agent --frozen --extra dev --python 3.11
+      - run: ops-agent/.venv/bin/pytest -q ops-agent/tests --junitxml=artifacts/ops-agent-tests.xml
       - run: ruff check src scripts tests orchestration
       - run: ruff format --check src scripts tests orchestration
       - run: pytest -m 'not integration' -q --junitxml=artifacts/unit-tests.xml
@@ -53,3 +57,32 @@ jobs:
             artifacts/**/event-logs/*
             artifacts/**/failure.json
           retention-days: 7
+
+  releasequery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: dtolnay/rust-toolchain@1.94.0
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: release-query
+      - run: pip install -e '.[dev,consumer]'
+      - run: cargo fmt --manifest-path release-query/Cargo.toml --all --check
+      - run: cargo clippy --manifest-path release-query/Cargo.toml --locked --workspace --all-targets -- -D warnings
+      - run: cargo test --manifest-path release-query/Cargo.toml --locked --workspace
+      - run: cargo build --manifest-path release-query/Cargo.toml --locked --bin release-query
+      - run: python release-query/tests/numeric_oracle.py --binary release-query/target/debug/release-query --output artifacts/numeric-oracle.json
+      - run: pytest -q tests/test_releasequery.py --junitxml=artifacts/releasequery-tests.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: releasequery-evidence
+          path: |
+            artifacts/releasequery-tests.xml
+            artifacts/numeric-oracle.json

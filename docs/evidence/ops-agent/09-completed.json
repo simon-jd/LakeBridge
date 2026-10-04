@@ -1,0 +1,550 @@
+{
+  "state": {
+    "task_id": "usage-investigation",
+    "intent": {
+      "question": "Compare rel_demo_1 to rel_demo_2 for tenant t0000; explain usage changes and propose a refresh.",
+      "dataset_id": "saas_seed_42",
+      "consumer_id": "daily_t0000",
+      "from_release": "rel_demo_1",
+      "to_release": "rel_demo_2",
+      "tenant_id": "t0000",
+      "source_version": "usage.v1",
+      "run_id": "demo_2",
+      "initial": false,
+      "rebuild": false
+    },
+    "phase": "Completed",
+    "next_node": "end",
+    "releases": {
+      "from_release": {
+        "dataset_id": "saas_seed_42",
+        "release_id": "rel_demo_1",
+        "tables": [
+          {
+            "name": "daily",
+            "table": "lake.consumer_demo_20260913.daily",
+            "snapshot_id": "996376450467074408"
+          },
+          {
+            "name": "detail",
+            "table": "lake.consumer_demo_20260913.detail",
+            "snapshot_id": "2722780289479196381"
+          },
+          {
+            "name": "plans",
+            "table": "lake.consumer_demo_20260913.plans",
+            "snapshot_id": "3766545344931770905"
+          }
+        ],
+        "schema_fingerprint": "a85c81c8fe904119e0433d8ac86676c3efbd7d20bc4043954d089121eda5c378",
+        "semantic_view_version": "detail.utc.v1",
+        "protocol_version": "lakebridge.consumer.v1"
+      },
+      "to_release": {
+        "dataset_id": "saas_seed_42",
+        "release_id": "rel_demo_2",
+        "tables": [
+          {
+            "name": "daily",
+            "table": "lake.consumer_demo_20260913.daily",
+            "snapshot_id": "5567291339616529795"
+          },
+          {
+            "name": "detail",
+            "table": "lake.consumer_demo_20260913.detail",
+            "snapshot_id": "7440127840202415206"
+          },
+          {
+            "name": "plans",
+            "table": "lake.consumer_demo_20260913.plans",
+            "snapshot_id": "2734685941631437404"
+          }
+        ],
+        "schema_fingerprint": "a85c81c8fe904119e0433d8ac86676c3efbd7d20bc4043954d089121eda5c378",
+        "semantic_view_version": "detail.utc.v1",
+        "protocol_version": "lakebridge.consumer.v1"
+      }
+    },
+    "runbook": {
+      "source_version": "usage.v1",
+      "source_id": "consumer-runbook.md",
+      "sha256": "a3b63ba26efacad07d1f5187272044433cae5fb56e021927d8e792122c87479e",
+      "excerpts": [
+        "# Usage rules, source version usage.v1",
+        "The canonical business input is the `detail` snapshot in an explicitly named\nLakeBridge release. Use tool-returned release IDs and snapshot IDs for facts.\nThis document explains semantics; it does not establish any event counts or totals.",
+        "Business keys are `(tenant_id,event_id)`. Tombstones (`is_deleted=true`) mean an\nevent is absent. Dates derive from UTC event timestamps; consumer windows are\n`[start,end)`. The upstream backfill CLI instead uses inclusive end dates.",
+        "`units` and `billable_units` are exact decimals with scale 6. `billable_units` and\n`plan_id` already reflect upstream LakeBridge rules. Rule v1 uses units directly;\nrule v2 applies the existing 0.9 factor to pro-plan usage. The consumer does not\nrecompute historical plan associations.",
+        "Only event_time, units, plan_id, billable_units and rule_version determine updates.\nFile rewrites and ingestion/source metadata changes alone do not change usage.\nThe current upstream rejects changing an event's timestamp; the generic diff can\nstill represent date moves in standalone fixtures."
+      ],
+      "authority": "explanation_only; pinned tool facts take precedence"
+    },
+    "run": {
+      "run_id": "demo_2",
+      "state": "COMPLETED",
+      "rule_version": "v1",
+      "input_high_watermark": 2,
+      "reason": "consumer demo"
+    },
+    "comparison": {
+      "comparison_id": "cmp_027ad651d0c6c08317177beb30176f2ee7d42de5",
+      "consumer_id": "daily_t0000",
+      "expected_generation": 1,
+      "requested_by": "agent",
+      "request": {
+        "scope": {
+          "end": "2025-01-08",
+          "start": "2025-01-01",
+          "tenant_id": "t0000"
+        },
+        "to_pin": {
+          "tables": [
+            {
+              "name": "daily",
+              "table": "lake.consumer_demo_20260913.daily",
+              "snapshot_id": "5567291339616529795"
+            },
+            {
+              "name": "detail",
+              "table": "lake.consumer_demo_20260913.detail",
+              "snapshot_id": "7440127840202415206"
+            },
+            {
+              "name": "plans",
+              "table": "lake.consumer_demo_20260913.plans",
+              "snapshot_id": "2734685941631437404"
+            }
+          ],
+          "dataset_id": "saas_seed_42",
+          "release_id": "rel_demo_2",
+          "protocol_version": "lakebridge.consumer.v1",
+          "schema_fingerprint": "a85c81c8fe904119e0433d8ac86676c3efbd7d20bc4043954d089121eda5c378",
+          "semantic_view_version": "detail.utc.v1"
+        },
+        "from_pin": {
+          "tables": [
+            {
+              "name": "daily",
+              "table": "lake.consumer_demo_20260913.daily",
+              "snapshot_id": "996376450467074408"
+            },
+            {
+              "name": "detail",
+              "table": "lake.consumer_demo_20260913.detail",
+              "snapshot_id": "2722780289479196381"
+            },
+            {
+              "name": "plans",
+              "table": "lake.consumer_demo_20260913.plans",
+              "snapshot_id": "3766545344931770905"
+            }
+          ],
+          "dataset_id": "saas_seed_42",
+          "release_id": "rel_demo_1",
+          "protocol_version": "lakebridge.consumer.v1",
+          "schema_fingerprint": "a85c81c8fe904119e0433d8ac86676c3efbd7d20bc4043954d089121eda5c378",
+          "semantic_view_version": "detail.utc.v1"
+        },
+        "key_columns": [
+          "tenant_id",
+          "event_id"
+        ],
+        "compare_columns": [
+          "event_time",
+          "units",
+          "plan_id",
+          "billable_units",
+          "rule_version"
+        ],
+        "protocol_version": "lakebridge.consumer.v1",
+        "comparison_version": "usage.exact.v1"
+      },
+      "state": "COMPLETE",
+      "artifact_hash": "af1d7dabd5dcd23bc238ea94da4b24de84ee1386d1eb2c3f9c486d2ef611b99d",
+      "error": null,
+      "result": {
+        "counts": {
+          "DELETE": 0,
+          "INSERT": 0,
+          "UPDATE": 4
+        },
+        "backend": "rust-releasequery",
+        "preview": {
+          "rows": [
+            {
+              "key": {
+                "event_id": "e000000000001",
+                "tenant_id": "t0000"
+              },
+              "after": {
+                "units": "17.122000",
+                "plan_id": "pro",
+                "event_id": "e000000000001",
+                "tenant_id": "t0000",
+                "event_time": "2025-01-06T19:51:22.000000Z",
+                "rule_version": "v1",
+                "billable_units": "17.122000"
+              },
+              "before": {
+                "units": "16.122000",
+                "plan_id": "pro",
+                "event_id": "e000000000001",
+                "tenant_id": "t0000",
+                "event_time": "2025-01-06T19:51:22.000000Z",
+                "rule_version": "v1",
+                "billable_units": "16.122000"
+              },
+              "change_type": "UPDATE"
+            },
+            {
+              "key": {
+                "event_id": "e000000000002",
+                "tenant_id": "t0000"
+              },
+              "after": {
+                "units": "5.680947",
+                "plan_id": "pro",
+                "event_id": "e000000000002",
+                "tenant_id": "t0000",
+                "event_time": "2025-01-04T01:05:05.000000Z",
+                "rule_version": "v1",
+                "billable_units": "5.680947"
+              },
+              "before": {
+                "units": "4.680947",
+                "plan_id": "pro",
+                "event_id": "e000000000002",
+                "tenant_id": "t0000",
+                "event_time": "2025-01-04T01:05:05.000000Z",
+                "rule_version": "v1",
+                "billable_units": "4.680947"
+              },
+              "change_type": "UPDATE"
+            },
+            {
+              "key": {
+                "event_id": "e000000000003",
+                "tenant_id": "t0000"
+              },
+              "after": {
+                "units": "70.007477",
+                "plan_id": "basic",
+                "event_id": "e000000000003",
+                "tenant_id": "t0000",
+                "event_time": "2025-01-02T21:55:07.000000Z",
+                "rule_version": "v1",
+                "billable_units": "70.007477"
+              },
+              "before": {
+                "units": "69.007477",
+                "plan_id": "basic",
+                "event_id": "e000000000003",
+                "tenant_id": "t0000",
+                "event_time": "2025-01-02T21:55:07.000000Z",
+                "rule_version": "v1",
+                "billable_units": "69.007477"
+              },
+              "change_type": "UPDATE"
+            },
+            {
+              "key": {
+                "event_id": "e000000000004",
+                "tenant_id": "t0000"
+              },
+              "after": {
+                "units": "98.775004",
+                "plan_id": "basic",
+                "event_id": "e000000000004",
+                "tenant_id": "t0000",
+                "event_time": "2025-01-02T23:39:41.000000Z",
+                "rule_version": "v1",
+                "billable_units": "98.775004"
+              },
+              "before": {
+                "units": "97.775004",
+                "plan_id": "basic",
+                "event_id": "e000000000004",
+                "tenant_id": "t0000",
+                "event_time": "2025-01-02T23:39:41.000000Z",
+                "rule_version": "v1",
+                "billable_units": "97.775004"
+              },
+              "change_type": "UPDATE"
+            }
+          ],
+          "truncated": false,
+          "total_rows": 4
+        },
+        "checksum": "af1d7dabd5dcd23bc238ea94da4b24de84ee1386d1eb2c3f9c486d2ef611b99d",
+        "artifact_id": "cmp_027ad651d0c6c08317177beb30176f2ee7d42de5"
+      }
+    },
+    "plan": {
+      "protocol_version": "lakebridge.consumer.v1",
+      "plan_id": "plan_59c9dc35911b43b588e0a815d207b7e1",
+      "source_pins": [
+        {
+          "dataset_id": "saas_seed_42",
+          "release_id": "rel_demo_1",
+          "tables": [
+            {
+              "name": "daily",
+              "table": "lake.consumer_demo_20260913.daily",
+              "snapshot_id": "996376450467074408"
+            },
+            {
+              "name": "detail",
+              "table": "lake.consumer_demo_20260913.detail",
+              "snapshot_id": "2722780289479196381"
+            },
+            {
+              "name": "plans",
+              "table": "lake.consumer_demo_20260913.plans",
+              "snapshot_id": "3766545344931770905"
+            }
+          ],
+          "schema_fingerprint": "a85c81c8fe904119e0433d8ac86676c3efbd7d20bc4043954d089121eda5c378",
+          "semantic_view_version": "detail.utc.v1",
+          "protocol_version": "lakebridge.consumer.v1"
+        },
+        {
+          "dataset_id": "saas_seed_42",
+          "release_id": "rel_demo_2",
+          "tables": [
+            {
+              "name": "daily",
+              "table": "lake.consumer_demo_20260913.daily",
+              "snapshot_id": "5567291339616529795"
+            },
+            {
+              "name": "detail",
+              "table": "lake.consumer_demo_20260913.detail",
+              "snapshot_id": "7440127840202415206"
+            },
+            {
+              "name": "plans",
+              "table": "lake.consumer_demo_20260913.plans",
+              "snapshot_id": "2734685941631437404"
+            }
+          ],
+          "schema_fingerprint": "a85c81c8fe904119e0433d8ac86676c3efbd7d20bc4043954d089121eda5c378",
+          "semantic_view_version": "detail.utc.v1",
+          "protocol_version": "lakebridge.consumer.v1"
+        }
+      ],
+      "comparison_id": "cmp_027ad651d0c6c08317177beb30176f2ee7d42de5",
+      "diff_hash": "af1d7dabd5dcd23bc238ea94da4b24de84ee1386d1eb2c3f9c486d2ef611b99d",
+      "comparison_version": "usage.exact.v1",
+      "consumer_id": "daily_t0000",
+      "expected_generation": 1,
+      "expected_transform_version": "tenant_daily_usage.v1",
+      "expected_comparison_version": "usage.exact.v1",
+      "base_consumer_release": "cr_96ed4ae1dafabbdb186807f7bbb2fba67956604e",
+      "registered_scope": {
+        "tenant_id": "t0000",
+        "start": "2025-01-01",
+        "end": "2025-01-08"
+      },
+      "affected_scope": [
+        {
+          "tenant_id": "t0000",
+          "business_date": "2025-01-02"
+        },
+        {
+          "tenant_id": "t0000",
+          "business_date": "2025-01-04"
+        },
+        {
+          "tenant_id": "t0000",
+          "business_date": "2025-01-06"
+        }
+      ],
+      "partition_count": 3,
+      "full_rebuild": false,
+      "transform_version": "tenant_daily_usage.v1",
+      "expires_at": "2026-09-14T06:34:28.016035Z",
+      "steps": [
+        "export pinned target scope",
+        "COPY job staging",
+        "dbt daily aggregate",
+        "build complete consumer release",
+        "atomically publish and record success"
+      ],
+      "plan_hash": "b2fd6ea177f2b9eecffbb00ae48b8645c6efaa166fde28e3fd28ed68bb455410"
+    },
+    "evidence": {
+      "facts": {
+        "DELETE": 0,
+        "INSERT": 0,
+        "UPDATE": 4,
+        "target_release": "rel_demo_2",
+        "tenant_id": "t0000",
+        "affected_dates": [
+          "2025-01-02",
+          "2025-01-04",
+          "2025-01-06"
+        ]
+      },
+      "document_claims": [],
+      "conflicts": [],
+      "citations": {
+        "releases": {
+          "from_release": {
+            "dataset_id": "saas_seed_42",
+            "release_id": "rel_demo_1",
+            "tables": [
+              {
+                "name": "daily",
+                "table": "lake.consumer_demo_20260913.daily",
+                "snapshot_id": "996376450467074408"
+              },
+              {
+                "name": "detail",
+                "table": "lake.consumer_demo_20260913.detail",
+                "snapshot_id": "2722780289479196381"
+              },
+              {
+                "name": "plans",
+                "table": "lake.consumer_demo_20260913.plans",
+                "snapshot_id": "3766545344931770905"
+              }
+            ],
+            "schema_fingerprint": "a85c81c8fe904119e0433d8ac86676c3efbd7d20bc4043954d089121eda5c378",
+            "semantic_view_version": "detail.utc.v1",
+            "protocol_version": "lakebridge.consumer.v1"
+          },
+          "to_release": {
+            "dataset_id": "saas_seed_42",
+            "release_id": "rel_demo_2",
+            "tables": [
+              {
+                "name": "daily",
+                "table": "lake.consumer_demo_20260913.daily",
+                "snapshot_id": "5567291339616529795"
+              },
+              {
+                "name": "detail",
+                "table": "lake.consumer_demo_20260913.detail",
+                "snapshot_id": "7440127840202415206"
+              },
+              {
+                "name": "plans",
+                "table": "lake.consumer_demo_20260913.plans",
+                "snapshot_id": "2734685941631437404"
+              }
+            ],
+            "schema_fingerprint": "a85c81c8fe904119e0433d8ac86676c3efbd7d20bc4043954d089121eda5c378",
+            "semantic_view_version": "detail.utc.v1",
+            "protocol_version": "lakebridge.consumer.v1"
+          }
+        },
+        "comparison_id": "cmp_027ad651d0c6c08317177beb30176f2ee7d42de5",
+        "diff_hash": "af1d7dabd5dcd23bc238ea94da4b24de84ee1386d1eb2c3f9c486d2ef611b99d",
+        "runbook_source": "consumer-runbook.md",
+        "runbook_sha256": "a3b63ba26efacad07d1f5187272044433cae5fb56e021927d8e792122c87479e"
+      },
+      "preview_truncated": false,
+      "summary": "0 inserts, 4 updates, 0 deletes; 3 tenant-days to rebuild from rel_demo_2.",
+      "interpretation": "factual_only",
+      "authority": "Pinned tool facts override document/model claims; no business write is complete."
+    },
+    "approval_id": "approval_19615636747f4c1eadf5f387e62debaf",
+    "idempotency_key": "ops_e8866dccb0259ae265b2967919bedb98276143d6",
+    "job": {
+      "job_id": "job_59ea005af4aa9d886df67b48e6561b48818d36f7",
+      "plan_id": "plan_59c9dc35911b43b588e0a815d207b7e1",
+      "approval_id": "approval_19615636747f4c1eadf5f387e62debaf",
+      "principal_id": "agent",
+      "idempotency_key": "ops_e8866dccb0259ae265b2967919bedb98276143d6",
+      "state": "SUCCEEDED",
+      "output_consumer_release": "cr_59ea005af4aa9d886df67b48e6561b48818d36f7",
+      "error": null,
+      "confirmed": false,
+      "consumer_id": "daily_t0000"
+    },
+    "unresolved": []
+  },
+  "waiting": false,
+  "budget": {
+    "model_calls": 0,
+    "tool_calls": 10,
+    "active_ms": 798
+  },
+  "limits": {
+    "active_ms": 180000,
+    "call_timeout_ms": 15000,
+    "model_calls": 6,
+    "tool_calls": 12
+  },
+  "receipts": [
+    {
+      "call_id": 1,
+      "kind": "tool",
+      "operation": "get_release",
+      "state": "COMPLETE",
+      "reserved_ms": 15000
+    },
+    {
+      "call_id": 2,
+      "kind": "tool",
+      "operation": "get_release",
+      "state": "COMPLETE",
+      "reserved_ms": 15000
+    },
+    {
+      "call_id": 3,
+      "kind": "tool",
+      "operation": "search_runbook",
+      "state": "COMPLETE",
+      "reserved_ms": 15000
+    },
+    {
+      "call_id": 4,
+      "kind": "tool",
+      "operation": "get_run",
+      "state": "COMPLETE",
+      "reserved_ms": 15000
+    },
+    {
+      "call_id": 5,
+      "kind": "tool",
+      "operation": "compare_releases",
+      "state": "OBSERVED",
+      "reserved_ms": 15000
+    },
+    {
+      "call_id": 6,
+      "kind": "tool",
+      "operation": "compare_releases",
+      "state": "OBSERVED",
+      "reserved_ms": 15000
+    },
+    {
+      "call_id": 7,
+      "kind": "tool",
+      "operation": "create_refresh_plan",
+      "state": "COMPLETE",
+      "reserved_ms": 15000
+    },
+    {
+      "call_id": 8,
+      "kind": "tool",
+      "operation": "execute_refresh",
+      "state": "OBSERVED",
+      "reserved_ms": 15000
+    },
+    {
+      "call_id": 9,
+      "kind": "tool",
+      "operation": "get_refresh_job",
+      "state": "OBSERVED",
+      "reserved_ms": 15000
+    },
+    {
+      "call_id": 10,
+      "kind": "tool",
+      "operation": "get_refresh_job",
+      "state": "OBSERVED",
+      "reserved_ms": 15000
+    }
+  ]
+}

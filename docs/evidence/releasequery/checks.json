@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "checks": [
+    "root Ruff lint/format",
+    "Agent Ruff lint/format",
+    "cargo fmt",
+    "cargo clippy --all-targets -- -D warnings",
+    "CI workflow YAML syntax"
+  ],
+  "hosted_ci_run": false
+}

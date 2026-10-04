@@ -1,0 +1,7 @@
+26/09/13 21:29:35 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/09/13 21:29:35 WARN SparkConf: Note that spark.local.dir will be overridden by the value set by the cluster manager (via SPARK_LOCAL_DIRS in mesos/standalone/kubernetes and LOCAL_DIRS in YARN).
+26/09/13 21:29:36 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+26/09/13 21:29:42 WARN SparkStringUtils: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+{"status": "passed", "report": "/home/postedism/Desktop/LakeBridge/artifacts/consumer-demo-20260913/report.json", "consumer_release_id": "cr_917df52cd68ae36f64b57837c0f23eb73ea4f664"}

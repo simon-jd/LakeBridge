@@ -187,3 +187,45 @@ def test_postgres_monitoring_uses_a_coherent_read_only_snapshot(stores, monkeypa
     assert snapshot["generation"] == 0
     assert snapshot["release_count"] == 0
     assert snapshot["active_release"] is None
+
+
+def test_atomic_admission_survives_backend_termination(stores):
+    import psycopg
+
+    victim, schema = stores()
+    recovery, _ = stores(schema)
+    context = {"manifest": "/local/immutable/manifest.json", "input_high_watermark": 1}
+    with victim.writer("admitted", initial_run=context):
+        assert recovery.run("admitted")["manifest"] == context["manifest"]
+        recovery.execute("SELECT pg_terminate_backend(?)", (victim.db.info.backend_pid,))
+        with pytest.raises(psycopg.OperationalError):
+            victim.status()
+    assert recovery.status()["writer_run"] == "admitted"
+    with recovery.writer("admitted", timeout=2, initial_run={"manifest": "wrong"}):
+        run = recovery.run("admitted")
+        assert run["state"] == "RUNNING" and run["generation"] == 0
+        assert run["manifest"] == context["manifest"]
+        recovery.finish_writer("admitted")
+
+
+def test_admission_failure_rolls_back_both_rows_in_postgres(stores, monkeypatch):
+    writer, schema = stores()
+    observer, _ = stores(schema)
+    original = writer.save_run
+
+    def interrupt(*args):
+        original(*args)
+        # A second connection must see neither uncommitted row change.
+        assert observer.status()["writer_run"] is None
+        assert observer.run("interrupted") is None
+        raise RuntimeError("admission interrupted")
+
+    monkeypatch.setattr(writer, "save_run", interrupt)
+    with pytest.raises(RuntimeError, match="admission interrupted"):
+        with writer.writer("interrupted", initial_run={"manifest": "fixed"}):
+            pytest.fail("admission should fail before execution")
+    assert observer.status()["writer_run"] is None
+    assert observer.run("interrupted") is None
+    # The failed transaction must release its session advisory lock too.
+    with observer.writer("next", initial_run={"manifest": "fixed"}):
+        observer.finish_writer("next")

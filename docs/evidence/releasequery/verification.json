@@ -1,0 +1,66 @@
+{
+  "status": "implemented_and_locally_verified",
+  "verified_at_utc": "2026-09-14",
+  "local_date": "2026-09-13",
+  "tests": {
+    "root_non_spark": {
+      "tests": 100,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "root_spark_prior_checkpoint": {
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "ops_agent": {
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "rust_core": {
+      "tests": 7,
+      "failures": 0
+    },
+    "rust_cross_language_subset_of_root": {
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "spark_note": "The nine real Spark/Iceberg cases ran at the Consumer Bridge checkpoint; subsequent work changes the independent Agent/Rust components and worker backend selection, not the upstream Spark pipeline.",
+  "demos": {
+    "native_export_sql_parity": "native-parity.json",
+    "real_stdio_http_native_iceberg_postgres_dbt": "combined-demo.json",
+    "model_mode": "full demo uses explicit IDs; configured model behavior is tested with a deterministic mocked HTTP endpoint",
+    "approval": "separate scripted human CLI; agent approval HTTP 403"
+  },
+  "benchmark": {
+    "report": "benchmark.json",
+    "observations": 48,
+    "complete_row_parity": true,
+    "default_backend": "sql",
+    "integrated_rust_speedup_claim": false
+  },
+  "resources": "resource-probe.json",
+  "binary_sha256": "156f2e0d1ef93b84e5d1a33868acb06a0f59aa884ba0c14f0c54b4b4030d4d99",
+  "versions": {
+    "rust": "1.94.0",
+    "datafusion": "53.1.0",
+    "arrow_parquet": "58.4.0",
+    "iceberg": "0.10.0",
+    "iceberg_datafusion": "0.10.1"
+  },
+  "source_manifest": "source-manifest.json",
+  "publication": "local uncommitted changes; no hosted CI run or push for this update",
+  "limitations": [
+    "Local synthetic data, no production/cloud/GPU claim",
+    "Native adapter rejects delete files, schema evolution/name mapping and missing field IDs",
+    "Memory reservations are not process RSS bounds",
+    "SQL kept as default; Rust is an explicit backend alternative"
+  ]
+}

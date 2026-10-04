@@ -1,0 +1,90 @@
+[
+  {
+    "name": "rust-build",
+    "command": [
+      "/home/postedism/Desktop/LakeBridge/.runtime/rustup/toolchains/1.94.0-x86_64-unknown-linux-gnu/bin/cargo",
+      "build",
+      "--offline",
+      "--locked",
+      "-p",
+      "releasequery-cli"
+    ],
+    "cwd": "/home/postedism/Desktop/Find work/github-alignment/repos/LakeBridge/release-query",
+    "returncode": 0,
+    "seconds": 0.17,
+    "output": "    Finished `dev` profile [unoptimized] target(s) in 0.15s\n"
+  },
+  {
+    "name": "rust-clippy",
+    "command": [
+      "/home/postedism/Desktop/LakeBridge/.runtime/rustup/toolchains/1.94.0-x86_64-unknown-linux-gnu/bin/cargo",
+      "clippy",
+      "--offline",
+      "--locked",
+      "--workspace",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "cwd": "/home/postedism/Desktop/Find work/github-alignment/repos/LakeBridge/release-query",
+    "returncode": 0,
+    "seconds": 0.18,
+    "output": "    Finished `dev` profile [unoptimized] target(s) in 0.15s\n"
+  },
+  {
+    "name": "rust-fmt",
+    "command": [
+      "/home/postedism/Desktop/LakeBridge/.runtime/rustup/toolchains/1.94.0-x86_64-unknown-linux-gnu/bin/cargo",
+      "fmt",
+      "--all",
+      "--check"
+    ],
+    "cwd": "/home/postedism/Desktop/Find work/github-alignment/repos/LakeBridge/release-query",
+    "returncode": 0,
+    "seconds": 0.05,
+    "output": ""
+  },
+  {
+    "name": "numeric-oracle",
+    "command": [
+      "/home/postedism/Desktop/Find work/github-alignment/repos/LakeBridge/.venv/bin/python",
+      "release-query/tests/numeric_oracle.py",
+      "--binary",
+      "/tmp/ml-lakebridge-target/debug/release-query",
+      "--output",
+      "/home/postedism/Desktop/Find work/github-alignment/reports/LakeBridge-numeric-oracle.json"
+    ],
+    "cwd": "/home/postedism/Desktop/Find work/github-alignment/repos/LakeBridge",
+    "returncode": 0,
+    "seconds": 2.21,
+    "output": "{\n  \"passed\": true,\n  \"cases\": 43,\n  \"random_rounds\": 20,\n  \"binary_sha256\": \"c8fca1b0e8009967fef34e39020870adce3c0834c0b0c84a88c9ece0bcd38457\",\n  \"outcomes\": [\n    {\n      \"case\": \"random-0-nan-True\",\n      \"input_rows\": 435,\n      \"changes\": 104\n    },\n    {\n      \"case\": \"random-0-nan-False\",\n      \"input_rows\": 435,\n      \"changes\": 127\n    },\n    {\n      \"case\": \"random-1-nan-True\",\n      \"input_rows\": 431,\n      \"changes\": 111\n    },\n    {\n      \"case\": \"random-1-nan-False\",\n      \"input_rows\": 431,\n      \"changes\": 132\n    },\n    {\n      \"case\": \"random-2-nan-True\",\n      \"input_rows\": 435,\n      \"changes\": 104\n    },\n    {\n      \"case\": \"random-2-nan-False\",\n      \"input_rows\": 435,\n      \"changes\": 126\n    },\n    {\n      \"case\": \"random-3-nan-True\",\n      \"input_rows\": 425,\n      \"changes\": 100\n    },\n    {\n      \"case\": \"random-3-nan-False\",\n      \"input_rows\": 425,\n      \"changes\": 125\n    },\n    {\n      \"case\": \"random-4-nan-True\",\n      \"input_rows\": 447,\n      \"changes\": 91\n    },\n    {\n      \"case\": \"random-4-nan-False\",\n      \"input_rows\": 447,\n      \"changes\": 117\n    },\n    {\n      \"case\": \"random-5-nan-True\",\n      \"input_rows\": 437,\n      \"changes\": 102\n    },\n    {\n      \"case\": \"random-5-nan-False\",\n      \"input_rows\": 437,\n      \"changes\": 122\n    },\n    {\n      \"case\": \"random-6-nan-True\",\n      \"input_rows\": 433,\n      \"changes\": 107\n    },\n    {\n      \"case\": \"random-6-nan-False\",\n      \"input_rows\": 433,\n      \"changes\": 126\n    },\n    {\n      \"case\": \"random-7-nan-True\",\n      \"input_rows\": 423,\n      \"changes\": 122\n    },\n    {\n      \"case\": \"random-7-nan-False\",\n      \"input_rows\": 423,\n      \"changes\": 141\n    },\n    {\n      \"case\": \"random-8-nan-True\",\n      \"input_rows\": 437,\n      \"changes\": 98\n    },\n    {\n      \"case\": \"random-8-nan-False\",\n      \"input_rows\": 437,\n      \"changes\": 120\n    },\n    {\n      \"case\": \"random-9-nan-True\",\n      \"input_rows\": 424,\n      \"changes\": 115\n    },\n    {\n      \"case\": \"random-9-nan-False\",\n      \"input_rows\": 424,\n      \"changes\": 133\n    },\n    {\n      \"case\": \"random-10-nan-True\",\n      \"input_rows\": 434,\n      \"changes\": 106\n    },\n    {\n      \"case\": \"random-10-nan-False\",\n      \"input_rows\": 434,\n      \"changes\": 121\n    },\n    {\n      \"case\": \"random-11-nan-True\",\n      \"input_rows\": 426,\n      \"changes\": 106\n    },\n    {\n      \"case\": \"random-11-nan-False\",\n      \"input_rows\": 426,\n      \"changes\": 126\n    },\n    {\n      \"case\": \"random-12-nan-True\",\n      \"input_rows\": 431,\n      \"changes\": 85\n    },\n    {\n      \"case\": \"random-12-nan-False\",\n      \"input_rows\": 431,\n      \"changes\": 113\n    },\n    {\n      \"case\": \"random-13-nan-True\",\n      \"input_rows\": 441,\n      \"changes\": 99\n    },\n    {\n      \"case\": \"random-13-nan-False\",\n      \"input_rows\": 441,\n      \"changes\": 121\n    },\n    {\n      \"case\": \"random-14-nan-True\",\n      \"input_rows\": 433,\n      \"changes\": 94\n    },\n    {\n      \"case\": \"random-14-nan-False\",\n      \"input_rows\": 433,\n      \"changes\": 116\n    },\n    {\n      \"case\": \"random-15-nan-True\",\n      \"input_rows\": 425,\n      \"changes\": 117\n    },\n    {\n      \"case\": \"random-15-nan-False\",\n      \"input_rows\": 425,\n      \"changes\": 139\n    },\n    {\n      \"case\": \"random-16-nan-True\",\n      \"input_rows\": 428,\n      \"changes\": 89\n    },\n    {\n      \"case\": \"random-16-nan-False\",\n      \"input_rows\": 428,\n      \"changes\": 117\n    },\n    {\n      \"case\": \"random-17-nan-True\",\n      \"input_rows\": 422,\n      \"changes\": 101\n    },\n    {\n      \"case\": \"random-17-nan-False\",\n      \"input_rows\": 422,\n      \"changes\": 123\n    },\n    {\n      \"case\": \"random-18-nan-True\",\n      \"input_rows\": 427,\n      \"changes\": 100\n    },\n    {\n      \"case\": \"random-18-nan-False\",\n      \"input_rows\": 427,\n      \"changes\": 118\n    },\n    {\n      \"case\": \"random-19-nan-True\",\n      \"input_rows\": 437,\n      \"changes\": 103\n    },\n    {\n      \"case\": \"random-19-nan-False\",\n      \"input_rows\": 437,\n      \"changes\": 120\n    },\n    {\n      \"case\": \"tolerance-boundary-and-no-overwrite\",\n      \"changes\": 1\n    },\n    {\n      \"case\": \"duplicate-cross-batch\",\n      \"rejected\": true\n    },\n    {\n      \"case\": \"descending\",\n      \"rejected\": true\n    }\n  ],\n  \"scope\": \"small-scale independent Python oracle, no cloud throughput/RSS rerun\"\n}\n\n"
+  },
+  {
+    "name": "rust-python-bridge",
+    "command": [
+      "/home/postedism/Desktop/Find work/github-alignment/repos/LakeBridge/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/test_releasequery.py",
+      "-ra"
+    ],
+    "cwd": "/home/postedism/Desktop/Find work/github-alignment/repos/LakeBridge",
+    "returncode": 0,
+    "seconds": 1.29,
+    "output": "...........s..                                                           [100%]\n=========================== short test summary info ============================\nSKIPPED [1] tests/test_releasequery.py:155: Generate the real pinned native request using the ReleaseQuery demo\n13 passed, 1 skipped in 1.15s\n"
+  },
+  {
+    "name": "numeric-ruff",
+    "command": [
+      "/home/postedism/Desktop/Find work/github-alignment/repos/LakeBridge/.venv/bin/ruff",
+      "check",
+      "release-query/tests/numeric_oracle.py"
+    ],
+    "cwd": "/home/postedism/Desktop/Find work/github-alignment/repos/LakeBridge",
+    "returncode": 0,
+    "seconds": 0.01,
+    "output": "All checks passed!\n"
+  }
+]

@@ -1,0 +1,49 @@
+{
+  "date_utc": "2026-10-04",
+  "scope": "Local regression and small numeric correctness qualification. Cloud performance in experience-bank-results.json is a separate owner-confirmed execution.",
+  "platform": "Linux-7.0.0-34-generic-x86_64-with-glibc2.43",
+  "rust": "1.94.0",
+  "python": "3.12",
+  "results": {
+    "python_unit": {
+      "passed": 82,
+      "skipped": 2,
+      "deselected": 25,
+      "command": "LAKEBRIDGE_RELEASE_QUERY=release-query/target/debug/release-query PYTHONPATH=src .venv/bin/python -m pytest -m 'not integration and not postgres' -q -ra"
+    },
+    "postgres_16_8": {
+      "passed": 13,
+      "skipped": 3,
+      "deselected": 93,
+      "command": ".venv/bin/python -m pytest -q -m postgres -ra",
+      "external_setup": "temporary PostgreSQL 16.8 container; LAKEBRIDGE_TEST_POSTGRES_DSN set by parent agent; container removed after run"
+    },
+    "ops_agent": {
+      "passed": 10,
+      "command": "ops-agent/.venv/bin/python -m pytest -q ops-agent/tests"
+    },
+    "rust_workspace": {
+      "passed": 11,
+      "command": "cargo test --manifest-path release-query/Cargo.toml --offline --locked --workspace"
+    },
+    "python_rust_bridge_subset": {
+      "passed": 13,
+      "skipped": 1,
+      "subset_of": "python_unit"
+    },
+    "numeric_oracle": {
+      "passed": 43,
+      "command": ".venv/bin/python release-query/tests/numeric_oracle.py --binary release-query/target/debug/release-query"
+    },
+    "build_fmt_clippy_ruff": {
+      "passed": true,
+      "details": "rust-verification.json"
+    }
+  },
+  "not_repeated": [
+    "100M-row-per-input cloud throughput and peak RSS qualification",
+    "full Spark/MinIO/native-Iceberg demo",
+    "3 dbt-dependent PostgreSQL cases (missing optional environment)",
+    "native pinned-request test (requires generated demo artifact)"
+  ]
+}

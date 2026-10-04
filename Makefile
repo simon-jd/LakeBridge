@@ -3,7 +3,7 @@ LB ?= .venv/bin/lakebridge
 
 .PHONY: install test integration lint demo benchmark compose-up compose-down
 install:
-	uv sync --frozen --extra dev --python 3.11
+	uv sync --frozen --extra dev --extra consumer --python 3.11
 	$(PYTHON) scripts/bootstrap.py
 
 test:

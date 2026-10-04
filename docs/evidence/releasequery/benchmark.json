@@ -1,0 +1,133 @@
+{
+  "status": "passed",
+  "rows_per_side": 50000,
+  "repeats": 3,
+  "cases": 8,
+  "all_results_equal": true,
+  "environment": {
+    "platform": "linux",
+    "python": "3.11.11 (main, Mar 17 2025, 21:02:09) [Clang 20.1.0 ]",
+    "cpu_count": 32,
+    "rust_binary_sha256": "156f2e0d1ef93b84e5d1a33868acb06a0f59aa884ba0c14f0c54b4b4030d4d99"
+  },
+  "method": "Fresh worker processes; warm local filesystem caches not flushed; alternating backend order; generation untimed. backend_ns includes configured backend and Rust bridge validation; process_wall_ns includes Python imports and shared parity validation. RSS is 5ms-sampled process-tree sum, not a hard bound. Core/scan/sort/output metrics are retained separately in raw-results.json.",
+  "medians": [
+    {
+      "case": "sorted-p1-w16",
+      "sql": {
+        "backend_ns": 61272964,
+        "process_wall_ns": 169727985,
+        "sampled_tree_peak_rss_kib": 120764
+      },
+      "rust": {
+        "backend_ns": 99141497,
+        "process_wall_ns": 211150682,
+        "sampled_tree_peak_rss_kib": 127064
+      },
+      "rust_to_sql_backend_ratio": 1.6180300499254452
+    },
+    {
+      "case": "sorted-p1-w512",
+      "sql": {
+        "backend_ns": 123948223,
+        "process_wall_ns": 246561241,
+        "sampled_tree_peak_rss_kib": 199744
+      },
+      "rust": {
+        "backend_ns": 161407541,
+        "process_wall_ns": 282245659,
+        "sampled_tree_peak_rss_kib": 151512
+      },
+      "rust_to_sql_backend_ratio": 1.302217467046704
+    },
+    {
+      "case": "sorted-p50-w16",
+      "sql": {
+        "backend_ns": 97228501,
+        "process_wall_ns": 1961750204,
+        "sampled_tree_peak_rss_kib": 139668
+      },
+      "rust": {
+        "backend_ns": 1541803345,
+        "process_wall_ns": 3380168328,
+        "sampled_tree_peak_rss_kib": 131316
+      },
+      "rust_to_sql_backend_ratio": 15.857524585306525
+    },
+    {
+      "case": "sorted-p50-w512",
+      "sql": {
+        "backend_ns": 198823887,
+        "process_wall_ns": 2141574735,
+        "sampled_tree_peak_rss_kib": 259360
+      },
+      "rust": {
+        "backend_ns": 1725524676,
+        "process_wall_ns": 3635328307,
+        "sampled_tree_peak_rss_kib": 195840
+      },
+      "rust_to_sql_backend_ratio": 8.678658797169577
+    },
+    {
+      "case": "unsorted-p1-w16",
+      "sql": {
+        "backend_ns": 63334219,
+        "process_wall_ns": 174428878,
+        "sampled_tree_peak_rss_kib": 121504
+      },
+      "rust": {
+        "backend_ns": 99777355,
+        "process_wall_ns": 205512238,
+        "sampled_tree_peak_rss_kib": 141316
+      },
+      "rust_to_sql_backend_ratio": 1.5754098901890619
+    },
+    {
+      "case": "unsorted-p1-w512",
+      "sql": {
+        "backend_ns": 124310049,
+        "process_wall_ns": 236049987,
+        "sampled_tree_peak_rss_kib": 194880
+      },
+      "rust": {
+        "backend_ns": 198395079,
+        "process_wall_ns": 310356534,
+        "sampled_tree_peak_rss_kib": 236912
+      },
+      "rust_to_sql_backend_ratio": 1.5959697594520295
+    },
+    {
+      "case": "unsorted-p50-w16",
+      "sql": {
+        "backend_ns": 100986086,
+        "process_wall_ns": 1986556633,
+        "sampled_tree_peak_rss_kib": 139508
+      },
+      "rust": {
+        "backend_ns": 1581829660,
+        "process_wall_ns": 3419224510,
+        "sampled_tree_peak_rss_kib": 144864
+      },
+      "rust_to_sql_backend_ratio": 15.663837689481301
+    },
+    {
+      "case": "unsorted-p50-w512",
+      "sql": {
+        "backend_ns": 195067164,
+        "process_wall_ns": 2131131458,
+        "sampled_tree_peak_rss_kib": 259888
+      },
+      "rust": {
+        "backend_ns": 1769712841,
+        "process_wall_ns": 3684310701,
+        "sampled_tree_peak_rss_kib": 247020
+      },
+      "rust_to_sql_backend_ratio": 9.07232567855449
+    }
+  ],
+  "decision": {
+    "default_backend": "sql",
+    "reason": "All eight median configured-backend calls are slower through the current Rust bridge. Its internal CLI task is faster, but process/provenance and independent complete-artifact validation costs erase that gain. Keep SQL as default and Rust as an explicit alternative; no speedup claim for the integrated service.",
+    "measurement_boundary": "Rust backend includes its independent full row validation; both fresh worker processes additionally perform the same parity validation. These are measured adapter behavior, not a claim that the merge algorithm itself is 1.3\u201315.9 times slower."
+  }
+}

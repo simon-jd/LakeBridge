@@ -1,0 +1,221 @@
+{
+  "passed": true,
+  "cases": 43,
+  "random_rounds": 20,
+  "binary_sha256": "c8fca1b0e8009967fef34e39020870adce3c0834c0b0c84a88c9ece0bcd38457",
+  "outcomes": [
+    {
+      "case": "random-0-nan-True",
+      "input_rows": 435,
+      "changes": 104
+    },
+    {
+      "case": "random-0-nan-False",
+      "input_rows": 435,
+      "changes": 127
+    },
+    {
+      "case": "random-1-nan-True",
+      "input_rows": 431,
+      "changes": 111
+    },
+    {
+      "case": "random-1-nan-False",
+      "input_rows": 431,
+      "changes": 132
+    },
+    {
+      "case": "random-2-nan-True",
+      "input_rows": 435,
+      "changes": 104
+    },
+    {
+      "case": "random-2-nan-False",
+      "input_rows": 435,
+      "changes": 126
+    },
+    {
+      "case": "random-3-nan-True",
+      "input_rows": 425,
+      "changes": 100
+    },
+    {
+      "case": "random-3-nan-False",
+      "input_rows": 425,
+      "changes": 125
+    },
+    {
+      "case": "random-4-nan-True",
+      "input_rows": 447,
+      "changes": 91
+    },
+    {
+      "case": "random-4-nan-False",
+      "input_rows": 447,
+      "changes": 117
+    },
+    {
+      "case": "random-5-nan-True",
+      "input_rows": 437,
+      "changes": 102
+    },
+    {
+      "case": "random-5-nan-False",
+      "input_rows": 437,
+      "changes": 122
+    },
+    {
+      "case": "random-6-nan-True",
+      "input_rows": 433,
+      "changes": 107
+    },
+    {
+      "case": "random-6-nan-False",
+      "input_rows": 433,
+      "changes": 126
+    },
+    {
+      "case": "random-7-nan-True",
+      "input_rows": 423,
+      "changes": 122
+    },
+    {
+      "case": "random-7-nan-False",
+      "input_rows": 423,
+      "changes": 141
+    },
+    {
+      "case": "random-8-nan-True",
+      "input_rows": 437,
+      "changes": 98
+    },
+    {
+      "case": "random-8-nan-False",
+      "input_rows": 437,
+      "changes": 120
+    },
+    {
+      "case": "random-9-nan-True",
+      "input_rows": 424,
+      "changes": 115
+    },
+    {
+      "case": "random-9-nan-False",
+      "input_rows": 424,
+      "changes": 133
+    },
+    {
+      "case": "random-10-nan-True",
+      "input_rows": 434,
+      "changes": 106
+    },
+    {
+      "case": "random-10-nan-False",
+      "input_rows": 434,
+      "changes": 121
+    },
+    {
+      "case": "random-11-nan-True",
+      "input_rows": 426,
+      "changes": 106
+    },
+    {
+      "case": "random-11-nan-False",
+      "input_rows": 426,
+      "changes": 126
+    },
+    {
+      "case": "random-12-nan-True",
+      "input_rows": 431,
+      "changes": 85
+    },
+    {
+      "case": "random-12-nan-False",
+      "input_rows": 431,
+      "changes": 113
+    },
+    {
+      "case": "random-13-nan-True",
+      "input_rows": 441,
+      "changes": 99
+    },
+    {
+      "case": "random-13-nan-False",
+      "input_rows": 441,
+      "changes": 121
+    },
+    {
+      "case": "random-14-nan-True",
+      "input_rows": 433,
+      "changes": 94
+    },
+    {
+      "case": "random-14-nan-False",
+      "input_rows": 433,
+      "changes": 116
+    },
+    {
+      "case": "random-15-nan-True",
+      "input_rows": 425,
+      "changes": 117
+    },
+    {
+      "case": "random-15-nan-False",
+      "input_rows": 425,
+      "changes": 139
+    },
+    {
+      "case": "random-16-nan-True",
+      "input_rows": 428,
+      "changes": 89
+    },
+    {
+      "case": "random-16-nan-False",
+      "input_rows": 428,
+      "changes": 117
+    },
+    {
+      "case": "random-17-nan-True",
+      "input_rows": 422,
+      "changes": 101
+    },
+    {
+      "case": "random-17-nan-False",
+      "input_rows": 422,
+      "changes": 123
+    },
+    {
+      "case": "random-18-nan-True",
+      "input_rows": 427,
+      "changes": 100
+    },
+    {
+      "case": "random-18-nan-False",
+      "input_rows": 427,
+      "changes": 118
+    },
+    {
+      "case": "random-19-nan-True",
+      "input_rows": 437,
+      "changes": 103
+    },
+    {
+      "case": "random-19-nan-False",
+      "input_rows": 437,
+      "changes": 120
+    },
+    {
+      "case": "tolerance-boundary-and-no-overwrite",
+      "changes": 1
+    },
+    {
+      "case": "duplicate-cross-batch",
+      "rejected": true
+    },
+    {
+      "case": "descending",
+      "rejected": true
+    }
+  ],
+  "scope": "small-scale independent Python oracle, no cloud throughput/RSS rerun"
+}

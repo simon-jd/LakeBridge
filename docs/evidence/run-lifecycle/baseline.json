@@ -1,0 +1,40 @@
+{
+  "commit": "9aa5bf96346e9921b8fd75b8f83123008524547a",
+  "summary": {
+    "tests": 6,
+    "failures": 6,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 0.556,
+    "timestamp": "2026-09-07T15:24:01.284407-07:00"
+  },
+  "scope": "5 behavioral regressions plus 1 new API case (unsupported keyword on baseline); not 6 distinct production defects.",
+  "cases": [
+    {
+      "name": "test_process_exit_after_admission_keeps_recoverable_context",
+      "failure": "AssertionError: committed ownership must have durable recovery inputs\nassert None is not None"
+    },
+    {
+      "name": "test_admission_context_and_owner_roll_back_together",
+      "failure": "AssertionError: assert 'new' is None"
+    },
+    {
+      "name": "test_abort_reloads_state_after_execution_lock",
+      "failure": "Failed: DID NOT RAISE <class 'lakebridge.common.LakeBridgeError'>"
+    },
+    {
+      "name": "test_abort_state_and_owner_roll_back_together",
+      "failure": "AssertionError: assert 'ABORTED' == 'FAILED'\n  \n  - FAILED\n  + ABORTED"
+    },
+    {
+      "name": "test_report_failure_cannot_demote_completed_publication",
+      "failure": "AssertionError: assert 'FAILED' == 'COMPLETED'\n  \n  - COMPLETED\n  + FAILED"
+    },
+    {
+      "name": "test_retry_preserves_initial_recovery_context",
+      "failure": "TypeError: Control.writer() got an unexpected keyword argument 'initial_run'"
+    }
+  ],
+  "raw_log": "/tmp/lakebridge-lifecycle-baseline.log",
+  "reproduction": "Extract src/ from the baseline commit into /tmp/lakebridge-baseline, then PYTHONPATH=/tmp/lakebridge-baseline/src .venv/bin/pytest tests/test_run_lifecycle.py -q. The subprocess inherits PYTHONPATH."
+}
